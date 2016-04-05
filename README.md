@@ -8,3 +8,26 @@ Partial Model library provides a set of functions to handle visibility into the 
 
 Before installing partialmodellib you need to install the following libraries:
 - octomap
+- iniparser
+- boost
+
+### Installation
+
+First, download and install [octomap] and [iniparser]. Modify the CMakeList.txt file to specify your installation addresses or follow the folder hierarchy that I have used. See "Full Next Best View Installation". 
+
+
+### Full Next Best View installation
+
+This is the folder hierarchy:
+
+- NBV Planning
+    - octomap
+    - PartialModel
+    - iniparser
+    - 
+
+   [octomap]: <https://octomap.github.io/>
+   [iniparser]: <https://github.com/ndevilla/iniparser>
+   [J. Irving Vasquez-Gomez]: <https://jivasquez.wordpress.com>
+
+

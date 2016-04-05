@@ -22,20 +22,20 @@ set(SRC_PARTIAL_MODEL partialmodelbase.cpp pmvolumetric.cpp pmvoctree.cpp pmvoct
 set(SRC_RAY_TREE pmraynode.cpp pmraytree.cpp)
 set(SRC_VIEW viewstructure.cpp vpfilereader.cpp vputils.cpp vptriangle.cpp vpvertex.cpp)
 set(SRC_OTHER evaluationresult.cpp evaluationresultvector.cpp volumetricutilityfunction.cpp vufobjectfilters.cpp coctreevpl.cpp)
-
 set(SRC_ALL ${SRC_PARTIAL_MODEL} ${SRC_RAY_TREE} ${SRC_OTHER} ${SRC_VIEW})
 
 
-
-# --------------- Octomap --------------------
-include_directories(/home/irving/projects/octomap-distribution/octomap/include)
-link_directories(/home/irving/projects/octomap-distribution/lib)
+# ----------------------------- Octomap --------------------
+set(OCTOMAP_DIR ${CMAKE_SOURCE_DIR}/../octomap-1.7.1) 
+include_directories(${OCTOMAP_DIR}/octomap/include)
+link_directories(${OCTOMAP_DIR}/lib ${OCTOMAP_DIR}/octovis/lib)
 set(LIBS_OCTOMAP octomap octomath octovis)
 
 
-# ---------------------------- INIPARSER -----------------
-include_directories(/home/irving/projects/iniparser)
-link_directories(/home/irving/projects/iniparser/lib)
+# ---------------------------- INIPARSER --------------------
+set(INIPARSER_DIR ${CMAKE_SOURCE_DIR}/../iniparser) 
+include_directories(${INIPARSER_DIR}/src)
+link_directories(${INIPARSER_DIR})
 set(LIBS_INIPARSER iniparser)
 
 
