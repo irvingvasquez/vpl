@@ -1,0 +1,3 @@
+// the configured options and settings for Tutorial
+#define pm_VERSION_MAJOR @pm_VERSION_MAJOR@
+#define pm_VERSION_MINOR @pm_VERSION_MINOR@
