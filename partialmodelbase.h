@@ -1,19 +1,35 @@
 /*
-    <one line to give the program's name and a brief idea of what it does.>
-    Copyright (C) 2012  <copyright holder> <email>
+ * 
+ * 
+Partial Model Library
+Copyright (c) 2016, J. Irving Vasquez ivasquez@ccc.inaoep.mx
+Consejo Nacional de Ciencia y Tecnología (CONACYT)
+All rights reserved.
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 
@@ -45,12 +61,17 @@
 using namespace std;
 using namespace octomap;
 
+
 /**
- * A partial model stores the information about the object.
- * Class that represents the partial model.
+ * The partial model stores information about the scene and provides functions that are needed to evaluate a candidate sensor view. 
+ * This class implements the base for a partial model,
+ * several functions related with the partial model are provided, for example update with a point cloud.
+ * This implementation stores a set of candidate views and can assign a evaluation to each candidate view according to a certain metric.
+ * Derived classes will implement the evaluations. 
  * This class implements the evaluation of the candidate views and the model update.
- * Units mts and rads
+ * Units: meters and rads
  */
+
 
 class PartialModelBase
 {
@@ -82,27 +103,31 @@ PartialModelBase();
   */ 
   virtual long int readRays(string file_address)=0;
   
+  
   virtual bool init();
   
   /**
    * Saves the evaluated views, 
-   * HTM is saved in mts
+   * HTM is saved in meters
    * (how was readed)
    */
   bool saveEvaluatedViews(string file_name);
+  
   
   /**
    * Reads candidate views from a given file
    */
   bool readCandidateViews(string file_name);
   
+  
   /**
    * selects only the n early candidate views
    * rest is deleted
-   * TM is saved in mts 
+   * TM is saved in meters 
    * (how was readed)
    */ 
   bool saveOnlyNViews(int n, string file_name);
+  
   
   /**
    * Orders the views according to their evaluation
@@ -110,15 +135,18 @@ PartialModelBase();
    */
   void sortCandidateViews();
   
+  
   /**
    * Establishes the limits for the capsule where the object is.
    */
   void setObjectCapsule(double x1, double y1, double z1, double x2, double y2, double z2);
   
+  
   /**
   * Establishes the limits for the Reconstruction Scene.
   */
   void setScene(double x1, double y1, double z1, double x2, double y2, double z2);
+  
   
 //   void setPaintPartialModel(bool value);
   
@@ -204,9 +232,9 @@ protected:
   
   /// Sensor information
   vector< boost::numeric::ublas::matrix<double> > rays;
-  // minimun depth of view. Distance in mts
+  // minimun depth of view. Distance in meters
   float minDOV;
-  // maximun depth of view. Distance in mts
+  // maximun depth of view. Distance in meters
   float maxDOV;
   
   /**
