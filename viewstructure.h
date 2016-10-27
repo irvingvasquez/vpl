@@ -106,7 +106,7 @@ public:
  * For example, if the original HTM was computed with mm and it will be used with mts, factor should be 1000
  * Inner matix is computed with S' x HTM x S
  */
-//bool vsSaveViewList(std::list<ViewStructure> views, string fileName, double factor);
+//bool vsSaveViewList(std::list<ViewStructure> views, std::string fileName, double factor);
 
 
 /**

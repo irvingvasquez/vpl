@@ -164,7 +164,7 @@ protected:
   /**
    * Gets the name of a rays file for a given abstraction level 
    */
-  string rtGetNameForRaysFile(std::string filename_cero, int level);
+  std::string rtGetNameForRaysFile(std::string filename_cero, int level);
   
   
 //   int castRayAtAbstractionLevel(BoostMatrix m,

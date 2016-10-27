@@ -37,7 +37,7 @@ bool PMVolumetric::init()
 {
     PartialModelBase::init();
     
-    string config_file(configFolder);
+    std::string config_file(configFolder);
     config_file.append("/");
     config_file.append("partialModelConfig.ini");
   
@@ -131,7 +131,7 @@ bool PMVolumetric::init()
 
 bool PMVolumetric::collisionFree(float x, float y, float z)
 {
-cout << "to be implemented" << std::endl;
+  std::cout << "to be implemented" << std::endl;
   return true;
 }
 

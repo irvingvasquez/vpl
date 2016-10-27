@@ -46,7 +46,7 @@ bool PartialModelBase::init()
 {
   std::cout << "Reading parameters" << std::endl;
  
-  string config_file(configFolder);
+  std::string config_file(configFolder);
   config_file.append("/");
   config_file.append("partialModelConfig.ini");
   
@@ -136,7 +136,7 @@ bool PartialModelBase::saveEvaluatedViews(std::string file_name)
 }
 
 
-bool PartialModelBase::saveOnlyNViews(int n, string file_name)
+bool PartialModelBase::saveOnlyNViews(int n, std::string file_name)
 {
   std::list<ViewStructure> secondList;
   getNViewsFromList(candidateViews, n, secondList);
@@ -239,7 +239,7 @@ bool PartialModelBase::readPointCloudFromDAT(std::string file_name, Pointcloud& 
  
   cloud.clear();
   
-  ifstream file(file_name.c_str());
+  std::ifstream file(file_name.c_str());
   if(file.is_open()){
 //    file >> n_points;
     file >> x_p;

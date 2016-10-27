@@ -7,20 +7,20 @@
 using namespace std;
 
 int main(int argc, char **argv) {
-    string scan_file("/home/irving/projects/nbvPlanning-1.1/test/EVA_Kat_horizontal/data/scan_1_reg.dat");
-    string origin_file("/home/irving/projects/nbvPlanning-1.1/test/EVA_Kat_horizontal/data/scan_origin_1.dat");
-    string octree_file("/home/irving/projects/nbvPlanning-1.1/test/EVA_Kat_horizontal/data/octree_color_test.ot");
+    std::string scan_file("/home/irving/projects/nbvPlanning-1.1/test/EVA_Kat_horizontal/data/scan_1_reg.dat");
+    std::string origin_file("/home/irving/projects/nbvPlanning-1.1/test/EVA_Kat_horizontal/data/scan_origin_1.dat");
+    std::string octree_file("/home/irving/projects/nbvPlanning-1.1/test/EVA_Kat_horizontal/data/octree_color_test.ot");
     
     //string file_rays("/home/irving/projects/Reconstructor3D/build/TestPioneerKinect/rays_kinect.dat");
-    string file_rays("/home/irving/projects/NBVPlanning_resp/test/test_octree/data/rays_0.dat");
+    std::string file_rays("/home/irving/projects/NBVPlanning_resp/test/test_octree/data/rays_0.dat");
     
-    string cviews_file("/home/irving/projects/NBVPlanning_resp/test/test_octree/data/pointed_views.vs");
+    std::string cviews_file("/home/irving/projects/NBVPlanning_resp/test/test_octree/data/pointed_views.vs");
     //string ev_file("/home/irving/projects/OctreeNBVPlanner/build/TestPioneerKinect_mo/goals.dat");
         
-    string config_folder("/home/irving/projects/nbvPlanning-1.1/test/EVA_Kat_horizontal/config");
-    string data_folder("/home/irving/projects/nbvPlanning-1.1/test/EVA_Kat_horizontal/data");
+    std::string config_folder("/home/irving/projects/nbvPlanning-1.1/test/EVA_Kat_horizontal/config");
+    std::string data_folder("/home/irving/projects/nbvPlanning-1.1/test/EVA_Kat_horizontal/data");
     
-    string evaluated_views("/home/irving/projects/NBVPlanning/test/test_octree/data/evaluated_views_test.dat");
+    std::string evaluated_views("/home/irving/projects/NBVPlanning/test/test_octree/data/evaluated_views_test.dat");
     
     PMVOctree octree;
     

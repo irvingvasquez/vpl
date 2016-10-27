@@ -2,13 +2,13 @@
 #include "pmvoctreehierarchicalrt.h"
 
 int main(int argc, char **argv) {
-  string config_folder("/home/irving/projects/NBVPlanning/test/test_octree/config");
-  string data_folder("/home/irving/projects/NBVPlanning/test/test_octree/data");
-  string octree_file("/home/irving/projects/NBVPlanning/test/test_octree/data/multi_test.ot");
-  string file_rays("/home/irving/projects/NBVPlanning/test/test_octree/data/rays_0.dat");
-  string scan_file("/home/irving/projects/NBVPlanning/test/test_octree/data/scan_0.dat");
-  string origin_file("/home/irving/projects/NBVPlanning/test/test_octree/data/scan_origin_0.dat");
-  string cviews_file("/home/irving/projects/NBVPlanning/test/test_octree/data/pointed_views.vs");
+  std::string config_folder("/home/irving/projects/NBVPlanning/test/test_octree/config");
+  std::string data_folder("/home/irving/projects/NBVPlanning/test/test_octree/data");
+  std::string octree_file("/home/irving/projects/NBVPlanning/test/test_octree/data/multi_test.ot");
+  std::string file_rays("/home/irving/projects/NBVPlanning/test/test_octree/data/rays_0.dat");
+  std::string scan_file("/home/irving/projects/NBVPlanning/test/test_octree/data/scan_0.dat");
+  std::string origin_file("/home/irving/projects/NBVPlanning/test/test_octree/data/scan_origin_0.dat");
+  std::string cviews_file("/home/irving/projects/NBVPlanning/test/test_octree/data/pointed_views.vs");
     
   
   //PMVMultiOctree2 esferota;

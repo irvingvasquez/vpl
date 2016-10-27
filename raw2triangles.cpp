@@ -2,8 +2,6 @@
 #include <string>
 #include "vputils.h"
 
-using namespace std;
-
 
 // When passing char arrays as parameters they must be pointers
 int main(int argc, char* argv[]) {

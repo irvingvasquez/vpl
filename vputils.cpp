@@ -170,8 +170,8 @@ double vpUtils::compareFilePoints(std::string file_target, std::string file_refe
    std::string file_a(file_target);
    
    //string file_reference("/home/irving/Blensor/scenes/teapot_ref.dat");
-//   string file_reference(argv[2]);
-//   string output_file(argv[3]);
+//   std::string file_reference(argv[2]);
+//   std::string output_file(argv[3]);
    
    std::cout << "file to read: " << file_a << std::endl; 
    

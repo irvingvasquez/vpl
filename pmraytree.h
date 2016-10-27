@@ -33,7 +33,6 @@
 
 #include "pmraynode.h"
 
-using namespace std;
 
 typedef std::vector< boost::numeric::ublas::matrix<double> > RaysVector;
 
@@ -104,7 +103,7 @@ private:
    /**
     * Gets the name of a rays file for a given abstraction level 
     */
-   string rtGetNameForRaysFile(std::string filename_cero, int level);
+   std::string rtGetNameForRaysFile(std::string filename_cero, int level);
 };
 
 #endif // PMRAYTREE_H

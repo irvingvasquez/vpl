@@ -28,7 +28,7 @@ bool PMVOctreeHierarchicalRT::init()
   
   std::cout << "---------------- Octree HTR -------------------" << std::endl;
   
-  string config_file(configFolder);
+  std::string config_file(configFolder);
   config_file.append("/");
   config_file.append("partialModelConfig.ini");
   
@@ -60,7 +60,7 @@ void PMVOctreeHierarchicalRT::rtGenerateRaysTree(std::string file_rays)
   RaysVector R_l;
   RayNodePtr_List children_ptr_list;
   RayNodePtr_List parent_ptr_list;
-  string name_for_level;
+  std::string name_for_level;
   
   std::cout << "Generating rays tree" << std::endl;
   std::cout << "Abstraction level: " << l << std::endl;
@@ -176,9 +176,9 @@ void PMVOctreeHierarchicalRT::rtAddRoot(RayNodePtr_List& node_ptr_list)
 
 string PMVOctreeHierarchicalRT::rtGetNameForRaysFile(std::string filename_cero, int level)
 {
-  string name;
-  string extension;
-  string name_for_level;
+  std::string name;
+  std::string extension;
+  std::string name_for_level;
   
   size_t found;
   found = filename_cero.find_last_of("0.dat");

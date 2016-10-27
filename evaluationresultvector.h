@@ -27,7 +27,6 @@
 #include <fstream>
 #include <stdio.h>
 
-using namespace std;
 
 class EvaluationResultVector : public std::vector<EvaluationResult>
 {

@@ -332,7 +332,7 @@ long int PMVOctree::readRays(std::string file_address)
   
   boost::numeric::ublas::matrix<double> ray(4,1);
   
-  ifstream file(file_address.c_str());
+  std::ifstream file(file_address.c_str());
   if(file.is_open()){
     //file >> n_rays;
     file >> x_r;
@@ -383,7 +383,7 @@ bool PMVOctree::savePartialModel(std::string file_name)
   //paintOccupiedInCapsule();
   
   long int n_unk;
-  string file_uknown(file_name);
+  std::string file_uknown(file_name);
   file_uknown.append(".unk.ot");
   COctreeVPL temp_octree(*(this->map));
   n_unk = paintVoxels(&temp_octree);
@@ -392,7 +392,7 @@ bool PMVOctree::savePartialModel(std::string file_name)
   }
   
   // save accumulated points
-  string file_object_points(dataFolder);
+  std::string file_object_points(dataFolder);
   file_object_points.append("/object_accumulated_points.wrl");
   objectPointCloud.writeVrml(file_object_points);
   
@@ -407,13 +407,13 @@ bool PMVOctree::savePartialModel(std::string file_name)
     vec_pc.push_back(vec);
   }
   
-  string file_pc(dataFolder);
+  std::string file_pc(dataFolder);
   file_pc.append("/");
   file_pc.append(object_points_filename);
   reader.saveDoubleCoordinates(file_pc, vec_pc);
   
   unknownVoxelsInOBBx.push_back(n_unk);;
-  string file_n_uknown(dataFolder);
+  std::string file_n_uknown(dataFolder);
   file_n_uknown.append("/unknown_voxels_OBBx");
   reader.saveVector<long int>(unknownVoxelsInOBBx, file_n_uknown);
   
@@ -451,7 +451,7 @@ bool PMVOctree::loadPartialModel(std::string file_name)
 }
 
 
-float PMVOctree::updateWithScan(std::string file_name_scan, string file_name_origin)
+float PMVOctree::updateWithScan(std::string file_name_scan, std::string file_name_origin)
 {
   std::cout << "Updating octree with scan." << std::endl;
   
@@ -554,13 +554,13 @@ void PMVOctree::evaluateCandidateViews()
       /// Evaluate the result of the raytracing
       if( this->utilityFunction->evaluate(result) == UNFEASIBLE_VIEW){
 	it_v = candidateViews.erase(it_v);
-	cout << "Unfeasible view" << std::endl;
+	std::cout << "Unfeasible view" << std::endl;
 	removed_views ++;
       } else {
 	if(result.n_unmark > minUnknown)
 	  stopCriteria = false;
 	
-	cout << "Evaluation " << i << ": " << result.evaluation << std::endl;
+	std::cout << "Evaluation " << i << ": " << result.evaluation << std::endl;
 	it_v->eval = result.evaluation;
 	it_v ++;
       }

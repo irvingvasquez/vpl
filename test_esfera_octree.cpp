@@ -12,13 +12,13 @@ int main(int argc, char **argv) {
 
   
   
-  string config_folder("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/config");
-  string data_folder("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data");
-  string octree_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/test_cotree.ot");
-  string file_rays("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/config/rays_0.dat");
-  string scan_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/scan_1.dat");
-  string origin_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/scan_origin_1.dat");
-  string cviews_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/config/sphere.vs");
+  std::string config_folder("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/config");
+  std::string data_folder("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data");
+  std::string octree_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/test_cotree.ot");
+  std::string file_rays("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/config/rays_0.dat");
+  std::string scan_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/scan_1.dat");
+  std::string origin_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/scan_origin_1.dat");
+  std::string cviews_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/config/sphere.vs");
   
   
   std::vector< std::vector<double> > a;
@@ -50,8 +50,8 @@ int main(int argc, char **argv) {
   //esferota.paintOccupiedInCapsule();
   //esferota.paintOccluded();
   esferota.savePartialModel(octree_file);
-  string tris("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/occupied.raw");  
-  string obst_filename("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/Obst"); 
+  std::string tris("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/occupied.raw");  
+  std::string obst_filename("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/Obst"); 
   esferota.saveObjectAsRawT(tris);
   esferota.saveObjectAsObst(obst_filename);
   

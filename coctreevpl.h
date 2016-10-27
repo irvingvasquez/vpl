@@ -42,7 +42,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "vputils.h"
 
 using namespace octomap;
-using namespace std;
 
 /**
  *  Just used for returning values of the ray tracing

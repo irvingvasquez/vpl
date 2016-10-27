@@ -58,7 +58,7 @@ class PMVOctree :  public PMVolumetric
 public:
 PMVOctree();
 
-  virtual float updateWithScan(std::string file_name_scan, string file_name_origin);
+  virtual float updateWithScan(std::string file_name_scan, std::string file_name_origin);
   
   virtual bool savePartialModel(std::string file_name);
   

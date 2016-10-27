@@ -125,7 +125,7 @@ void pmRayTree::rtGenerateRaysTree(std::string file_rays)
   RaysVector R_l;
   RayNodePtr_List children_ptr_list;
   RayNodePtr_List parent_ptr_list;
-  string name_for_level;
+  std::string name_for_level;
   
   rtReadRays(file_rays, R_l);
   rtAddLeafsToTree(R_l, children_ptr_list);
@@ -208,9 +208,9 @@ pmRayNode* pmRayTree::rtGetNearestRay(pmRayNode* node_ptr, RayNodePtr_List node_
 string pmRayTree::rtGetNameForRaysFile(std::string filename_cero, int level)
 {
   
-  string name;
-  string extension;
-  string name_for_level;
+  std::string name;
+  std::string extension;
+  std::string name_for_level;
   
   size_t found;
   found = filename_cero.find_last_of("0.dat");

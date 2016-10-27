@@ -58,7 +58,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "vpfilereader.h"
 #include "viewstructure.h"
 
-using namespace std;
 using namespace octomap;
 
 
@@ -79,7 +78,7 @@ public:
 
 PartialModelBase();
   
-  virtual float updateWithScan(std::string file_name_scan, string file_name_origin)=0;
+  virtual float updateWithScan(std::string file_name_scan, std::string file_name_origin)=0;
   
   virtual void evaluateCandidateViews()=0;
   
@@ -126,7 +125,7 @@ PartialModelBase();
    * TM is saved in meters 
    * (how was readed)
    */ 
-  bool saveOnlyNViews(int n, string file_name);
+  bool saveOnlyNViews(int n, std::string file_name);
   
   
   /**
@@ -199,7 +198,7 @@ PartialModelBase();
   /**
    * Accumulated points from the reconstructions
    */
-  string object_points_filename;
+  std::string object_points_filename;
   
   
   /// Stadistical variables
@@ -221,9 +220,9 @@ protected:
   double objRadius2;
   point3d directorRay;
   
-  string configFolder;
-  string dataFolder;
-  string evaluationsFile;
+  std::string configFolder;
+  std::string dataFolder;
+  std::string evaluationsFile;
   
   /// robot bounding box size
   //double rbb_size; 

@@ -71,32 +71,32 @@ int main(int argc, char **argv) {
     }
     
     
-    string config_folder(argv[1]);
-    string data_folder(config_folder);
+    std::string config_folder(argv[1]);
+    std::string data_folder(config_folder);
     std::cout << "Config folder: " << config_folder.c_str() << std::endl;
     std::cout << "Data folder: " << data_folder.c_str() << std::endl;
     
     // output file
-    string octree_file(argv[2]);
+    std::string octree_file(argv[2]);
     std::cout << "octree_file: " << octree_file.c_str() << std::endl;
 
     return 0;
     
     // scan files
-    string scan_file(data_folder + "scan_1_reg.dat");
-    string origin_file(data_folder + "scan_origin_1.dat");
+    std::string scan_file(data_folder + "scan_1_reg.dat");
+    std::string origin_file(data_folder + "scan_origin_1.dat");
     
     
     //string file_rays("/home/irving/projects/Reconstructor3D/build/TestPioneerKinect/rays_kinect.dat");
-    string file_rays(data_folder + "rays_0.dat");
+    std::string file_rays(data_folder + "rays_0.dat");
     
-    string cviews_file("/home/irving/projects/NBVPlanning_resp/test/test_octree/data/pointed_views.vs");
+    std::string cviews_file("/home/irving/projects/NBVPlanning_resp/test/test_octree/data/pointed_views.vs");
     //string ev_file("/home/irving/projects/OctreeNBVPlanner/build/TestPioneerKinect_mo/goals.dat");
         
     //string config_folder("../data_example/test_partialmodel");
     //tring data_folder("../data_example/test_partialmodel");
     
-    string evaluated_views("/home/irving/projects/NBVPlanning/test/test_octree/data/evaluated_views_test.dat");
+    std::string evaluated_views("/home/irving/projects/NBVPlanning/test/test_octree/data/evaluated_views_test.dat");
     
     PMVOctree octree;
     

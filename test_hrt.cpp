@@ -27,17 +27,17 @@ int main(int argc, char **argv) {
         exit(0);
   } 
     
-  string main_folder(argv[1]);
+  std::string main_folder(argv[1]);
     //cout << main_folder << std::endl;
     //exit(0);
     
-  string config_folder(main_folder);
+  std::string config_folder(main_folder);
   config_folder.append("/config");
     
-  string data_folder(main_folder);
+  std::string data_folder(main_folder);
   data_folder.append("/data");
   
-  string rays_file(main_folder);
+  std::string rays_file(main_folder);
   rays_file.append("/data/rays_0.dat");
   
   //std::cout << "Hello, world!" << std::endl;
@@ -66,7 +66,7 @@ int main(int argc, char **argv) {
   
   
   ViewList lista;
-  string lista_fn("/home/irving/projects/nbvPlanning-1.1/VPL/build/views_hrt.vs");
+  std::string lista_fn("/home/irving/projects/nbvPlanning-1.1/VPL/build/views_hrt.vs");
   lista.read(lista_fn);
   
   
@@ -87,8 +87,8 @@ int main(int argc, char **argv) {
   // insert scans
   int n_scans = 1;
   for (int i = 1; i<=n_scans; i++){
-    string filename_scan(data_folder);
-    string filename_origin(data_folder);
+    std::string filename_scan(data_folder);
+    std::string filename_origin(data_folder);
   
     std::stringstream file_string_s;
     file_string_s << "/scan_" << i << ".dat";
