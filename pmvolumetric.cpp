@@ -75,14 +75,14 @@ bool PMVolumetric::init()
     
     maxRange = iniparser_getdouble(ini_file, "volumetric:maxRange", -1);
     
-    cout << "---------- Volumetric configuration -------" << endl;
-    cout << "Voxel reslution:" << voxelResolution << endl;
-    cout << "Weight:" << weight << endl;
-    cout << "Free space:" << freeSpace << endl;
-    cout << "Collision gap:" << collisionGap << endl;
-    cout << "Min unknown:" << minUnknown << endl;
-    cout << "Min overlap:" << minOverlap << endl;
-    cout << "max range:" << maxRange << endl;
+    std::cout << "---------- Volumetric configuration -------" << std::endl;
+    std::cout << "Voxel reslution:" << voxelResolution << std::endl;
+    std::cout << "Weight:" << weight << std::endl;
+    std::cout << "Free space:" << freeSpace << std::endl;
+    std::cout << "Collision gap:" << collisionGap << std::endl;
+    std::cout << "Min unknown:" << minUnknown << std::endl;
+    std::cout << "Min overlap:" << minOverlap << std::endl;
+    std::cout << "max range:" << maxRange << std::endl;
     
     float x1, x2, y1, y2, z1, z2;
     x1 = iniparser_getdouble(ini_file, "objectCapsule:x1", 0);
@@ -122,8 +122,8 @@ bool PMVolumetric::init()
       utilityFunction->setMinimunOverlap(minOverlap);
     }
  
-    cout << "Utility function type: " << uf_type << endl;
-    cout << "-------------------------------------------" << endl;
+    std::cout << "Utility function type: " << uf_type << std::endl;
+    std::cout << "-------------------------------------------" << std::endl;
     
     return true;
 }
@@ -131,7 +131,7 @@ bool PMVolumetric::init()
 
 bool PMVolumetric::collisionFree(float x, float y, float z)
 {
-cout << "to be implemented" << endl;
+cout << "to be implemented" << std::endl;
   return true;
 }
 
@@ -223,7 +223,7 @@ void PMVolumetric::getVoxelVertices(point3d_list& vertices, const point3d center
 void PMVolumetric::getTrianglesOfVoxel(vpTriangleList& tris, const point3d center, const double resolution)
 {
   vpVertex vertex;
-  vector<vpVertex> vertices(8);
+  std::vector<vpVertex> vertices(8);
   double x, y, z;
   double offset = resolution/2;
   

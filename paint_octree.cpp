@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
   
  if ( argc != 3 ) // argc should be 3 for correct execution
     // We print argv[0] assuming it is the program name
-    cout<<"usage: "<< argv[0] <<" <filename>  <filename>\n";
+    std::cout<<"usage: "<< argv[0] <<" <filename>  <filename>\n";
  else {
     string octree_file(argv[1]);
     string output_file(argv[2]);
@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
     oc.loadPartialModel(octree_file);
     
     //oc.paintOccupiedInCapsule();
-    cout << "Ready to paint and save" << endl;
+    std::cout << "Ready to paint and save" << std::endl;
     oc.savePartialModel(output_file);
  }
  return 0;

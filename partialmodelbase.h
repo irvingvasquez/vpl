@@ -79,7 +79,7 @@ public:
 
 PartialModelBase();
   
-  virtual float updateWithScan(string file_name_scan, string file_name_origin)=0;
+  virtual float updateWithScan(std::string file_name_scan, string file_name_origin)=0;
   
   virtual void evaluateCandidateViews()=0;
   
@@ -87,9 +87,9 @@ PartialModelBase();
   
   virtual bool stopCriteriaReached()=0;
   
-  virtual bool savePartialModel(string file_name)=0;
+  virtual bool savePartialModel(std::string file_name)=0;
   
-  virtual bool loadPartialModel(string file_name)=0;
+  virtual bool loadPartialModel(std::string file_name)=0;
   
   /**
    * Returns an aproximation of the unknown volume;
@@ -101,7 +101,7 @@ PartialModelBase();
   * They are stored at rays with the notation [x, y, z, 1]^T
   * The 1 is added to perform matrix multiplications by a HTM
   */ 
-  virtual long int readRays(string file_address)=0;
+  virtual long int readRays(std::string file_address)=0;
   
   
   virtual bool init();
@@ -111,13 +111,13 @@ PartialModelBase();
    * HTM is saved in meters
    * (how was readed)
    */
-  bool saveEvaluatedViews(string file_name);
+  bool saveEvaluatedViews(std::string file_name);
   
   
   /**
    * Reads candidate views from a given file
    */
-  bool readCandidateViews(string file_name);
+  bool readCandidateViews(std::string file_name);
   
   
   /**
@@ -150,9 +150,9 @@ PartialModelBase();
   
 //   void setPaintPartialModel(bool value);
   
-  void setConfigFolder(string folder);
+  void setConfigFolder(std::string folder);
   
-  void setDataFolder(string folder);
+  void setDataFolder(std::string folder);
   
   virtual void saveEvaluations()=0;
   
@@ -160,28 +160,28 @@ PartialModelBase();
   /**
    * Saves the occupied and uknown voxels inside the object bouding box as a list of triangles.
    */
-  virtual void saveObjectAsRawT(string file_name)=0;
+  virtual void saveObjectAsRawT(std::string file_name)=0;
   
   
   /**
    * Saves the occupied and uknown voxels inside the object bouding box as a list of triangles.
    */
-  virtual void saveObjectAsObst(string file_name)=0;
+  virtual void saveObjectAsObst(std::string file_name)=0;
   
   /**
   *
   */
-  virtual bool saveUnknownVolumeAsObst(string file_name)=0;
+  virtual bool saveUnknownVolumeAsObst(std::string file_name)=0;
   
   /**
    * 
    */
-  virtual bool saveUnknownVolumeAsRawT(string file_name)=0;
+  virtual bool saveUnknownVolumeAsRawT(std::string file_name)=0;
   
   /**
    * Saves the occupied  and unknown voxels as Obs
    */
-  virtual bool saveObstacle(string file_name)=0;
+  virtual bool saveObstacle(std::string file_name)=0;
   
   virtual void getOccupiedTriangles(vpTriangleList &tris) = 0;
   
@@ -228,10 +228,10 @@ protected:
   /// robot bounding box size
   //double rbb_size; 
   
-  list<ViewStructure> candidateViews;
+  std::list<ViewStructure> candidateViews;
   
   /// Sensor information
-  vector< boost::numeric::ublas::matrix<double> > rays;
+  std::vector< boost::numeric::ublas::matrix<double> > rays;
   // minimun depth of view. Distance in meters
   float minDOV;
   // maximun depth of view. Distance in meters
@@ -276,7 +276,7 @@ protected:
   * Reads a scan
   * The file is an ASCII Format with plain data
   */
-  bool readPointCloudFromDAT(string file_name, octomap::Pointcloud &cloud);
+  bool readPointCloudFromDAT(std::string file_name, octomap::Pointcloud &cloud);
   
   
   void computeRayFromOriginToPoint(double x, double y, double z, double & i, double &j, double &k);
@@ -301,7 +301,7 @@ protected:
   /**
    * Stadistical variables. Used for compare reconstructions:
    */
-  vector<long int> unknownVoxelsInOBBx;
+  std::vector<long int> unknownVoxelsInOBBx;
   
 private:
   

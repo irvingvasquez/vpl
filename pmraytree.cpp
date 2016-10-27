@@ -30,7 +30,7 @@ pmRayTree::pmRayTree()
 void pmRayTree::setAbstractionLevel(int level)
 {
   if(level < 0){
-    cout << "ERROR: Abstraction level must be higher than 0" << endl;
+    std::cout << "ERROR: Abstraction level must be higher than 0" << std::endl;
     exit(0);
   }
   
@@ -38,14 +38,14 @@ void pmRayTree::setAbstractionLevel(int level)
   hasAbstractionLevel = true;
 }
 
-// // void pmRayTree::setFolder(string folder)
+// // void pmRayTree::setFolder(std::string folder)
 // // {
 // //   raysFileFolder.assign(folder);
 // //   hasFolder = true;
 // // }
 
 
-bool pmRayTree::rtReadRays(string file_name, vector< boost::numeric::ublas::matrix<double> > & R)
+bool pmRayTree::rtReadRays(std::string file_name, std::vector< boost::numeric::ublas::matrix<double> > & R)
 {
   double x_r, y_r, z_r;
   long int n_rays;
@@ -53,7 +53,7 @@ bool pmRayTree::rtReadRays(string file_name, vector< boost::numeric::ublas::matr
   R.clear();
   boost::numeric::ublas::matrix<double> ray(4,1);
   
-  cout << "Reading file: " << file_name << endl;
+  std::cout << "Reading file: " << file_name << std::endl;
   
   ifstream file(file_name.c_str());
   if(file.is_open()){
@@ -77,12 +77,12 @@ bool pmRayTree::rtReadRays(string file_name, vector< boost::numeric::ublas::matr
     }
     file.close();
   } else {
-    cout << "Unable to open file " << file_name.c_str() << endl;
+    std::cout << "Unable to open file " << file_name.c_str() << std::endl;
     return false;
   }
   
-  //cout << "done." << endl;
-  cout << "Readed rays: "<< readed_rays << endl;
+  //cout << "done." << std::endl;
+  std::cout << "Readed rays: "<< readed_rays << std::endl;
   return true;
 }
 
@@ -90,9 +90,9 @@ void pmRayTree::rtAddLeafsToTree(vector< boost::numeric::ublas::matrix< double >
 {
   rtRaysTree.clear();
   leafsPtrList.clear();
-  list<pmRayNode>::pointer node_ptr;
+  std::list<pmRayNode>::pointer node_ptr;
   
-  vector< boost::numeric::ublas::matrix< double > >::iterator it_rays;
+  std::vector< boost::numeric::ublas::matrix< double > >::iterator it_rays;
   for(it_rays = R.begin(); it_rays!=R.end(); it_rays++){
     pmRayNode node(*it_rays);  
     node.nLeafs = 1; // it is 1 because byitself is a leaf if there is no more links
@@ -106,7 +106,7 @@ void pmRayTree::rtAddLeafsToTree(vector< boost::numeric::ublas::matrix< double >
 void pmRayTree::rtAddNodesToTree(RaysVector& R, RayNodePtr_List& node_ptr_list)
 {
   node_ptr_list.clear();
-  list<pmRayNode>::pointer node_ptr;
+  std::list<pmRayNode>::pointer node_ptr;
   
   RaysVector::iterator it_rays;
   //vector< boost::numeric::ublas::matrix< double > >::iterator it_rays;
@@ -119,7 +119,7 @@ void pmRayTree::rtAddNodesToTree(RaysVector& R, RayNodePtr_List& node_ptr_list)
 }
 
 
-void pmRayTree::rtGenerateRaysTree(string file_rays)
+void pmRayTree::rtGenerateRaysTree(std::string file_rays)
 {
   int l=0;
   RaysVector R_l;
@@ -161,7 +161,7 @@ void pmRayTree::rtLinkChildrenWithParents(RayNodePtr_List children, RayNodePtr_L
 {
   RayNodePtr_List::iterator children_it;
   RayNodePtr_List::iterator parents_it;
-  list<pmRayNode>::pointer np; // nearest parent
+  std::list<pmRayNode>::pointer np; // nearest parent
   
   for(children_it = children.begin(); children_it != children.end(); children_it ++){
     np = rtGetNearestRay(*children_it, parents);
@@ -177,9 +177,9 @@ void pmRayTree::rtLinkChildrenWithParents(RayNodePtr_List children, RayNodePtr_L
 
 pmRayNode* pmRayTree::rtGetNearestRay(pmRayNode* node_ptr, RayNodePtr_List node_ptr_list)
 {
-  //cout << "Get nearest ray." << endl;
+  //cout << "Get nearest ray." << std::endl;
   RayNodePtr_List::iterator list_it;
-  cout << "Node: " << node_ptr->ray.x() << " " << node_ptr->ray.y() << " " << node_ptr->ray.z() << endl;
+  std::cout << "Node: " << node_ptr->ray.x() << " " << node_ptr->ray.y() << " " << node_ptr->ray.z() << std::endl;
   
   pmRayNode* nn = NULL;
   double distance ;
@@ -191,7 +191,7 @@ pmRayNode* pmRayTree::rtGetNearestRay(pmRayNode* node_ptr, RayNodePtr_List node_
     if(distance < 0)
       distance = distance * (-1);
     
-    //cout << "Parent: " << (*list_it)->ray.x() << " " << (*list_it)->ray.y() << " " << (*list_it)->ray.z() << "\t" << "d: " << distance <<endl;
+    //cout << "Parent: " << (*list_it)->ray.x() << " " << (*list_it)->ray.y() << " " << (*list_it)->ray.z() << "\t" << "d: " << distance <<std::endl;
     if(distance < min_dist)
     {
       nn = *list_it;
@@ -199,13 +199,13 @@ pmRayNode* pmRayTree::rtGetNearestRay(pmRayNode* node_ptr, RayNodePtr_List node_
     }
   }
   
-  //cout << "Selected parent: " << nn->ray.x() << " " << nn->ray.y() << " " << nn->ray.z() << endl << endl;
+  //cout << "Selected parent: " << nn->ray.x() << " " << nn->ray.y() << " " << nn->ray.z() << std::endl << std::endl;
   return nn;
 }
 
 
 
-string pmRayTree::rtGetNameForRaysFile(string filename_cero, int level)
+string pmRayTree::rtGetNameForRaysFile(std::string filename_cero, int level)
 {
   
   string name;
@@ -226,36 +226,36 @@ string pmRayTree::rtGetNameForRaysFile(string filename_cero, int level)
 
 void pmRayTree::rtTraverseWithInfo()
 {
-  list<pmRayNode>::iterator node_it;
+  std::list<pmRayNode>::iterator node_it;
   
   int i;
   int counter = 0;
    
-  cout << "-------------------------------------\n" << endl;
-  cout << "	rtRaysTree\n";
-  cout << "-------------------------------------\n" << endl;
+  std::cout << "-------------------------------------\n" << std::endl;
+  std::cout << "	rtRaysTree\n";
+  std::cout << "-------------------------------------\n" << std::endl;
   
   for(node_it = rtRaysTree.begin(); node_it != rtRaysTree.end(); node_it++){
-    cout.precision(3);
-    cout << fixed << node_it->ray.x() << " " << fixed << node_it->ray.y() << " " << fixed << node_it->ray.z() << "\t";
-    cout << "Children count: " << node_it->children_count << "\t";
-    cout << "Leafs: " << node_it->nLeafs << endl;
+    std::cout.precision(3);
+    std::cout << fixed << node_it->ray.x() << " " << fixed << node_it->ray.y() << " " << fixed << node_it->ray.z() << "\t";
+    std::cout << "Children count: " << node_it->children_count << "\t";
+    std::cout << "Leafs: " << node_it->nLeafs << std::endl;
     counter ++;
     
     if (counter == 100){
-      cout << "press any key to continue..." << endl;
+      std::cout << "press any key to continue..." << std::endl;
       getchar();
       counter = 0;
     }
   }
-  cout << "-------------------------------------" << endl;
+  std::cout << "-------------------------------------" << std::endl;
 }
 
 
 void pmRayTree::rtAddRoot(RayNodePtr_List& node_ptr_list)
 {
   pmRayNode root(0,0,0);
-  list<pmRayNode>::pointer root_ptr;
+  std::list<pmRayNode>::pointer root_ptr;
   rtRaysTree.push_front(root);
   root_ptr = &rtRaysTree.front();
   

@@ -26,7 +26,7 @@ bool PMVOctreeHierarchicalRT::init()
 {
   PMVOctree::init();
   
-  cout << "---------------- Octree HTR -------------------" << endl;
+  std::cout << "---------------- Octree HTR -------------------" << std::endl;
   
   string config_file(configFolder);
   config_file.append("/");
@@ -44,17 +44,17 @@ bool PMVOctreeHierarchicalRT::init()
   
   hasAbstractionLevel = true;
     
-  cout << "-------------------------------------------" << endl;
+  std::cout << "-------------------------------------------" << std::endl;
 }
 
-long int PMVOctreeHierarchicalRT::readRays(string file_address)
+long int PMVOctreeHierarchicalRT::readRays(std::string file_address)
 {
    PMVOctree::readRays(file_address);
    
    rtGenerateRaysTree(file_address);
 }
 
-void PMVOctreeHierarchicalRT::rtGenerateRaysTree(string file_rays)
+void PMVOctreeHierarchicalRT::rtGenerateRaysTree(std::string file_rays)
 {
   int l=0;
   RaysVector R_l;
@@ -62,8 +62,8 @@ void PMVOctreeHierarchicalRT::rtGenerateRaysTree(string file_rays)
   RayNodePtr_List parent_ptr_list;
   string name_for_level;
   
-  cout << "Generating rays tree" << endl;
-  cout << "Abstraction level: " << l << endl;
+  std::cout << "Generating rays tree" << std::endl;
+  std::cout << "Abstraction level: " << l << std::endl;
   
   rtReadRays(file_rays, R_l);
   rtAddLeafsToTree(R_l, children_ptr_list);
@@ -71,15 +71,15 @@ void PMVOctreeHierarchicalRT::rtGenerateRaysTree(string file_rays)
   
   
   while(l <= abstractionLevel){
-    cout << "	Abstraction level: " << l << endl;
+    std::cout << "	Abstraction level: " << l << std::endl;
     // generate nodes
-    cout << "	Generate nodes." << endl;
+    std::cout << "	Generate nodes." << std::endl;
     name_for_level = rtGetNameForRaysFile(file_rays, l);
     rtReadRays(name_for_level, R_l);
     rtAddNodesToTree(R_l,parent_ptr_list);
     
     //link nodes
-    cout << "	-Link nodes." << endl;
+    std::cout << "	-Link nodes." << std::endl;
     rtLinkChildrenWithParents(children_ptr_list, parent_ptr_list);
     
     //update references
@@ -94,7 +94,7 @@ void PMVOctreeHierarchicalRT::rtGenerateRaysTree(string file_rays)
   rtHasRoot = true;
   
  // rtTraverseWithInfo();
-  cout << "Rays tree generated" << endl;
+  std::cout << "Rays tree generated" << std::endl;
 }
 
 
@@ -102,7 +102,7 @@ void PMVOctreeHierarchicalRT::rtGenerateRaysTree(string file_rays)
 void PMVOctreeHierarchicalRT::setAbstractionLevel(int level)
 {
   if(level < 0){
-    cout << "ERROR: Abstraction level must be higher than 0" << endl;
+    std::cout << "ERROR: Abstraction level must be higher than 0" << std::endl;
     exit(0);
   }
   
@@ -127,9 +127,9 @@ void PMVOctreeHierarchicalRT::rtAddLeafsToTree(RaysVector& R, std::list< pmRayNo
 {
   rtRaysTree.clear();
   leafsPtrList.clear();
-  list<pmRayNode>::pointer node_ptr;
+  std::list<pmRayNode>::pointer node_ptr;
   
-  vector< boost::numeric::ublas::matrix< double > >::iterator it_rays;
+  std::vector< boost::numeric::ublas::matrix< double > >::iterator it_rays;
   for(it_rays = R.begin(); it_rays!=R.end(); it_rays++){
     pmRayNode node(*it_rays);  
     node.nLeafs = 1; // it is 1 because byitself is a leaf if there is no more links
@@ -143,7 +143,7 @@ void PMVOctreeHierarchicalRT::rtAddLeafsToTree(RaysVector& R, std::list< pmRayNo
 void PMVOctreeHierarchicalRT::rtAddNodesToTree(RaysVector& R, RayNodePtr_List& node_ptr_list)
 {
    node_ptr_list.clear();
-  list<pmRayNode>::pointer node_ptr;
+  std::list<pmRayNode>::pointer node_ptr;
   
   RaysVector::iterator it_rays;
   
@@ -158,7 +158,7 @@ void PMVOctreeHierarchicalRT::rtAddNodesToTree(RaysVector& R, RayNodePtr_List& n
 void PMVOctreeHierarchicalRT::rtAddRoot(RayNodePtr_List& node_ptr_list)
 {
   pmRayNode root(0,0,0);
-  list<pmRayNode>::pointer root_ptr;
+  std::list<pmRayNode>::pointer root_ptr;
   rtRaysTree.push_front(root);
   root_ptr = &rtRaysTree.front();
   
@@ -174,7 +174,7 @@ void PMVOctreeHierarchicalRT::rtAddRoot(RayNodePtr_List& node_ptr_list)
 }
 
 
-string PMVOctreeHierarchicalRT::rtGetNameForRaysFile(string filename_cero, int level)
+string PMVOctreeHierarchicalRT::rtGetNameForRaysFile(std::string filename_cero, int level)
 {
   string name;
   string extension;
@@ -195,9 +195,9 @@ string PMVOctreeHierarchicalRT::rtGetNameForRaysFile(string filename_cero, int l
 
 pmRayNode* PMVOctreeHierarchicalRT::rtGetNearestRay(pmRayNode* node_ptr, RayNodePtr_List node_ptr_list)
 {
-  //cout << "Get nearest ray." << endl;
+  //cout << "Get nearest ray." << std::endl;
   RayNodePtr_List::iterator list_it;
-  //cout << "Node: " << node_ptr->ray.x() << " " << node_ptr->ray.y() << " " << node_ptr->ray.z() << endl;
+  //cout << "Node: " << node_ptr->ray.x() << " " << node_ptr->ray.y() << " " << node_ptr->ray.z() << std::endl;
   
   pmRayNode* nn = NULL;
   double distance ;
@@ -209,7 +209,7 @@ pmRayNode* PMVOctreeHierarchicalRT::rtGetNearestRay(pmRayNode* node_ptr, RayNode
     if(distance < 0)
       distance = distance * (-1);
     
-    //cout << "Parent: " << (*list_it)->ray.x() << " " << (*list_it)->ray.y() << " " << (*list_it)->ray.z() << "\t" << "d: " << distance <<endl;
+    //cout << "Parent: " << (*list_it)->ray.x() << " " << (*list_it)->ray.y() << " " << (*list_it)->ray.z() << "\t" << "d: " << distance <<std::endl;
     if(distance < min_dist)
     {
       nn = *list_it;
@@ -217,7 +217,7 @@ pmRayNode* PMVOctreeHierarchicalRT::rtGetNearestRay(pmRayNode* node_ptr, RayNode
     }
   }
   
-  //cout << "Selected parent: " << nn->ray.x() << " " << nn->ray.y() << " " << nn->ray.z() << endl << endl;
+  //cout << "Selected parent: " << nn->ray.x() << " " << nn->ray.y() << " " << nn->ray.z() << std::endl << std::endl;
   return nn;
 }
 
@@ -226,11 +226,11 @@ void PMVOctreeHierarchicalRT::rtLinkChildrenWithParents(RayNodePtr_List children
 {
   RayNodePtr_List::iterator children_it;
   RayNodePtr_List::iterator parents_it;
-  list<pmRayNode>::pointer np; // nearest parent
+  std::list<pmRayNode>::pointer np; // nearest parent
   int child_number = 0;
   
   for(children_it = children.begin(); children_it != children.end(); children_it ++){
-    //cout << "child: " << child_number << endl;
+    //cout << "child: " << child_number << std::endl;
     child_number++;
     
     np = rtGetNearestRay(*children_it, parents);
@@ -254,7 +254,7 @@ bool PMVOctreeHierarchicalRT::rtIsLeaf(rtPointerToElementType element_ptr)
 }
 
 
-bool PMVOctreeHierarchicalRT::rtReadRays(string file_name, vector< boost::numeric::ublas::matrix< double > >& R)
+bool PMVOctreeHierarchicalRT::rtReadRays(std::string file_name, std::vector< boost::numeric::ublas::matrix< double > >& R)
 {
   double x_r, y_r, z_r;
   long int n_rays;
@@ -262,7 +262,7 @@ bool PMVOctreeHierarchicalRT::rtReadRays(string file_name, vector< boost::numeri
   R.clear();
   boost::numeric::ublas::matrix<double> ray(4,1);
   
-  cout << "Reading file: " << file_name << endl;
+  std::cout << "Reading file: " << file_name << std::endl;
   
   ifstream file(file_name.c_str());
   if(file.is_open()){
@@ -286,42 +286,42 @@ bool PMVOctreeHierarchicalRT::rtReadRays(string file_name, vector< boost::numeri
     }
     file.close();
   } else {
-    cout << "Unable to open file " << file_name.c_str() << endl;
+    std::cout << "Unable to open file " << file_name.c_str() << std::endl;
     getchar();
     return false;
   }
   
-  //cout << "done." << endl;
-  cout << "Readed rays: "<< readed_rays << endl;
+  //cout << "done." << std::endl;
+  std::cout << "Readed rays: "<< readed_rays << std::endl;
   return true;
 }
 
 
 void PMVOctreeHierarchicalRT::rtTraverseWithInfo()
 {
-   list<pmRayNode>::iterator node_it;
+   std::list<pmRayNode>::iterator node_it;
   
   int i;
   int counter = 0;
    
-  cout << "-------------------------------------\n" << endl;
-  cout << "	rtRaysTree\n";
-  cout << "-------------------------------------\n" << endl;
+  std::cout << "-------------------------------------\n" << std::endl;
+  std::cout << "	rtRaysTree\n";
+  std::cout << "-------------------------------------\n" << std::endl;
   
   for(node_it = rtRaysTree.begin(); node_it != rtRaysTree.end(); node_it++){
-    cout.precision(3);
-    cout << fixed << node_it->ray.x() << " " << fixed << node_it->ray.y() << " " << fixed << node_it->ray.z() << "\t";
-    cout << "Children count: " << node_it->children_count << "\t";
-    cout << "Leafs: " << node_it->nLeafs << endl;
+    std::cout.precision(3);
+    std::cout << fixed << node_it->ray.x() << " " << fixed << node_it->ray.y() << " " << fixed << node_it->ray.z() << "\t";
+    std::cout << "Children count: " << node_it->children_count << "\t";
+    std::cout << "Leafs: " << node_it->nLeafs << std::endl;
     counter ++;
     
     if (counter == 100){
-      cout << "press any key to continue..." << endl;
+      std::cout << "press any key to continue..." << std::endl;
       getchar();
       counter = 0;
     }
   }
-  cout << "-------------------------------------" << endl;
+  std::cout << "-------------------------------------" << std::endl;
 }
 
 
@@ -329,7 +329,7 @@ void PMVOctreeHierarchicalRT::rtTraverseWithInfo()
 int PMVOctreeHierarchicalRT::evaluateView(ViewStructure& v)
 {   
   if(!poitsToTheObject(v)){
-    //cout << "Sorry no points :(" << endl;
+    //cout << "Sorry no points :(" << std::endl;
     return UNFEASIBLE_VIEW;
   }
   
@@ -337,12 +337,12 @@ int PMVOctreeHierarchicalRT::evaluateView(ViewStructure& v)
   EvaluationResult result;
     
   if(!rtHasRoot){
-    cout << "RaysTree has not been created." << endl;
+    std::cout << "RaysTree has not been created." << std::endl;
     return UNFEASIBLE_VIEW;
   }
   
   if(rtRootPtr->children_count == 0){
-    cout << "RaysTree Root has no rays." << endl;
+    std::cout << "RaysTree Root has no rays." << std::endl;
     return UNFEASIBLE_VIEW;
   }
   
@@ -381,16 +381,16 @@ void PMVOctreeHierarchicalRT::evaluateCandidateViews()
   EvaluationResult result;
   int i =0;
   
-  cout << "Evaluation candidate views with HRT octree." << endl;
-  cout << "Rays to be traced:" << rtRootPtr->nLeafs << endl;
+  std::cout << "Evaluation candidate views with HRT octree." << std::endl;
+  std::cout << "Rays to be traced:" << rtRootPtr->nLeafs << std::endl;
   
   if(!rtHasRoot){
-    cout << "RaysTree has not been created." << endl;
+    std::cout << "RaysTree has not been created." << std::endl;
     return;
   }
   
   if(rtRootPtr->children_count == 0){
-    cout << "RaysTree Root has no rays." << endl;
+    std::cout << "RaysTree Root has no rays." << std::endl;
     return;
   }
   
@@ -418,13 +418,13 @@ void PMVOctreeHierarchicalRT::evaluateCandidateViews()
       /// Evaluate the result of the raytracing
       if( this->utilityFunction->evaluate(result) == UNFEASIBLE_VIEW){
 	it_v = candidateViews.erase(it_v);
-	cout << "Unfeasible view" << endl;
+	cout << "Unfeasible view" << std::endl;
 	removed_views ++;
       } else {
 	if(result.n_unmark > minUnknown)
 	  stopCriteria = false;
 	
-	cout << "Evaluation " << i << ": " << result.evaluation << endl;
+	cout << "Evaluation " << i << ": " << result.evaluation << std::endl;
 	it_v->eval = result.evaluation;
 	it_v ++;
       }
@@ -436,7 +436,7 @@ void PMVOctreeHierarchicalRT::evaluateCandidateViews()
     }
   }
   
-  cout << "Removed views: " << removed_views << endl;
+  std::cout << "Removed views: " << removed_views << std::endl;
 }
 
 
@@ -457,7 +457,7 @@ void PMVOctreeHierarchicalRT::evaluateCandidateViews()
 // 	else {
 // 	  EvaluationResult aux_result;
 // 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-// 	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << endl; 
+// 	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
 // 	  result.addVoxelAmouts(aux_result);
 // 	}
 // 	break;
@@ -484,9 +484,9 @@ void PMVOctreeHierarchicalRT::evaluateCandidateViews()
 //     }
 //   }
 //   
-// //   cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
+// //   std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
 // //    		    << " Unk:" << result.n_unmark <<  " Unk_sce:" << result.n_unmark_scene 
-// //    		    << " lost:" << result.n_lost << endl;
+// //    		    << " lost:" << result.n_lost << std::endl;
 // 
 //   map->write("painted.ot");
 //   //getchar();
@@ -514,7 +514,7 @@ bool PMVOctreeHierarchicalRT::hierarchicalRayTracing(BoostMatrix m, pmRayNode* r
 	} else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
     } else {
@@ -526,7 +526,7 @@ bool PMVOctreeHierarchicalRT::hierarchicalRayTracing(BoostMatrix m, pmRayNode* r
 	else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
       }
@@ -541,7 +541,7 @@ bool PMVOctreeHierarchicalRT::hierarchicalRayTracing(BoostMatrix m, pmRayNode* r
 	else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
 	break;
@@ -557,7 +557,7 @@ bool PMVOctreeHierarchicalRT::hierarchicalRayTracing(BoostMatrix m, pmRayNode* r
 	else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
 	break;
@@ -576,9 +576,9 @@ bool PMVOctreeHierarchicalRT::hierarchicalRayTracing(BoostMatrix m, pmRayNode* r
     }
   }
  */ 
-//   cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
+//   std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
 //    		    << " Unk:" << result.n_unmark <<  " Unk_sce:" << result.n_unmark_scene 
-//    		    << " lost:" << result.n_lost << endl;
+//    		    << " lost:" << result.n_lost << std::endl;
 
   //map->write("painted.ot");
   //getchar();
@@ -605,7 +605,7 @@ bool PMVOctreeHierarchicalRT::recursiveHRayTracing(BoostMatrix m, pmRayNode* roo
 	} else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
     } else {
@@ -617,7 +617,7 @@ bool PMVOctreeHierarchicalRT::recursiveHRayTracing(BoostMatrix m, pmRayNode* roo
 	else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
       }
@@ -636,8 +636,8 @@ bool PMVOctreeHierarchicalRT::isInCapsule(point3d point, float resolution)
       if ( point.z() >= (z_cap_1-resolution) && point.z() <= (z_cap_2+resolution) )
 	return true;
   
-//  cout << point.x() << " " << point.y() << " " << point.z() << endl;
-//  cout << "false" << endl;
+//  std::cout << point.x() << " " << point.y() << " " << point.z() << std::endl;
+//  std::cout << "false" << std::endl;
   return false;
 }
 
@@ -648,7 +648,7 @@ int PMVOctreeHierarchicalRT::castRayAtDepth(BoostMatrix m, rtPointerToElementTyp
     //Dynamic casting
     COctreeVPL * octree_hrt;
     octree_hrt = dynamic_cast<COctreeVPL*>(map);
-    if (octree_hrt==0) cout << "Null pointer on type-cast" << endl;
+    if (octree_hrt==0) std::cout << "Null pointer on type-cast" << std::endl;
   
     int diff_depth = octree_hrt->getTreeDepth() - depth;
     double resolution_at_depth = octree_hrt->getResolution() * pow(2,diff_depth);
@@ -673,26 +673,26 @@ int PMVOctreeHierarchicalRT::castRayAtDepth(BoostMatrix m, rtPointerToElementTyp
     //compute origin
     rotated_origin = boost::numeric::ublas::prod(m, cero_origin);
     octomap::point3d origin(rotated_origin(0,0), rotated_origin(1,0), rotated_origin(2,0));
-    //cout << "origin: " << endl << origin << endl;
+    //cout << "origin: " << std::endl << origin << std::endl;
   
     // check for collision
     origin_node =  octree_hrt->search(origin);
     if(origin_node == NULL){
-      //cout << "Origin not found. It could be in a unknown part. " << endl;
-      //cout << origin.x() << " " << origin.y() << " " << origin.z() << endl;
+      //cout << "Origin not found. It could be in a unknown part. " << std::endl;
+      //cout << origin.x() << " " << origin.y() << " " << origin.z() << std::endl;
       return INVALID;
     }
 
     /// The ray is rotated and traslated by the rotation matrix
     ray = ray_node->ray_matrix;
     rotated_ray = boost::numeric::ublas::prod(m, ray);
-    //cout << "rotated_ray: " << rotated_ray(0,0) << " " <<  rotated_ray(1,0) << " " << rotated_ray(2,0) << endl;
+    //cout << "rotated_ray: " << rotated_ray(0,0) << " " <<  rotated_ray(1,0) << " " << rotated_ray(2,0) << std::endl;
     
     //compute direction from position to the rotated ray. This is necesary because the rotated ray was also trasladated by the rotation matrix
     computeRayFromPointToPoint(rotated_origin , rotated_ray, i_ray, j_ray, k_ray);
 
     direction = new octomap::point3d(i_ray, j_ray, k_ray);
-    //cout << "direction: " << direction->x() << " " << direction->y() << " " << direction->z() << endl;
+    //cout << "direction: " << direction->x() << " " << direction->y() << " " << direction->z() << std::endl;
     
     // if the casted ray returns true a occupied voxel was hit
     // if (map->castRay(origin, *direction, touched_position, false, -1.0)){
@@ -755,7 +755,7 @@ int PMVOctreeHierarchicalRT::castRayAtAbstractionLevel(BoostMatrix m, rtPointerT
   //compute origin
   rotated_origin = boost::numeric::ublas::prod(m, cero_origin);
   octomap::point3d origin(rotated_origin(0,0), rotated_origin(1,0), rotated_origin(2,0));
-  //cout << "rotated origin: " << endl << rotated_origin << endl;
+  //cout << "rotated origin: " << std::endl << rotated_origin << std::endl;
   
   /// Collision Checking
 //   if(!collisionFree(origin.x(),origin.y(),origin.z())){
@@ -766,8 +766,8 @@ int PMVOctreeHierarchicalRT::castRayAtAbstractionLevel(BoostMatrix m, rtPointerT
    origin_node =  map->search(origin);
 //   
   if(origin_node == NULL){
-     //cout << "Origin not found. It could be in a unknown part. " << endl;
-     //cout << origin.x() << " " << origin.y() << " " << origin.z() << endl;
+     //cout << "Origin not found. It could be in a unknown part. " << std::endl;
+     //cout << origin.x() << " " << origin.y() << " " << origin.z() << std::endl;
      return INVALID;
   }
   
@@ -781,24 +781,24 @@ int PMVOctreeHierarchicalRT::castRayAtAbstractionLevel(BoostMatrix m, rtPointerT
   //rotated_end = boost::numeric::ublas::prod(m, rotated_end);
   //point3d end_point(rotated_end(0,0), rotated_end(1,0), rotated_end(2,0));
   
-  //cout << "end point" << end_point.x() << " " << end_point.y() << " " <<  end_point.z() << endl;
-  //cout << "rotated_ray: " << rotated_ray(0,0) << " " <<  rotated_ray(1,0) << " " << rotated_ray(2,0) << endl;
+  //cout << "end point" << end_point.x() << " " << end_point.y() << " " <<  end_point.z() << std::endl;
+  //cout << "rotated_ray: " << rotated_ray(0,0) << " " <<  rotated_ray(1,0) << " " << rotated_ray(2,0) << std::endl;
   
     //compute direction from position to the rotated ray. This is necesary because the rotated ray was also trasladated by the rotation matrix
   computeRayFromPointToPoint(rotated_origin , rotated_ray, i_ray, j_ray, k_ray);
 
   
   direction = new octomap::point3d(i_ray, j_ray, k_ray);
-  //cout << "direction: " << direction->x() << " " << direction->y() << " " << direction->z() << endl;
+  //cout << "direction: " << direction->x() << " " << direction->y() << " " << direction->z() << std::endl;
   delete direction;
   
   point3d scaled_dir(maxDOV*i_ray, maxDOV*j_ray,maxDOV*k_ray);
   point3d end_point = origin + scaled_dir;
-  //cout << "end point" << end_point.x() << " " << end_point.y() << " " <<  end_point.z() << endl;
+  //cout << "end point" << end_point.x() << " " << end_point.y() << " " <<  end_point.z() << std::endl;
   
   //getchar();
   // if the castRay returns true a occupied voxel was hit
-  vector<point3d> voxels;
+  std::vector<point3d> voxels;
   
   float res_temp = voxelResolution * pow(2,a_l);
   int deepth_goal = map->getTreeDepth() - a_l;
@@ -807,19 +807,19 @@ int PMVOctreeHierarchicalRT::castRayAtAbstractionLevel(BoostMatrix m, rtPointerT
   if (map->computeRay(origin, end_point, voxels)){
     map->setResolution(voxelResolution);
     
-    vector<point3d>::iterator it_voxel;
+    std::vector<point3d>::iterator it_voxel;
     for(it_voxel= voxels.begin(); it_voxel!= voxels.end(); it_voxel++){      
       ColorOcTreeNode *node;
       node= map->search(*it_voxel, deepth_goal);
       
       if(node == NULL){
 	if(isInCapsule(*it_voxel, res_temp)){
-	  //cout << "Unmark" << endl;
+	  //cout << "Unmark" << std::endl;
 	  
 	  return UNMARK;
 	} else { 
 	  if(isInScene(*it_voxel)){
-	    //cout << "Unmark Scene" << endl;
+	    //cout << "Unmark Scene" << std::endl;
 	    return UNMARK_SCENE;
 	  } else {
 	    return RAY_LOST;
@@ -829,11 +829,11 @@ int PMVOctreeHierarchicalRT::castRayAtAbstractionLevel(BoostMatrix m, rtPointerT
       
       if(node->getOccupancy()>0.5){
 	if(isInCapsule(*it_voxel, res_temp)){	  
-	  //cout << "Occupied" << endl;
+	  //cout << "Occupied" << std::endl;
 	  return OCCUPIED;
 	} else {
 	  if(isInScene(*it_voxel)){
-	    //cout << "Occupied scene" << endl;
+	    //cout << "Occupied scene" << std::endl;
 	    return OCCUPIED_SCENE;
 	  } else {
 	    return RAY_LOST;
@@ -843,11 +843,11 @@ int PMVOctreeHierarchicalRT::castRayAtAbstractionLevel(BoostMatrix m, rtPointerT
       
       if(node->getOccupancy() == 0.5) {
 	if(isInCapsule(*it_voxel, res_temp)){
-	  //cout << "Unmark" << endl;
+	  //cout << "Unmark" << std::endl;
 	  return UNMARK;
 	} else{
 	  if(isInScene(*it_voxel)){
-	    //cout << "Unmark Scene" << endl;
+	    //cout << "Unmark Scene" << std::endl;
 	    return UNMARK_SCENE;
 	  } else {
 	    return RAY_LOST;
@@ -860,7 +860,7 @@ int PMVOctreeHierarchicalRT::castRayAtAbstractionLevel(BoostMatrix m, rtPointerT
     return RAY_LOST;
   }
   map->setResolution(voxelResolution);
-  cout << "Aqui hay un problema el punto inicial o final esta fuera del rango del octree!";
+  std::cout << "Aqui hay un problema el punto inicial o final esta fuera del rango del octree!";
   getchar();
  
  
@@ -873,7 +873,7 @@ bool PMVOctreeHierarchicalRT::recursiveHRayTracing(BoostMatrix m, pmRayNode* roo
   result.clear();
   
   rtChildrenPtrListType::iterator r_it;
-  //cout << "children rays: " << root_ray_ptr->children_count << endl;;
+  //cout << "children rays: " << root_ray_ptr->children_count << std::endl;;
   for(r_it = root_ray_ptr->childrenPtrList.begin(); r_it!= root_ray_ptr->childrenPtrList.end(); r_it++){
       switch(castRayAtDepth(m,*r_it, depth)){
 	case OCCUPIED:
@@ -907,7 +907,7 @@ bool PMVOctreeHierarchicalRT::recursiveHRayTracing(BoostMatrix m, pmRayNode* roo
 	  break;
       }
   }
- // cout << "Occupied: " << n_occupied << " Unmark: " << n_unmark <<  " Unmark scene: " << n_unmark_scene <<  " occupied_scene:" << n_occupied_scene << " lost:" << ray_lost << endl;
+ // std::cout << "Occupied: " << n_occupied << " Unmark: " << n_unmark <<  " Unmark scene: " << n_unmark_scene <<  " occupied_scene:" << n_occupied_scene << " lost:" << ray_lost << std::endl;
 
   return true;
 }*/

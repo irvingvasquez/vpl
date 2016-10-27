@@ -2,12 +2,8 @@
 #include <math.h>
 #include <octomap/Pointcloud.h>
 #include <iostream>
-#include "viewstructure.h"
-#include "vpfilereader.h"
+//#include "vpfilereader.h"
 #include "vptriangle.h"
-
-using namespace std;
-
 
 
 namespace vpUtils {
@@ -16,24 +12,24 @@ namespace vpUtils {
     
   double euclideanDistance (std::vector<double> A, std::vector<double> B);
 
-  void printVector( vector<int> v);
+  void printVector( std::vector<int> v);
   
-  void printVector( vector<float> v);
+  void printVector( std::vector<float> v);
   
-  void printVector( vector<double> v);
+  void printVector( std::vector<double> v);
 
-  bool utilsAreBoolVectorsEqual(vector<bool> A, vector<bool> B);
+  bool utilsAreBoolVectorsEqual(std::vector<bool> A, std::vector<bool> B);
 
-  void utilsGetActivatedMotors(vector<int> u, vector<bool> &activations);
+  void utilsGetActivatedMotors(std::vector<int> u, std::vector<bool> &activations);
 
-  int applyIncrement(const vector<int> &q_t, const vector<int> &control, vector<int> &q_tmas1);
+  int applyIncrement(const std::vector<int> &q_t, const std::vector<int> &control, std::vector<int> &q_tmas1);
 
-  bool raw2triangles(const string file_raw, const string file_tri);
+  bool raw2triangles(const std::string file_raw, const std::string file_tri);
   
-  bool saveCoordinatesAsVRML( vector<vector<double> > data, string file_name);
+  bool saveCoordinatesAsVRML( std::vector< std::vector<double> > data, std::string file_name);
   
   /**
    * Reads the files and return the percentage of matched points based on the reference file
    */
-  double compareFilePoints(string file_target, string file_reference, double gap);
+  double compareFilePoints(std::string file_target, std::string file_reference, double gap);
 }

@@ -29,13 +29,13 @@
 
 using namespace std;
 
-class EvaluationResultVector : public vector<EvaluationResult>
+class EvaluationResultVector : public std::vector<EvaluationResult>
 {
 
 public:
 EvaluationResultVector();
 
-void saveVector(string file_name);
+void saveVector(std::string file_name);
   
 };
 

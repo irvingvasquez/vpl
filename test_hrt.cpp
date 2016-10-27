@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
   } 
     
   string main_folder(argv[1]);
-    //cout << main_folder << endl;
+    //cout << main_folder << std::endl;
     //exit(0);
     
   string config_folder(main_folder);
@@ -74,15 +74,15 @@ int main(int argc, char **argv) {
   //octree.loadPartialModel(pm_fn);
   //hrt_octree.loadPartialModel(pm_fn);
   
-  ofstream myfile ("example.txt");
+ std::ofstream myfile ("example.txt");
   if (!myfile.is_open())
   {
-    cout << "unable to opel log file" << endl;
+    std::cout << "unable to opel log file" << std::endl;
     return 0;
   }
   
-  myfile << "--------- Octree ------------  HRT Octree ----------- " << endl;
-  myfile << "unknown \toccupied \ttime \tunknown \toccupied \ttime" << endl;
+  myfile << "--------- Octree ------------  HRT Octree ----------- " << std::endl;
+  myfile << "unknown \toccupied \ttime \tunknown \toccupied \ttime" << std::endl;
   
   // insert scans
   int n_scans = 1;
@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
     if ( !boost::filesystem::exists( filename_scan.c_str() ) )
     {
       std::cout << "There are no more scans to read." << std::endl;
-      std::cout << "Looking for: " << filename_scan << endl;
+      std::cout << "Looking for: " << filename_scan << std::endl;
       return 0;
     }
     
@@ -131,7 +131,7 @@ int main(int argc, char **argv) {
       t1 = (double) (ends - start) / CLOCKS_PER_SEC;
       
       if(rsl==FEASIBLE_VIEW && v.n_unmark > 16){
-	cout << "Octree evaluation: Unknown " << v.n_unmark << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t1 << endl;
+	cout << "Octree evaluation: Unknown " << v.n_unmark << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t1 << std::endl;
 	myfile << v.n_unmark << "\t" << v.n_occupied << "\t" << t1 ;
 	
 	start = clock();
@@ -141,9 +141,9 @@ int main(int argc, char **argv) {
 	t2 = (double) (ends - start) / CLOCKS_PER_SEC ;
 	
 	if(rsl==FEASIBLE_VIEW)
-	  cout << "HRT Octree evaluation. Unknown " << v.n_unmark << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t2  << endl;
+	  std::cout << "HRT Octree evaluation. Unknown " << v.n_unmark << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t2  << std::endl;
 	else
-	  cout << "Unfeasible view.  Unknown " << v.n_unmark << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t2 << endl;
+	  std::cout << "Unfeasible view.  Unknown " << v.n_unmark << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t2 << std::endl;
 	
 	myfile  << "\t" << v.n_unmark << "\t" << v.n_occupied << "\t" << t2;
 	
@@ -153,12 +153,12 @@ int main(int argc, char **argv) {
 	
 	double t3 = (double) (ends - start) / CLOCKS_PER_SEC ;
 	
-	cout << "IG: " << v.eval << "\t time " << t3 << endl;
+	cout << "IG: " << v.eval << "\t time " << t3 << std::endl;
 	
-	myfile  << "\t" << v.eval << "\t" << t3 << endl;
+	myfile  << "\t" << v.eval << "\t" << t3 << std::endl;
 	
 	cout << "\n" ;
-	//cout << "Continue press any key" << endl;
+	//cout << "Continue press any key" << std::endl;
 	//getchar();
       }
     }

@@ -45,7 +45,7 @@ bool PMVOctree::init()
 {  
   PMVolumetric::init();
   
-  cout << "---------------- Octree -------------------" << endl;
+  std::cout << "---------------- Octree -------------------" << std::endl;
   
   //map = new octomap::ColorOcTree(voxelResolution);
   map = new COctreeVPL(voxelResolution);
@@ -73,7 +73,7 @@ bool PMVOctree::init()
   y_cap_2 += 2* voxelResolution;
   z_cap_2 += 2* voxelResolution;
   
-  cout << "-------------------------------------------" << endl;
+  std::cout << "-------------------------------------------" << std::endl;
 }
 
 
@@ -92,7 +92,7 @@ void PMVOctree::insertFreeSpace(double x1, double y1, double z1, double x2, doub
   if(z1>z2)
     return;
   
-  cout << "Inserting free space.." << endl;
+  std::cout << "Inserting free space.." << std::endl;
   
   float resolution;
   int nx, ny, nz;
@@ -240,7 +240,7 @@ bool PMVOctree::rayTracingHTM(boost::numeric::ublas::matrix< double > m, Evaluat
   // Funcion revisada! ok!
   double i_ray,j_ray,k_ray;
   
-  vector< boost::numeric::ublas::matrix<double> >::iterator it;
+  std::vector< boost::numeric::ublas::matrix<double> >::iterator it;
   BoostMatrix rotated_ray;
   BoostMatrix cero_origin(4,1);
   cero_origin(0,0) = 0;
@@ -259,13 +259,13 @@ bool PMVOctree::rayTracingHTM(boost::numeric::ublas::matrix< double > m, Evaluat
   //compute origin
   rotated_origin = boost::numeric::ublas::prod(m, cero_origin);
   octomap::point3d origin(rotated_origin(0,0), rotated_origin(1,0), rotated_origin(2,0));
-  //cout << "origin: " << endl << origin << endl;
+  //cout << "origin: " << std::endl << origin << std::endl;
   
   // check for collision
   origin_node = map->search(origin);
   if(origin_node == NULL){
-    //cout << "Origin not found. It could be in a unknown part" << endl;
-    //cout << origin.x() << " " << origin.y() << " " << origin.z() << endl;
+    //cout << "Origin not found. It could be in a unknown part" << std::endl;
+    //cout << origin.x() << " " << origin.y() << " " << origin.z() << std::endl;
     return false;
   }
   
@@ -273,13 +273,13 @@ bool PMVOctree::rayTracingHTM(boost::numeric::ublas::matrix< double > m, Evaluat
      /// The ray is rotated and traslated by the rotation matrix
      ray = *it;
      rotated_ray = boost::numeric::ublas::prod(m, ray);
-     //cout << "rotated_ray: " << rotated_ray(0,0) << " " <<  rotated_ray(1,0) << " " << rotated_ray(2,0) << endl;
+     //cout << "rotated_ray: " << rotated_ray(0,0) << " " <<  rotated_ray(1,0) << " " << rotated_ray(2,0) << std::endl;
      
      //compute direction from position to the rotated ray. This is necesary because the rotated ray was also trasladated by the rotation matrix
      computeRayFromPointToPoint(rotated_origin , rotated_ray, i_ray, j_ray, k_ray);
      
      direction = new octomap::point3d(i_ray, j_ray, k_ray);
-     //cout << "direction: " << direction->x() << " " << direction->y() << " " << direction->z() << endl;
+     //cout << "direction: " << direction->x() << " " << direction->y() << " " << direction->z() << std::endl;
      
      // if the casted ray returns true a occupied voxel was hit
      int answer = map->castRayVPL(origin, *direction, touched_position); 
@@ -311,9 +311,9 @@ bool PMVOctree::rayTracingHTM(boost::numeric::ublas::matrix< double > m, Evaluat
      
      delete direction;
   }
-//  cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
+//  std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
 // 		    << " Unk:" << result.n_unmark <<  " Unk_sce:" << result.n_unmark_scene 
-// 		    << " lost:" << result.n_lost << endl;
+// 		    << " lost:" << result.n_lost << std::endl;
 
   //map->write("octree_painted.ot");
   map->cleanTouchedVoxels();
@@ -321,11 +321,11 @@ bool PMVOctree::rayTracingHTM(boost::numeric::ublas::matrix< double > m, Evaluat
 }
 
 
-long int PMVOctree::readRays(string file_address)
+long int PMVOctree::readRays(std::string file_address)
 {
   rays.clear();
   
-  cout << "Reading rays...." << endl;
+  std::cout << "Reading rays...." << std::endl;
   double x_r, y_r, z_r;
   long int n_rays;
   long int readed_rays = 0;
@@ -354,27 +354,27 @@ long int PMVOctree::readRays(string file_address)
     }
     file.close();
   } else {
-    cout << "Unable to open file " << file_address.c_str() << endl;
+    std::cout << "Unable to open file " << file_address.c_str() << std::endl;
     return -1;
   }
   
-  //cout << "done." << endl;
-  cout << "Readed rays: "<< readed_rays << endl;
+  //cout << "done." << std::endl;
+  std::cout << "Readed rays: "<< readed_rays << std::endl;
   
   return readed_rays;
 }
 
 
-bool PMVOctree::savePartialModel(string file_name)
+bool PMVOctree::savePartialModel(std::string file_name)
 { 
   vpFileReader reader;
   
   if (map->size() == 0){
-    cout << "Octree empty" << endl;
+    std::cout << "Octree empty" << std::endl;
     return false;
   }
   
-  cout << "Writing to " << file_name.c_str() << endl;
+  std::cout << "Writing to " << file_name.c_str() << std::endl;
   
   if(!map->write(file_name.c_str())){
     return false;
@@ -398,9 +398,9 @@ bool PMVOctree::savePartialModel(string file_name)
   
   
   Pointcloud::iterator it;
-  vector< vector<double> > vec_pc;
+  std::vector< std::vector<double> > vec_pc;
   for (it = objectPointCloud.begin(); it!= objectPointCloud.end(); it++){
-    vector<double> vec(3);
+    std::vector<double> vec(3);
     vec[0] = it->x();
     vec[1] = it->y();
     vec[2] = it->z();
@@ -421,7 +421,7 @@ bool PMVOctree::savePartialModel(string file_name)
 }
 
 
-bool PMVOctree::loadPartialModel(string file_name)
+bool PMVOctree::loadPartialModel(std::string file_name)
 {
   if(map!= NULL)
     delete map;
@@ -430,11 +430,11 @@ bool PMVOctree::loadPartialModel(string file_name)
   map = dynamic_cast<COctreeVPL*>(tree);
   
   /*
-  cout << "Reading file: " << file_name << endl; 
+  std::cout << "Reading file: " << file_name << std::endl; 
   AbstractOcTree* readTreeAbstract;
   readTreeAbstract = AbstractOcTree::read(file_name);
   //EXPECT_TRUE(readTreeAbstract);
-  cout << "Readed: " << readTreeAbstract->getTreeType() << endl;
+  std::cout << "Readed: " << readTreeAbstract->getTreeType() << std::endl;
   //EXPECT_EQ(colorTree.getTreeType(),  readTreeAbstract->getTreeType());
   ColorOcTree* readColorTree = dynamic_cast<ColorOcTree*>(readTreeAbstract);
  
@@ -451,9 +451,9 @@ bool PMVOctree::loadPartialModel(string file_name)
 }
 
 
-float PMVOctree::updateWithScan(string file_name_scan, string file_name_origin)
+float PMVOctree::updateWithScan(std::string file_name_scan, string file_name_origin)
 {
-  cout << "Updating octree with scan." << endl;
+  std::cout << "Updating octree with scan." << std::endl;
   
   if (!readPointCloudFromDAT(file_name_scan, *scanCloud))
     return -1;
@@ -490,7 +490,7 @@ float PMVOctree::updateWithScan(string file_name_scan, string file_name_origin)
 int PMVOctree::evaluateView(ViewStructure& v)
 {
   if(!poitsToTheObject(v)){
-    //cout << "Sorry no points :(" << endl;
+    //cout << "Sorry no points :(" << std::endl;
     return UNFEASIBLE_VIEW;
   }
   
@@ -523,11 +523,11 @@ void PMVOctree::evaluateCandidateViews()
   EvaluationResult result;
   int i =0;
   
-  cout << "Evaluating candidate views with octree." << endl;
+  std::cout << "Evaluating candidate views with octree." << std::endl;
   
   
   if(rays.size() ==0){
-    cout << "rays have not been readed" << endl;
+    std::cout << "rays have not been readed" << std::endl;
     return;
   }
   
@@ -554,13 +554,13 @@ void PMVOctree::evaluateCandidateViews()
       /// Evaluate the result of the raytracing
       if( this->utilityFunction->evaluate(result) == UNFEASIBLE_VIEW){
 	it_v = candidateViews.erase(it_v);
-	cout << "Unfeasible view" << endl;
+	cout << "Unfeasible view" << std::endl;
 	removed_views ++;
       } else {
 	if(result.n_unmark > minUnknown)
 	  stopCriteria = false;
 	
-	cout << "Evaluation " << i << ": " << result.evaluation << endl;
+	cout << "Evaluation " << i << ": " << result.evaluation << std::endl;
 	it_v->eval = result.evaluation;
 	it_v ++;
       }
@@ -572,7 +572,7 @@ void PMVOctree::evaluateCandidateViews()
     }
   }
   
-  cout << "Removed views: " << removed_views << endl;
+  std::cout << "Removed views: " << removed_views << std::endl;
 }
 
 
@@ -582,7 +582,7 @@ void PMVOctree::setUtilityFunction(VolumetricUtilityFunction* uf)
 }
 
 
-void PMVOctree::saveObjectAsRawT(string file_name)
+void PMVOctree::saveObjectAsRawT(std::string file_name)
 {
   //point3d_list occ_centers;
   //map->getOccupiedLeafsBBX(occ_centers, ObjectBBxMin, ObjectBBxMax);
@@ -592,14 +592,14 @@ void PMVOctree::saveObjectAsRawT(string file_name)
 }
 
 
-void PMVOctree::saveObjectAsObst(string file_name)
+void PMVOctree::saveObjectAsObst(std::string file_name)
 {
   vpTriangleList triangles;
   getOccupiedTriangles(triangles);
   triangles.saveToMSLTriangle(file_name);
 }
 
-bool PMVOctree::saveUnknownVolumeAsObst(string file_name)
+bool PMVOctree::saveUnknownVolumeAsObst(std::string file_name)
 {
   vpTriangleList triangles;
   getUnknownTriangles(triangles);
@@ -607,7 +607,7 @@ bool PMVOctree::saveUnknownVolumeAsObst(string file_name)
 }
 
 
-bool PMVOctree::saveUnknownVolumeAsRawT(string file_name)
+bool PMVOctree::saveUnknownVolumeAsRawT(std::string file_name)
 {
   vpTriangleList triangles;
   getUnknownTriangles(triangles);
@@ -616,7 +616,7 @@ bool PMVOctree::saveUnknownVolumeAsRawT(string file_name)
 
 
 
-bool PMVOctree::saveObstacle(string file_name)
+bool PMVOctree::saveObstacle(std::string file_name)
 {
   vpTriangleList triangles;
   
@@ -686,7 +686,7 @@ double PMVOctree::getUnknownVolume()
   double accumulated_volume = 0;
   
   for(it = sizes.begin(); it != sizes.end(); it++){
-    //cout << "voxel size:" << *it << endl;
+    //cout << "voxel size:" << *it << std::endl;
     vol = pow(*it,3);
     accumulated_volume = accumulated_volume + vol;
   }

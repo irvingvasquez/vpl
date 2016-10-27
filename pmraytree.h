@@ -35,7 +35,7 @@
 
 using namespace std;
 
-typedef vector< boost::numeric::ublas::matrix<double> > RaysVector;
+typedef std::vector< boost::numeric::ublas::matrix<double> > RaysVector;
 
 typedef std::list< std::list<pmRayNode>::pointer > RayNodePtr_List;
 
@@ -51,20 +51,20 @@ void setAbstractionLevel(int level);
 /** 
  * Establishes the folder where the files of rays are
  */
-// void setFolder(string folder);
+// void setFolder(std::string folder);
 
 /**
  * file_rays must name the first resolution, for example rays_kinect_0.dat 
  * It is very important that the file ends with "_0.dat"
  * Then the function automatically will search for rays_kinect_1.dat
  */
-void rtGenerateRaysTree(string file_rays);
+void rtGenerateRaysTree(std::string file_rays);
 
 void rtTraverseWithInfo();
 
 //list<pmRayNode>::pointer getRootPtr();
 
-//pmRayNode getNodeFromPtr(list<pmRayNode>::pointer ptr);
+//pmRayNode getNodeFromPtr(std::list<pmRayNode>::pointer ptr);
 
 protected:
 
@@ -73,7 +73,7 @@ protected:
  * Clears the tree
  * Returns a list of pointers to the created leafs
  */
-void rtAddLeafsToTree( vector< boost::numeric::ublas::matrix<double> > & R, std::list< std::list<pmRayNode>::pointer > & leafsPtrList);
+void rtAddLeafsToTree( std::vector< boost::numeric::ublas::matrix<double> > & R, std::list< std::list<pmRayNode>::pointer > & leafsPtrList);
 
 void rtAddNodesToTree( RaysVector &R,  RayNodePtr_List &node_ptr_list);
 
@@ -90,7 +90,7 @@ void rtLinkChildrenWithParents(RayNodePtr_List children, RayNodePtr_List parents
 list<pmRayNode>::pointer rtGetNearestRay(std::list<pmRayNode>::pointer node_ptr, RayNodePtr_List node_ptr_list);
 
 
-bool rtReadRays(string file_name, vector< boost::numeric::ublas::matrix<double> > &R);   
+bool rtReadRays(std::string file_name, std::vector< boost::numeric::ublas::matrix<double> > &R);   
 
 private:
    bool rtHasRoot;
@@ -98,13 +98,13 @@ private:
    
    int abstractionLevel;
    
-   list<pmRayNode> rtRaysTree;
-   list<pmRayNode>::pointer rtRootPtr;
+   std::list<pmRayNode> rtRaysTree;
+   std::list<pmRayNode>::pointer rtRootPtr;
    
    /**
     * Gets the name of a rays file for a given abstraction level 
     */
-   string rtGetNameForRaysFile(string filename_cero, int level);
+   string rtGetNameForRaysFile(std::string filename_cero, int level);
 };
 
 #endif // PMRAYTREE_H

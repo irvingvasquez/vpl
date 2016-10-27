@@ -33,12 +33,12 @@ vpTriangle::vpTriangle(vpVertex v1, vpVertex v2, vpVertex v3)
 
 
 
-bool vpTriangleList::saveToMSLTriangle(string file_name)
+bool vpTriangleList::saveToMSLTriangle(std::string file_name)
 {
-  ofstream file;
+ std::ofstream file;
   vpTriangleList::iterator triangle_it;
   
-  cout << "Saving data..." << endl;
+  std::cout << "Saving data..." << std::endl;
   file.open(file_name.c_str());
   
   if(file.is_open()){
@@ -57,7 +57,7 @@ bool vpTriangleList::saveToMSLTriangle(string file_name)
       file << triangle_it->c.x << ", " << triangle_it->c.y << ", " << triangle_it->c.z;
       file << ")" ;
       
-      file << endl;
+      file << std::endl;
       triangle_it ++;
       
     }
@@ -73,12 +73,12 @@ bool vpTriangleList::saveToMSLTriangle(string file_name)
 }
 
 
-bool vpTriangleList::saveToFile(string file_name)
+bool vpTriangleList::saveToFile(std::string file_name)
 {
-  ofstream file;
+ std::ofstream file;
   vpTriangleList::iterator triangle_it;
   
-  cout << "Saving data..." << endl;
+  std::cout << "Saving data..." << std::endl;
   file.open(file_name.c_str());
   
   if(file.is_open()){
@@ -91,7 +91,7 @@ bool vpTriangleList::saveToFile(string file_name)
 
       file << triangle_it->c.x << " " << triangle_it->c.y << " " << triangle_it->c.z;
       
-      file << endl;
+      file << std::endl;
       triangle_it ++;
       
     }
@@ -108,13 +108,13 @@ bool vpTriangleList::saveToFile(string file_name)
 
 
 
-bool vpTriangleList::readFile(string file_name)
+bool vpTriangleList::readFile(std::string file_name)
 {  
   double value;
   double x,y,z;
   vpVertex a,b,c;
   
-  ifstream file(file_name.c_str());
+  std::ifstream file(file_name.c_str());
   
   if(file.is_open()){
     //TODO: verify when the file it is good, is it loading the right number of points?
@@ -146,7 +146,7 @@ bool vpTriangleList::readFile(string file_name)
     file.close();
     return true;
   } else {
-    cout << "Unable to open file" << endl;
+    std::cout << "Unable to open file" << std::endl;
     return false;
   }
 }

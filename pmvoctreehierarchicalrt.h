@@ -33,7 +33,7 @@
 
 #include "volumetricutilityfunction.h"
 
-typedef vector< boost::numeric::ublas::matrix<double> > RaysVector;
+typedef std::vector< boost::numeric::ublas::matrix<double> > RaysVector;
 
 typedef std::list< std::list<pmRayNode>::pointer > RayNodePtr_List;
 
@@ -60,7 +60,7 @@ public:
   
   virtual bool init();
   
-  virtual long int readRays(string file_address);
+  virtual long int readRays(std::string file_address);
     
   virtual void evaluateCandidateViews();
   
@@ -78,10 +78,10 @@ protected:
   bool rtHasRoot;
   
   /// Tree of rays. Structure used to perform rays tracing
-  list<pmRayNode> rtRaysTree;
+  std::list<pmRayNode> rtRaysTree;
   
   /// Pointer to the root of the rays tree
-  list<pmRayNode>::pointer rtRootPtr;
+  std::list<pmRayNode>::pointer rtRootPtr;
   
  
   /// Control members
@@ -96,7 +96,7 @@ protected:
    * @param m [in] Homogenous transformation matrix. It will be applied to the sensor model
    */ 
   bool hierarchicalRayTracing(BoostMatrix m,
-			      list<pmRayNode>::pointer root_ray_ptr, 
+			      std::list<pmRayNode>::pointer root_ray_ptr, 
 			      int depth,
 			      EvaluationResult &result);
   
@@ -105,7 +105,7 @@ protected:
    * used by hierarchicalRayTracing
   */
   bool recursiveHRayTracing( BoostMatrix m,
-			     list<pmRayNode>::pointer root_ray_ptr, 
+			     std::list<pmRayNode>::pointer root_ray_ptr, 
 			     int depth,
 			     EvaluationResult &result); 
   
@@ -124,7 +124,7 @@ protected:
     * It is very important that the file ends with "_0.dat"
     * Then the function automatically will search for rays_kinect_1.dat
     */
-  virtual void rtGenerateRaysTree(string file_rays);
+  virtual void rtGenerateRaysTree(std::string file_rays);
   
   /**
    * Traverse the rays tree and shows info about each node
@@ -157,14 +157,14 @@ protected:
    * Returns a pointer to the finded ray.
     * We are assuming that the rays are normalized.
     */
-  list<pmRayNode>::pointer rtGetNearestRay(std::list<pmRayNode>::pointer node_ptr, RayNodePtr_List node_ptr_list);
+  std::list<pmRayNode>::pointer rtGetNearestRay(std::list<pmRayNode>::pointer node_ptr, RayNodePtr_List node_ptr_list);
   
-  bool rtReadRays(string file_name, vector< boost::numeric::ublas::matrix<double> > &R);  
+  bool rtReadRays(std::string file_name, std::vector< boost::numeric::ublas::matrix<double> > &R);  
   
   /**
    * Gets the name of a rays file for a given abstraction level 
    */
-  string rtGetNameForRaysFile(string filename_cero, int level);
+  string rtGetNameForRaysFile(std::string filename_cero, int level);
   
   
 //   int castRayAtAbstractionLevel(BoostMatrix m,

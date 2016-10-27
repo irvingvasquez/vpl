@@ -28,7 +28,6 @@
 #include "vpvertex.h"
 #include "vpfilereader.h"
 
-using namespace std;
 
 class vpTriangle
 {
@@ -51,14 +50,14 @@ public:
   /** 
    * Save to raw File
    */
-  bool saveToFile(string file_name);
+  bool saveToFile(std::string file_name);
   
-  bool saveToMSLTriangle(string file_name);
+  bool saveToMSLTriangle(std::string file_name);
   
   /**
    * Reads a raw triangle file
    */
-  bool readFile(string file_name);
+  bool readFile(std::string file_name);
   
 };
 

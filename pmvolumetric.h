@@ -106,7 +106,7 @@ public:
   
   
 protected:
-  vector<point3d> touched_voxels;
+  std::vector<point3d> touched_voxels;
   
   ///Object Bounding Box
   octomap::point3d ObjectBBxMin;

@@ -28,10 +28,6 @@
 #include <iostream>
 #include <fstream>
 
-#include <string.h>
-
-using namespace std;
-
 
 class vpFileReader
 {
@@ -43,7 +39,7 @@ virtual ~vpFileReader();
 /**
  * Read all int number from a file
  */
-bool readInt(string file_name, vector<int> &data);
+bool readInt(std::string file_name, std::vector<int> &data);
 
 
 /**
@@ -51,14 +47,14 @@ bool readInt(string file_name, vector<int> &data);
  */ 
 template <typename Tipo>
 bool readSingleValue(Tipo &value, std::string file_name){ 
-  ifstream file(file_name.c_str());
+  std::ifstream file(file_name.c_str());
   if(file.is_open()){
     file >> value;
     
     file.close();
     return true;
   } else {
-    cout << "Unable to open file " << file_name.c_str() << endl;
+    std::cout << "Unable to open file " << file_name.c_str() << std::endl;
     return false;
   }
 }
@@ -69,12 +65,12 @@ bool readSingleValue(Tipo &value, std::string file_name){
  * 
  */
 template <typename TipoDato>
-bool readMSLVector(vector<TipoDato> &data, string file_name)
+bool readMSLVector(std::vector<TipoDato> &data, std::string file_name)
 {
   TipoDato value;
   int Elements;
   
-  ifstream file(file_name.c_str());
+  std::ifstream file(file_name.c_str());
   
   if(file.is_open()){
     file >> Elements;
@@ -85,7 +81,7 @@ bool readMSLVector(vector<TipoDato> &data, string file_name)
     file.close();
     return true;
   } else {
-    cout << "Unable to open file " << file_name.c_str() << endl;
+    std::cout << "Unable to open file " << file_name.c_str() << std::endl;
     return false;
   }
 }
@@ -95,13 +91,13 @@ bool readMSLVector(vector<TipoDato> &data, string file_name)
  * 
  */
 template <typename TipoDato>
-bool readMSLListVector(std::list < vector<TipoDato> > &data, string file_name)
+bool readMSLListVector(std::list < std::vector<TipoDato> > &data, std::string file_name)
 {
   TipoDato value;
   int Elements;
   std::vector<TipoDato> vec;
   
-  ifstream file(file_name.c_str());
+  std::ifstream file(file_name.c_str());
   
   if(file.is_open()){
     while(file >> Elements){
@@ -117,10 +113,10 @@ bool readMSLListVector(std::list < vector<TipoDato> > &data, string file_name)
     }
     
     file.close();
-    cout << "File readed, " << data.size() << " vectors loaded" << endl;
+    std::cout << "File readed, " << data.size() << " vectors loaded" << std::endl;
     return true;
   } else {
-    cout << "Unable to open file " << file_name.c_str() << endl;
+    std::cout << "Unable to open file " << file_name.c_str() << std::endl;
     return false;
   }
 }
@@ -130,11 +126,11 @@ bool readMSLListVector(std::list < vector<TipoDato> > &data, string file_name)
  * Saves a list of T type vectors in MSL format
  */
 template <typename T>
-bool saveToMSLListVector(std::list< vector<T> > data, string file_name, bool append=false){
-  ofstream file;
+bool saveToMSLListVector(std::list< std::vector<T> > data, std::string file_name, bool append=false){
+  std::ofstream file;
   
   if(append){
-    file.open(file_name.c_str(),ios_base::app);
+    file.open(file_name.c_str(),std::ios_base::app);
   }else {
     file.open(file_name.c_str());
   }
@@ -152,14 +148,14 @@ bool saveToMSLListVector(std::list< vector<T> > data, string file_name, bool app
       for(int i = 0; i<vec_size; i++){
 	file << " " << (*it_lista)[i] ;
       }
-      file << endl;
+      file << std::endl;
       it_lista ++;
     }
     
     file.close();
     return true;
   } else {
-    cout << "Unable to open file " << file_name.c_str() << endl;
+    std::cout << "Unable to open file " << file_name.c_str() << std::endl;
     return false;
   }
 }
@@ -169,11 +165,11 @@ bool saveToMSLListVector(std::list< vector<T> > data, string file_name, bool app
  * Saves a vector of vectors
  */
 template <typename T>
-bool saveVectorOfVectors(std::vector< vector<T> > data, string file_name, bool append=false){
-  ofstream file;
+bool saveVectorOfVectors(std::vector< std::vector<T> > data, std::string file_name, bool append=false){
+  std::ofstream file;
   
   if(append){
-    file.open(file_name.c_str(),ios_base::app);
+    file.open(file_name.c_str(),std::ios_base::app);
   }else {
     file.open(file_name.c_str());
   }
@@ -191,14 +187,14 @@ bool saveVectorOfVectors(std::vector< vector<T> > data, string file_name, bool a
       for(int i = 0; i<vec_size; i++){
 	file << (*it_lista)[i] << " "  ;
       }
-      file << endl;
+      file << std::endl;
       it_lista ++;
     }
     
     file.close();
     return true;
   } else {
-    cout << "Unable to open file " << file_name.c_str() << endl;
+    std::cout << "Unable to open file " << file_name.c_str() << std::endl;
     return false;
   }
 }
@@ -208,12 +204,12 @@ bool saveVectorOfVectors(std::vector< vector<T> > data, string file_name, bool a
  *  Saves a vector in MSL format
  */
 template <typename TipoDato>
-bool saveToMSLVector(vector<TipoDato> &data, string file_name, bool append= false)
+bool saveToMSLVector(std::vector<TipoDato> &data, std::string file_name, bool append= false)
 {
-  ofstream file;
+  std::ofstream file;
   
   if(append){
-    file.open(file_name.c_str(),ios_base::app);
+    file.open(file_name.c_str(),std::ios_base::app);
   }else {
     file.open(file_name.c_str());
   }
@@ -229,12 +225,12 @@ bool saveToMSLVector(vector<TipoDato> &data, string file_name, bool append= fals
 	i++;
     }
     
-    file << endl;
+    file << std::endl;
     
     file.close();
     return true;
   } else {
-    cout << "Unable to open file " << file_name.c_str() << endl;
+    std::cout << "Unable to open file " << file_name.c_str() << std::endl;
     return false;
   }
 }
@@ -244,38 +240,38 @@ bool saveToMSLVector(vector<TipoDato> &data, string file_name, bool append= fals
 /**
  * Reads all double numbers from a file
  */
-bool readDouble(string file_name, vector<double> &data);
+bool readDouble(std::string file_name, std::vector<double> &data);
 
-bool readDoubleCoordFromPCD(string file_name, vector< vector<double> > &data, string &header);
+bool readDoubleCoordFromPCD(std::string file_name, std::vector< std::vector<double> > &data, std::string &header);
 
 /**
  * Reads all double coordinates.
  */
-bool readDoubleCoordinates(string file_name, vector< vector<double> > &data);
+bool readDoubleCoordinates(std::string file_name, std::vector< std::vector<double> > &data);
 
-bool saveDoubleCoordinates(string file_name, vector< vector<double> > &data);
-
-
-bool readDoubleCoordinatesComa(string file_name, vector< vector<double> > &data);
-
-bool readDoubleCoordinatesFromWRL(string file_name, vector< vector< double> > &data);
-
-bool saveDoubleCoordinatesAsPCD(string file_name, vector< vector<double> > &data);
+bool saveDoubleCoordinates(std::string file_name, std::vector< std::vector<double> > &data);
 
 
-bool saveDoubleCoordinatesAsOBJ(string file_name, vector< vector<double> > &data);
+bool readDoubleCoordinatesComa(std::string file_name, std::vector< std::vector<double> > &data);
+
+bool readDoubleCoordinatesFromWRL(std::string file_name, std::vector< std::vector< double> > &data);
+
+bool saveDoubleCoordinatesAsPCD(std::string file_name, std::vector< std::vector<double> > &data);
+
+
+bool saveDoubleCoordinatesAsOBJ(std::string file_name, std::vector< std::vector<double> > &data);
 
 
 /**
  * 
  */
 template <typename TipoDato>
-bool saveVector(vector<TipoDato> &data, string file_name, bool append= false)
+bool saveVector(std::vector<TipoDato> &data, std::string file_name, bool append= false)
 {
-  ofstream file;
+  std::ofstream file;
   
   if(append){
-    file.open(file_name.c_str(),ios_base::app);
+    file.open(file_name.c_str(),std::ios_base::app);
   }else {
     file.open(file_name.c_str());
   }
@@ -292,7 +288,7 @@ bool saveVector(vector<TipoDato> &data, string file_name, bool append= false)
     file.close();
     return true;
   } else {
-    cout << "Unable to save file " << file_name.c_str() << endl;
+    std::cout << "Unable to save file " << file_name.c_str() << std::endl;
     return false;
   }
 }
@@ -302,12 +298,12 @@ bool saveVector(vector<TipoDato> &data, string file_name, bool append= false)
  * Saves a data to a text file,
  */
 template <typename TipoDato>
-bool saveData2Text(TipoDato data, string file_name, bool append= false, char separator  = ' ')
+bool saveData2Text(TipoDato data, std::string file_name, bool append= false, char separator  = ' ')
 {
-  ofstream file;
+  std::ofstream file;
   
   if(append){
-    file.open(file_name.c_str(),ios_base::app);
+    file.open(file_name.c_str(),std::ios_base::app);
   }else {
     file.open(file_name.c_str());
   }
@@ -319,7 +315,7 @@ bool saveData2Text(TipoDato data, string file_name, bool append= false, char sep
     file.close();
     return true;
   } else {
-    cout << "Unable to save file " << file_name.c_str() << endl;
+    std::cout << "Unable to save file " << file_name.c_str() << std::endl;
     return false;
   }
 }
@@ -327,7 +323,7 @@ bool saveData2Text(TipoDato data, string file_name, bool append= false, char sep
 
 private:
   
-bool readLineCoordinatesfromPCD(string file_name, vector<double> &data, string &header);
+bool readLineCoordinatesfromPCD(std::string file_name, std::vector<double> &data, std::string &header);
   
 };
 

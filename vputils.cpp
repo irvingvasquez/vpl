@@ -1,7 +1,7 @@
 #include "vputils.h"
 
 
-bool vpUtils::raw2triangles(const string file_raw, const string file_tri)
+bool vpUtils::raw2triangles(const std::string file_raw, const std::string file_tri)
 {
   vpTriangleList tl;
   
@@ -12,9 +12,9 @@ bool vpUtils::raw2triangles(const string file_raw, const string file_tri)
 }
 
 
-bool vpUtils::saveCoordinatesAsVRML(vector< std::vector< double > > data, string file_name)
+bool vpUtils::saveCoordinatesAsVRML(std::vector< std::vector<double> > data, std::string file_name)
 {
-  vector<vector<double> >::iterator it;
+  std::vector< std::vector<double> >::iterator it;
   octomap::Pointcloud pc;
   
   for(it = data.begin(); it!= data.end(); it++){
@@ -30,8 +30,8 @@ bool vpUtils::saveCoordinatesAsVRML(vector< std::vector< double > > data, string
 
 double vpUtils::euclideanDistance(std::vector< int > A, std::vector< int > B)
 {
-   vector<int>::iterator ita;
-   vector<int>::iterator itb;
+   std::vector<int>::iterator ita;
+   std::vector<int>::iterator itb;
    
    double sum = 0.0;
    double distance =  0.0;
@@ -54,8 +54,8 @@ double vpUtils::euclideanDistance(std::vector< int > A, std::vector< int > B)
 
 double vpUtils::euclideanDistance(std::vector< double > A, std::vector< double > B)
 {
-   vector<double>::iterator ita;
-   vector<double>::iterator itb;
+   std::vector<double>::iterator ita;
+   std::vector<double>::iterator itb;
    
    double sum = 0.0;
    double distance =  0.0;
@@ -78,29 +78,29 @@ double vpUtils::euclideanDistance(std::vector< double > A, std::vector< double >
 
 void vpUtils::printVector(std::vector< int > v)
 {
-  vector<int>::iterator it;
+  std::vector<int>::iterator it;
   for(it = v.begin(); it!= v.end(); it++){
     std::cout << " " << *it;
   }
-  cout << endl;
+  std::cout <<std::endl;
 }
 
 void vpUtils::printVector(std::vector< float > v)
 {
-  vector<float>::iterator it;
+  std::vector<float>::iterator it;
   for(it = v.begin(); it!= v.end(); it++){
     std::cout << " " << *it;
   }
-  cout << endl;
+  std::cout << std::endl;
 }
 
 void vpUtils::printVector(std::vector< double > v)
 {
-  vector<double>::iterator it;
+  std::vector<double>::iterator it;
   for(it = v.begin(); it!= v.end(); it++){
     std::cout << " " << *it;
   }
-  cout << endl;
+  std::cout << std::endl;
 }
 
 
@@ -125,11 +125,11 @@ bool vpUtils::utilsAreBoolVectorsEqual(std::vector< bool > A, std::vector< bool 
 }
 
 
-void vpUtils::utilsGetActivatedMotors(std::vector< int > u, std::vector< bool > &activations)
+void vpUtils::utilsGetActivatedMotors(std::vector< int > u, std::vector< bool >& activations)
 {
   activations.clear();
 //  activations.resize(u.size());
-  vector<int>::iterator it;
+  std::vector<int>::iterator it;
   bool value;
   
   for(it=u.begin(); it!=u.end(); it++){
@@ -143,7 +143,7 @@ void vpUtils::utilsGetActivatedMotors(std::vector< int > u, std::vector< bool > 
     }
   }
   
-  //cout << activations.size() << endl;
+  //cout << activations.size() <<std::endl;
 }
 
 
@@ -164,20 +164,20 @@ int vpUtils::applyIncrement(const std::vector< int >& q_t, const std::vector< in
 }
 
 
-double vpUtils::compareFilePoints(string file_target, string file_reference, double gap)
+double vpUtils::compareFilePoints(std::string file_target, std::string file_reference, double gap)
 {
    //string file_a("/home/irving/projects/nbvPlanning-1.1/test/EVA/data/object_accumulated_points.dat");
-   string file_a(file_target);
+   std::string file_a(file_target);
    
    //string file_reference("/home/irving/Blensor/scenes/teapot_ref.dat");
 //   string file_reference(argv[2]);
 //   string output_file(argv[3]);
    
-   cout << "file to read: " << file_a << endl; 
+   std::cout << "file to read: " << file_a << std::endl; 
    
    vpFileReader reader;
    
-   vector< vector<double> > a,reference;
+   std::vector< std::vector<double> > a,reference;
    reader.readDoubleCoordinates(file_a, a);
    reader.readDoubleCoordinates(file_reference, reference);
    
@@ -198,9 +198,9 @@ double vpUtils::compareFilePoints(string file_target, string file_reference, dou
      }
    }
    
-   cout << "Correspondences: " << correspondences << endl;
+   std::cout << "Correspondences: " << correspondences << std::endl;
    double percentage = (correspondences / (double) reference.size()) * 100 ;
-   cout << "%" << percentage << endl;
+   std::cout << "%" << percentage << std::endl;
    
    return percentage;
 }

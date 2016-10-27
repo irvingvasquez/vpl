@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
   point3d origin (0.01f, 0.01f, 0.02f);
   point3d point_on_surface (1.01f, 0.01f, 0.01f);
 
-  cout << "generating spherical scan at " << origin << " ..." << endl;
+  std::cout << "generating spherical scan at " << origin << " ..." << std::endl;
 
   Pointcloud cloud;
 
@@ -48,40 +48,40 @@ int main(int argc, char **argv) {
   tree.setResolution(tree.getResolution()*4);
   tree.computeRay(origin,point_on_surface, v2);
   
-  cout << "v1 size: " << v1.size() << endl;
-  cout << "v2 size: " << v2.size() << endl;
+  std::cout << "v1 size: " << v1.size() << std::endl;
+  std::cout << "v2 size: " << v2.size() << std::endl;
  
   point3d fin;
   tree.expand();
   switch( tree.castRayVPLHierarchical(origin, point_on_surface, fin, false, -1.0, tree.getTreeDepth()-2)){
     case VXL_OCCUPIED:
-      cout << "occupied" << endl;
+      std::cout << "occupied" << std::endl;
       break;  
     
     case VXL_UNKNOWN:
-      cout << "Unknown" << endl;
+      std::cout << "Unknown" << std::endl;
       break;
     case VXL_OCCUPIED_TOUCHED:
-      cout << "occupied touched" << endl;
+      std::cout << "occupied touched" << std::endl;
       break;
 
   }
   
     switch( tree.castRayVPLHierarchical(origin, point_on_surface, fin, false, -1.0, tree.getTreeDepth()-2)){
     case VXL_OCCUPIED:
-      cout << "occupied" << endl;
+      std::cout << "occupied" << std::endl;
       break;  
     
     case VXL_UNKNOWN:
-      cout << "Unknown" << endl;
+      std::cout << "Unknown" << std::endl;
       break;
     case VXL_OCCUPIED_TOUCHED:
-      cout << "occupied touched" << endl;
+      std::cout << "occupied touched" << std::endl;
       break;
   }
   
   
-  cout << "writing to spherical_scan.bt..." << endl;
+  std::cout << "writing to spherical_scan.bt..." << std::endl;
   tree.writeBinary("spherical_scan.bt");
   
   return 0;

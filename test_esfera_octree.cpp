@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
   string cviews_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/config/sphere.vs");
   
   
-  vector< vector<double> > a;
+  std::vector< std::vector<double> > a;
   vpFileReader r;
   r.readDoubleCoordinates(scan_file, a);
   

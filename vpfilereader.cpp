@@ -30,20 +30,20 @@ vpFileReader::~vpFileReader()
 }
 
 
-bool vpFileReader::readDoubleCoordFromPCD(string file_name, vector< std::vector< double > >& data, string& header)
+bool vpFileReader::readDoubleCoordFromPCD(std::string file_name, std::vector< std::vector< double > >& data, std::string& header)
 {
-  //cout << " Reading double  ---" << endl;
+  //cout << " Reading double  ---" <<std::endl;
   data.clear();
-  vector<double> lineal;
+  std::vector<double> lineal;
   if(!readLineCoordinatesfromPCD(file_name, lineal, header))
     return false;
   
-  vector<double> point(3);
-  vector<double>::iterator it;
+  std::vector<double> point(3);
+  std::vector<double>::iterator it;
   it = lineal.begin();
   
-  //cout << "Readed values: " << lineal.size() << endl;
-  cout << "Readed " << lineal.size()/3 << "coordinates from PCD" <<  endl;	
+  //cout << "Readed values: " << lineal.size() <<std::endl;
+  std::cout << "Readed " << lineal.size()/3 << "coordinates from PCD" <<  std::endl;	
   //getchar();
   
   long int i=0;
@@ -63,24 +63,24 @@ bool vpFileReader::readDoubleCoordFromPCD(string file_name, vector< std::vector<
     if(it == lineal.end())
       break;
     
-    //cout << i << " " << point[0] << " "  <<  point[1] << " "  << point[2] << endl;
+    //cout << i << " " << point[0] << " "  <<  point[1] << " "  << point[2] <<std::endl;
     i++;
     data.push_back(point);
   }
   
   //getchar();
   
-  //cout << "--- Done rcf pcd ---" << endl;
+  //cout << "--- Done rcf pcd ---" <<std::endl;
   return true;
 }
 
 
 
-bool vpFileReader::readLineCoordinatesfromPCD(string file_name, std::vector< double >& data, string& header)
+bool vpFileReader::readLineCoordinatesfromPCD(std::string file_name, std::vector< double >& data, std::string& header)
 {
   double value;
   
-  ifstream file(file_name.c_str());
+  std::ifstream file(file_name.c_str());
   char line[100];
   int n = 100;
   
@@ -121,31 +121,31 @@ bool vpFileReader::readLineCoordinatesfromPCD(string file_name, std::vector< dou
     file.getline(line,n);
     header.append(line);
     
-    cout << "File readed info:" << endl << header.c_str() << endl;
+    std::cout << "File readed info:" << std::endl << header.c_str() << std::endl;
 
     while(file.good()){
-	//cout << value << endl;
+	//cout << value <<std::endl;
 	file >> value;
 	data.push_back(value);
     }
     
     file.close();
     
-    cout << "closed file" << endl;
+    std::cout << "closed file" << std::endl;
     return true;
   } else {
-    cout << "Unable to open file" << endl;
+    std::cout << "Unable to open file" << std::endl;
     return false;
   }
 }
 
 
-bool vpFileReader::saveDoubleCoordinates(string file_name, vector< std::vector< double > >& data)
+bool vpFileReader::saveDoubleCoordinates(std::string file_name, std::vector< std::vector< double > >& data)
 {
-  ofstream file;
-  vector< std::vector< double > >::iterator it_points;
+  std::ofstream file;
+  std::vector< std::vector< double > >::iterator it_points;
   
-  //cout << "Saving data..." << endl;
+  //cout << "Saving data..." <<std::endl;
   file.open(file_name.c_str());
   
   if(file.is_open()){
@@ -155,21 +155,21 @@ bool vpFileReader::saveDoubleCoordinates(string file_name, vector< std::vector< 
     file.close();
   }
   else {
-    std::cout << "ERROR: unable to save file "  << file_name << endl;
+    std::cout << "ERROR: unable to save file "  << file_name << std::endl;
     return false;
   }
   
-  std::cout << file_name << "Saved" << endl;
+  std::cout << file_name << "Saved" << std::endl;
   return true;
 }
 
 
-bool vpFileReader::saveDoubleCoordinatesAsOBJ(string file_name, vector< std::vector< double > >& data)
+bool vpFileReader::saveDoubleCoordinatesAsOBJ(std::string file_name, std::vector< std::vector< double > >& data)
 {
-  ofstream file;
-  vector< std::vector< double > >::iterator it_points;
+  std::ofstream file;
+  std::vector< std::vector< double > >::iterator it_points;
   
-  //cout << "Saving data..." << endl;
+  //cout << "Saving data..." <<std::endl;
   file.open(file_name.c_str());
   
   if(file.is_open()){
@@ -181,34 +181,34 @@ bool vpFileReader::saveDoubleCoordinatesAsOBJ(string file_name, vector< std::vec
     file.close();
   }
   else {
-    std::cout << "Error: unable to save file " << file_name << endl;
+    std::cout << "Error: unable to save file " << file_name << std::endl;
     return false;
   }
   
-  std::cout << file_name << "Saved" << endl;
+  std::cout << file_name << "Saved" << std::endl;
   return true;
 }
 
 
 
-bool vpFileReader::saveDoubleCoordinatesAsPCD(string file_name, vector< std::vector< double > >& data)
+bool vpFileReader::saveDoubleCoordinatesAsPCD(std::string file_name, std::vector< std::vector< double > >& data)
 {
    // TODO:
 }
 
 
-bool vpFileReader::readDoubleCoordinates(string file_name, vector< std::vector< double > >& data)
+bool vpFileReader::readDoubleCoordinates(std::string file_name, std::vector< std::vector< double > >& data)
 {
   data.clear();
-  vector<double> lineal;
-  cout << "Reading double coordinates from " << file_name.c_str() << endl;
+  std::vector<double> lineal;
+  std::cout << "Reading double coordinates from " << file_name.c_str() << std::endl;
   if(!readDouble(file_name, lineal)){
-    cout << "Error" << endl;
+    std::cout << "Error" << std::endl;
     return false;
   }
     
-  vector<double> point(3);
-  vector<double>::iterator it;
+  std::vector<double> point(3);
+  std::vector<double>::iterator it;
   it = lineal.begin();
   
   while(it != lineal.end()){
@@ -221,17 +221,17 @@ bool vpFileReader::readDoubleCoordinates(string file_name, vector< std::vector< 
     data.push_back(point);
   }
   
-  cout << data.size() << " readed points." << endl;
+  std::cout << data.size() << " readed points." << std::endl;
   return true;
 }
 
 
 
-bool vpFileReader::readDouble(string file_name, std::vector< double >& data)
+bool vpFileReader::readDouble(std::string file_name, std::vector< double >& data)
 {
   double value;
   
-  ifstream file(file_name.c_str());
+  std::ifstream file(file_name.c_str());
   
   if(file.is_open()){
     
@@ -242,22 +242,22 @@ bool vpFileReader::readDouble(string file_name, std::vector< double >& data)
     while(file>>value)
       data.push_back(value);
     
-   // cout << data.size() << "points" << endl;
+   // std::cout << data.size() << "points" <<std::endl;
     
     file.close();
     return true;
   } else {
-    cout << "Unable to open file" << endl;
+    std::cout << "Unable to open file" << std::endl;
     return false;
   }
 }
 
 
-bool vpFileReader::readInt(string file_name, std::vector< int >& data)
+bool vpFileReader::readInt(std::string file_name, std::vector< int >& data)
 {
   int value;
   
-  ifstream file(file_name.c_str());
+  std::ifstream file(file_name.c_str());
   
   if(file.is_open()){
     
@@ -267,23 +267,23 @@ bool vpFileReader::readInt(string file_name, std::vector< int >& data)
     file.close();
     return true;
   } else {
-    cout << "Unable to open file " << file_name.c_str() << endl;
+    std::cout << "Unable to open file " << file_name.c_str() << std::endl;
     return false;
   }
 }
 
 
 
-bool vpFileReader::readDoubleCoordinatesFromWRL(string file_name, vector< std::vector< double > >& data)
+bool vpFileReader::readDoubleCoordinatesFromWRL(std::string file_name, std::vector< std::vector< double > >& data)
 {
-  vector< double> point(3);
+  std::vector< double> point(3);
   //point.reserve(3);
   
   
-  cout << "Reading WRL file: " << file_name.c_str() << endl;
+  std::cout << "Reading WRL file: " << file_name.c_str() << std::endl;
   
   
-  vector< vector<double> > vertices;
+  std::vector< std::vector<double> > vertices;
   //double ***vertices; /* output, pointer to FMatrix, not allocated [1..no_vertices][1..3] */
   int ***triangles;   /* output, pointer to IMatrix, not allocated [1..no_triangles][1..3] */
   //double ***colours;  /* output, pointer to DMatrix, not allocated [1..no_triangles][1..3] */
@@ -293,7 +293,7 @@ bool vpFileReader::readDoubleCoordinatesFromWRL(string file_name, vector< std::v
   double x,y,z;
   int v1,v2,v3;
   char code[80];
-  FILE *tmesh;
+  std::FILE *tmesh;
   int i=0;
 
   tmesh=fopen(file_name.c_str(),"r");
@@ -305,7 +305,8 @@ bool vpFileReader::readDoubleCoordinatesFromWRL(string file_name, vector< std::v
   /* count vertices and triangles */
   while (fscanf(tmesh,"%s",code)==1)
     {
-      if (strcmp(code,"point")==0) /* count vertices */
+      std::string strcode(code);
+      if (strcode == "point") /* count vertices */
 	{
 	  fscanf(tmesh,"%s",code); /* [ */
 	  while(true)
@@ -319,7 +320,7 @@ bool vpFileReader::readDoubleCoordinatesFromWRL(string file_name, vector< std::v
 	    }
 	}
 
-      if (strcmp(code,"coordIndex")==0) /* count triangles */
+      if (strcode == "coordIndex") /* count triangles */
 	{
 	  fscanf(tmesh,"%s",code); /* [ */
 	  while(true)
@@ -346,7 +347,8 @@ bool vpFileReader::readDoubleCoordinatesFromWRL(string file_name, vector< std::v
 
   while (fscanf(tmesh,"%s",code)==1)
     {
-      if (strcmp(code,"point")==0) /* read vertices */
+      std::string strcode(code);
+      if (strcode == "point") /* read vertices */
 	{
 	  fscanf(tmesh,"%s",code); /* [ */
 	  for (i=1; i<=(*no_vertices); i++)
@@ -364,7 +366,7 @@ bool vpFileReader::readDoubleCoordinatesFromWRL(string file_name, vector< std::v
 	    }
 	}
 
-      if (strcmp(code,"coordIndex")==0) /* read triangles */
+      if (strcode == "coordIndex") /* read triangles */
 	{
 	  fscanf(tmesh,"%s",code); /* [ */
 	  for (i=1; i<=(*no_triangles); i++)
@@ -381,7 +383,7 @@ bool vpFileReader::readDoubleCoordinatesFromWRL(string file_name, vector< std::v
   fclose(tmesh);
   
   data = vertices;
-  cout << "Readed " << data.size() << " vertices";
+  std::cout << "Readed " << data.size() << " vertices";
   return true;
 }
 

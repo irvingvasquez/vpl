@@ -73,12 +73,12 @@ int main(int argc, char **argv) {
     
     string config_folder(argv[1]);
     string data_folder(config_folder);
-    cout << "Config folder: " << config_folder.c_str() << endl;
-    cout << "Data folder: " << data_folder.c_str() << endl;
+    std::cout << "Config folder: " << config_folder.c_str() << std::endl;
+    std::cout << "Data folder: " << data_folder.c_str() << std::endl;
     
     // output file
     string octree_file(argv[2]);
-    cout << "octree_file: " << octree_file.c_str() << endl;
+    std::cout << "octree_file: " << octree_file.c_str() << std::endl;
 
     return 0;
     

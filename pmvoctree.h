@@ -58,11 +58,11 @@ class PMVOctree :  public PMVolumetric
 public:
 PMVOctree();
 
-  virtual float updateWithScan(string file_name_scan, string file_name_origin);
+  virtual float updateWithScan(std::string file_name_scan, string file_name_origin);
   
-  virtual bool savePartialModel(string file_name);
+  virtual bool savePartialModel(std::string file_name);
   
-  virtual bool loadPartialModel(string file_name);
+  virtual bool loadPartialModel(std::string file_name);
   
   virtual void evaluateCandidateViews();
   
@@ -73,7 +73,7 @@ PMVOctree();
   * They are stored at rays with the notation [x, y, z, 1]^T
   * The 1 is added to perform matrix multiplications by a HTM
   */ 
-  virtual long int readRays(string file_address);
+  virtual long int readRays(std::string file_address);
   
 
    
@@ -96,18 +96,18 @@ PMVOctree();
   
   void setUtilityFunction(VolumetricUtilityFunction *uf);
   
-  virtual void saveObjectAsRawT(string file_name);
+  virtual void saveObjectAsRawT(std::string file_name);
 
-  virtual void saveObjectAsObst(string file_name);
+  virtual void saveObjectAsObst(std::string file_name);
   
-  virtual bool saveUnknownVolumeAsObst(string file_name);
+  virtual bool saveUnknownVolumeAsObst(std::string file_name);
   
-  virtual bool saveUnknownVolumeAsRawT(string file_name);
+  virtual bool saveUnknownVolumeAsRawT(std::string file_name);
   
   /**
    * Saves the occupied  and unknown voxels as Obs
    */
-  virtual bool saveObstacle(string file_name);
+  virtual bool saveObstacle(std::string file_name);
   
   virtual void getOccupiedTriangles(vpTriangleList &tris);
   

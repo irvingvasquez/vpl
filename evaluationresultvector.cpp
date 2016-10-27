@@ -24,27 +24,27 @@ EvaluationResultVector::EvaluationResultVector()
 
 }
 
-void EvaluationResultVector::saveVector(string file_name)
+void EvaluationResultVector::saveVector(std::string file_name)
 {
-  cout << "Saving Evaluation Vector" << endl;
-  cout << "File: " << file_name.c_str() << endl;
-  cout << this->size() << " elements" << endl;
-  ofstream myfile (file_name.c_str());
+  std::cout << "Saving Evaluation Vector" << std::endl;
+  std::cout << "File: " << file_name.c_str() << std::endl;
+  std::cout << this->size() << " elements" << std::endl;
+ std::ofstream myfile (file_name.c_str());
   
   EvaluationResultVector::iterator result_it;
   
   if (myfile.is_open())
   {
     //myfile << "";
-    myfile << "# occupied occupied_scene unmark unmark_scene ray_lost computation_time" << endl;
+    myfile << "# occupied occupied_scene unmark unmark_scene ray_lost computation_time" << std::endl;
     for(result_it = this->begin(); result_it != this->end(); result_it++){
       myfile << result_it->n_occupied << " " << result_it->n_occupied_scene << " " << result_it->n_unmark 
-	      << " " << result_it->n_unmark_scene << " " << result_it->n_lost << " " << result_it->computation_time << endl;
+	      << " " << result_it->n_unmark_scene << " " << result_it->n_lost << " " << result_it->computation_time << std::endl;
     }
     myfile.close();
   }
   else{ 
-    cout << "Unable to open file";
+    std::cout << "Unable to open file";
     getchar();
   }
   

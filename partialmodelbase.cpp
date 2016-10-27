@@ -44,7 +44,7 @@ colorGray(200,200,200)
 
 bool PartialModelBase::init()
 {
-  std::cout << "Reading parameters" << endl;
+  std::cout << "Reading parameters" << std::endl;
  
   string config_file(configFolder);
   config_file.append("/");
@@ -59,7 +59,7 @@ bool PartialModelBase::init()
   }
   //iniparser_dump(ini_file, stderr);
   
-  cout << "------------- Partial Model Configuration ------------" << endl;
+  std::cout << "------------- Partial Model Configuration ------------" << std::endl;
   
   float x1, x2, y1, y2, z1, z2;
   x1 = iniparser_getdouble(ini_file, "objectCapsule:x1", 0);
@@ -104,13 +104,13 @@ bool PartialModelBase::init()
   point3d dr(x,y,z);
   directorRay = dr;
  
-  cout << "Sensor:" << endl;
-  cout << "  Director ray: " << directorRay << endl;
-  cout << "  Minimun DOV: " << minDOV << endl;
-  cout << "  Maximun DOV: " << maxDOV << endl;
-  cout << "Object Center: " << p << "  radius:" << objectSphereRadius << endl;
+  std::cout << "Sensor:" << std::endl;
+  std::cout << "  Director ray: " << directorRay << std::endl;
+  std::cout << "  Minimun DOV: " << minDOV << std::endl;
+  std::cout << "  Maximun DOV: " << maxDOV << std::endl;
+  std::cout << "Object Center: " << p << "  radius:" << objectSphereRadius << std::endl;
   
-  cout << "-------------------------------------" << endl;
+  std::cout << "-------------------------------------" << std::endl;
   
   return true;
 }
@@ -130,7 +130,7 @@ void PartialModelBase::setObjectCapsule(double x1, double y1, double z1, double 
 }
 
 
-bool PartialModelBase::saveEvaluatedViews(string file_name)
+bool PartialModelBase::saveEvaluatedViews(std::string file_name)
 {
   return vsSaveViewList(candidateViews, file_name);
 }
@@ -138,13 +138,13 @@ bool PartialModelBase::saveEvaluatedViews(string file_name)
 
 bool PartialModelBase::saveOnlyNViews(int n, string file_name)
 {
-  list<ViewStructure> secondList;
+  std::list<ViewStructure> secondList;
   getNViewsFromList(candidateViews, n, secondList);
   return vsSaveViewList(secondList, file_name);
 }
 
 
-bool PartialModelBase::readCandidateViews(string file_name)
+bool PartialModelBase::readCandidateViews(std::string file_name)
 {
   candidateViews.clear();
   return vsReadViewList(candidateViews, file_name);
@@ -177,8 +177,8 @@ bool PartialModelBase::isInCapsule(point3d point)
       if ( point.z() >= z_cap_1 && point.z() <= z_cap_2 )
 	return true;
   
-//  cout << point.x() << " " << point.y() << " " << point.z() << endl;
-//  cout << "false" << endl;
+//  std::cout << point.x() << " " << point.y() << " " << point.z() << std::endl;
+//  std::cout << "false" << std::endl;
   return false;
 }
 
@@ -196,7 +196,7 @@ bool PartialModelBase::isInScene(point3d point)
 
 
 
-// bool PartialModelBase::readScanFromPCD(string file_name, octomap::Pointcloud &cloud)
+// bool PartialModelBase::readScanFromPCD(std::string file_name, octomap::Pointcloud &cloud)
 // {
 // //   double x_p, y_p, z_p;
 // //   long int readed_points = 0;
@@ -211,7 +211,7 @@ bool PartialModelBase::isInScene(point3d point)
 // //   for(it = points.begin(); it != points.end(); it++){
 // //     	//point_on_surface = new octomap::point3d(x_p, y_p, z_p);
 // //     	if( isnan(it->x) || isnan(it->y) || isnan(it->z) ){
-// // 	    cout << it->x << " " << it->y << " " << it->z << endl;
+// // 	    std::cout << it->x << " " << it->y << " " << it->z << std::endl;
 // // 	} 
 // // 	else {
 // // 	  cloud.push_back(new octomap::point3d(it->x, it->y, it->z));
@@ -220,8 +220,8 @@ bool PartialModelBase::isInScene(point3d point)
 // // 	//delete point_on_surface;
 // //   }
 // //   
-// //   cout << "done." << endl;
-// //   cout << "Readed points: "<< readed_points << endl;
+// //   std::cout << "done." << std::endl;
+// //   std::cout << "Readed points: "<< readed_points << std::endl;
 // //   
 // // //   if(!readPointCloudFromFile(origin_file, *scanCloudOrigins))
 // // //     return false;
@@ -230,7 +230,7 @@ bool PartialModelBase::isInScene(point3d point)
 // }
 
 
-bool PartialModelBase::readPointCloudFromDAT(string file_name, Pointcloud& cloud)
+bool PartialModelBase::readPointCloudFromDAT(std::string file_name, Pointcloud& cloud)
 {
  double x_p, y_p, z_p;
   long int n_points;
@@ -261,12 +261,12 @@ bool PartialModelBase::readPointCloudFromDAT(string file_name, Pointcloud& cloud
     
     file.close();
   } else {
-    cout << "Unable to open file" << endl;
+    std::cout << "Unable to open file" << std::endl;
     return false;
   }
   
-  cout << "done." << endl;
-  cout << "Readed points: "<< readed_points << endl;
+  std::cout << "done." << std::endl;
+  std::cout << "Readed points: "<< readed_points << std::endl;
   
   return true;
 }
@@ -322,12 +322,12 @@ bool PartialModelBase::registrationLowConstraint(long int n_occupied)
 }
 
 
-void PartialModelBase::setConfigFolder(string folder)
+void PartialModelBase::setConfigFolder(std::string folder)
 {
   configFolder = folder;
 }
 
-void PartialModelBase::setDataFolder(string folder)
+void PartialModelBase::setDataFolder(std::string folder)
 {
   dataFolder = folder;
 }
@@ -397,7 +397,7 @@ bool PartialModelBase::poitsToTheObject(ViewStructure& v)
    point3d origin(v.w[0],v.w[1],v.w[2]);
    
    if(rayIntersectObjectSphere(ray, origin)){
-    //cout << "points :)" << endl;
+    //cout << "points :)" << std::endl;
     return true;
    }
    
@@ -415,7 +415,7 @@ bool PartialModelBase::pointsToASphere(ViewStructure& v, double center_x, double
    point3d center(center_x,center_y,center_z);
    
    if(rayIntersectSphere(ray, origin, center, radius)){
-    //cout << "points :)" << endl;
+    //cout << "points :)" << std::endl;
     return true;
    }
    

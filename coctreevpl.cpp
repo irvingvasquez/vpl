@@ -179,7 +179,7 @@ double COctreeVPL::castRayIG(const point3d& origin, const point3d& directionP, p
 	      double p = currentNode->getOccupancy();
 	       
 	      ig_sum = ig_sum + (-p * log(p) - (1-p) * log(1-p));
-	      //cout << "p " << p << " IG " << ig_sum << endl;
+	      //cout << "p " << p << " IG " << ig_sum <<std::endl;
 	     }
 	  }
 	}
@@ -308,7 +308,7 @@ int COctreeVPL::castRayVPL(const point3d& origin, const point3d& directionP, poi
 	  // verificar si el nodo ya fue tocado
 	  if(currentNode->getColor() == colorTouchedOccupied){
 	      // el nodo ya fue tocado
-	      //cout << "voxel repetido" << endl;
+	      //cout << "voxel repetido" <<std::endl;
 	      return VXL_OCCUPIED_TOUCHED;
 	  } else {
 	      // el nodo no ha sido tocado
@@ -321,7 +321,7 @@ int COctreeVPL::castRayVPL(const point3d& origin, const point3d& directionP, poi
         } else if (this->isNodeUnknown(currentNode)) {
 	  if(currentNode->getColor() == colorTouchedUnknown){
 	      // el nodo ya fue tocado
-	      //cout << "unknown repetido" << endl;
+	      //cout << "unknown repetido" <<std::endl;
 	      return VXL_UNKNOWN_TOUCHED;
 	  }else {
 	      currentNode->setColor(colorTouchedUnknown);
@@ -345,7 +345,7 @@ void COctreeVPL::cleanTouchedVoxels()
 {
   std::list< ColorOcTreeNode* >::iterator it;
   
-  //cout << touchedNodes.size() << " different touched voxels" << endl;
+  //cout << touchedNodes.size() << " different touched voxels" <<std::endl;
   
   for(it= touchedNodes.begin(); it!= touchedNodes.end(); it++){
     //(*it)->setColor(255,255,0);
@@ -833,7 +833,7 @@ int COctreeVPL::castRayVPLHierarchical(const point3d& origin, const point3d& dir
 	  // verificar si el nodo ya fue tocado
 	  if(currentNode->getColor() == colorTouchedOccupied){
 	      // el nodo ya fue tocado
-	      //cout << "voxel repetido" << endl;
+	      //cout << "voxel repetido" <<std::endl;
 	      return_value = VXL_OCCUPIED_TOUCHED;
 	      done = true;
 	  } else {
@@ -848,7 +848,7 @@ int COctreeVPL::castRayVPLHierarchical(const point3d& origin, const point3d& dir
         } else if (this->isNodeUnknown(currentNode)) {
 	  if(currentNode->getColor() == colorTouchedUnknown){
 	      // el nodo ya fue tocado
-	      //cout << "unknown repetido" << endl;
+	      //cout << "unknown repetido" <<std::endl;
 	      return_value = VXL_UNKNOWN_TOUCHED;
 	      done = true;
 	  }else {
@@ -1016,7 +1016,7 @@ int COctreeVPL::castRayVPLHierarchical(const point3d& origin, const point3d& dir
 	  // verificar si el nodo ya fue tocado
 	  if(currentNode->getColor() == colorTouchedOccupied){
 	      // el nodo ya fue tocado
-	      //cout << "voxel repetido" << endl;
+	      //cout << "voxel repetido" <<std::endl;
 	      return_value = VXL_OCCUPIED_TOUCHED;
 	      done = true;
 	  } else {
@@ -1031,7 +1031,7 @@ int COctreeVPL::castRayVPLHierarchical(const point3d& origin, const point3d& dir
         } else if (this->isNodeUnknown(currentNode)) {
 	  if(currentNode->getColor() == colorTouchedUnknown){
 	      // el nodo ya fue tocado
-	      //cout << "unknown repetido" << endl;
+	      //cout << "unknown repetido" <<std::endl;
 	      return_value = VXL_UNKNOWN_TOUCHED;
 	      done = true;
 	  }else {

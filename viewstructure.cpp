@@ -45,9 +45,9 @@ bool ViewStructure::operator==(const ViewStructure& theOther) const
 }
 
 
-ViewStructure bestViewOfList(list< ViewStructure >& viewsList)
+ViewStructure bestViewOfList(std::list< ViewStructure >& viewsList)
 {
- cout << "Best View of List" << endl;
+  std::cout << "Best View of List" << std::endl;
   
   
   std::list<ViewStructure>::iterator it_list;
@@ -55,7 +55,7 @@ ViewStructure bestViewOfList(list< ViewStructure >& viewsList)
   double max_eval = -1;
   it_list = viewsList.begin();
   while(it_list != viewsList.end()){
-    //cout << "Encoders: " << endl;
+    //cout << "Encoders: " <<std::endl;
     //printIntVector(it_list->q);
     //cout << "eval: " << it_list->eval;
     if(it_list->eval > max_eval){
@@ -65,9 +65,9 @@ ViewStructure bestViewOfList(list< ViewStructure >& viewsList)
     it_list++;
   }
   
-  //cout << "B: " << endl;
+  //cout << "B: " <<std::endl;
   printVector(best_view.q);
-  cout << "Max eval :" << max_eval;
+  std::cout << "Max eval :" << max_eval;
   return best_view;
 }
 
@@ -80,14 +80,14 @@ void ViewList::sortHighToLow()
 
 ViewStructure ViewList::getBestView()
 {
-  //cout << "Best View of List" << endl;
+  //cout << "Best View of List" <<std::endl;
   
   std::list<ViewStructure>::iterator it_list;
   ViewStructure best_view;
   double max_eval = -1;
   it_list = this->begin();
   while(it_list != this->end()){
-    //cout << "Encoders: " << endl;
+    //cout << "Encoders: " <<std::endl;
     //printIntVector(it_list->q);
     //cout << "eval: " << it_list->eval;
     if(it_list->eval > max_eval){
@@ -97,15 +97,15 @@ ViewStructure ViewList::getBestView()
     it_list++;
   }
   
-  //cout << "B: " << endl;
+  //cout << "B: " <<std::endl;
   printVector(best_view.q);
-  cout << "Max eval :" << max_eval;
+  std::cout << "Max eval :" << max_eval;
   return best_view;
 }
 
 
 
-bool vsReadViewList(list< ViewStructure >& views, string fileName)
+bool vsReadViewList(std::list< ViewStructure >& views, std::string fileName)
 {
   double value_double;
   int value_int;
@@ -113,7 +113,7 @@ bool vsReadViewList(list< ViewStructure >& views, string fileName)
   int size_of_q, qi;
   int size_of_w, wi;
   ViewStructure view;
-  ifstream file(fileName.c_str());
+  std::ifstream file(fileName.c_str());
   
   views.clear();
   
@@ -160,17 +160,17 @@ bool vsReadViewList(list< ViewStructure >& views, string fileName)
     }
     
     file.close();
-    cout << "Readed complete. " << views.size() << "views." << endl;
+    std::cout << "Readed complete. " << views.size() << "views." << std::endl;
     return true;
   } else {
-    cout << "Unable to open file" << endl;
+    std::cout << "Unable to open file" << std::endl;
     return false;
   }
 }
 
 
 
-bool ViewList::read(string file_name)
+bool ViewList::read(std::string file_name)
 {
   double value_double;
   int value_int;
@@ -178,7 +178,7 @@ bool ViewList::read(string file_name)
   int size_of_q, qi;
   int size_of_w, wi;
   ViewStructure view;
-  ifstream file(file_name.c_str());
+  std::ifstream file(file_name.c_str());
   
   this->clear();
   
@@ -225,19 +225,19 @@ bool ViewList::read(string file_name)
     }
     
     file.close();
-    cout << "Readed complete. " << this->size() << "views." << endl;
+    std::cout << "Readed complete. " << this->size() << "views." << std::endl;
     return true;
   } else {
-    cout << "Unable to open file" << endl;
+    std::cout << "Unable to open file" << std::endl;
     return false;
   }
 }
 
 
-bool ViewList::saveAsMSLStates(string file_name)
+bool ViewList::saveAsMSLStates(std::string file_name)
 {
   if(this->size() == 0){
-    cout << "Empty list" << endl;
+    std::cout << "Empty list" << std::endl;
     return false;
   }
   
@@ -246,7 +246,7 @@ bool ViewList::saveAsMSLStates(string file_name)
   std::vector<double>:: iterator it_w;
   int i,j;  
   
-  ofstream myfile (file_name.c_str());
+  std::ofstream myfile (file_name.c_str());
   if (myfile.is_open())
   {
     it_v = this->begin();
@@ -256,24 +256,24 @@ bool ViewList::saveAsMSLStates(string file_name)
       for(it_q = it_v->q.begin(); it_q != it_v->q.end(); it_q ++){
 	myfile << *it_q << " ";
       }
-      myfile << endl;
+      myfile << std::endl;
     }
     
     myfile.close();
-    cout << "Views saved. File: " << file_name.c_str() << endl;
+    std::cout << "Views saved. File: " << file_name.c_str() << std::endl;
     return true;
   }
   
-  else cout << "Unable to open file" << endl;
+  else std::cout << "Unable to open file" << std::endl;
   return false;
 }
 
 
-bool ViewList::save(string file_name)
+bool ViewList::save(std::string file_name)
 {
   
   if(this->size() == 0){
-    cout << "Empty vector" << endl;
+    std::cout << "Empty vector" << std::endl;
     return false;
   }
   
@@ -282,56 +282,56 @@ bool ViewList::save(string file_name)
   std::vector<double>:: iterator it_w;
   int i,j;  
   
-  ofstream myfile (file_name.c_str());
+  std::ofstream myfile (file_name.c_str());
   if (myfile.is_open())
   {
-    myfile << this->size() << endl;
+    myfile << this->size() << std::endl;
     it_v = this->begin();
-    myfile << it_v->q.size() << endl;
-    myfile << it_v->w.size() << endl;
+    myfile << it_v->q.size() << std::endl;
+    myfile << it_v->w.size() << std::endl;
     
     for (it_v = this->begin(); it_v!= this->end(); it_v++){
       // save q
       for(it_q = it_v->q.begin(); it_q != it_v->q.end(); it_q ++){
 	myfile << *it_q << " ";
       }
-      myfile << endl;
+      myfile <<std::endl;
       
       // save w
       for(it_w = it_v->w.begin(); it_w != it_v->w.end(); it_w ++){
 	myfile << *it_w << " ";
       }
-      myfile << endl;
+      myfile <<std::endl;
       
       // save HTM
       for(i = 0; i<4 ;i++){
 	for (j=0; j<4; j++){
 	  myfile << it_v->HTM(i,j) << " ";
 	}
-	myfile << endl;
+	myfile <<std::endl;
       }
       
       //save eval
-      //cout << "eval " << it_v->eval << endl;
-      myfile << it_v->type << endl;
-      myfile << it_v->eval << endl;
+      //cout << "eval " << it_v->eval <<std::endl;
+      myfile << it_v->type <<std::endl;
+      myfile << it_v->eval <<std::endl;
     }
     
     myfile.close();
-    cout << "Views saved. File: " << file_name.c_str() << endl;
+    std::cout << "Views saved. File: " << file_name.c_str() <<std::endl;
     return true;
   }
   
-  else cout << "Unable to open file" << endl;
+  else std::cout << "Unable to open file" <<std::endl;
   return false;
 }
 
 
 
-bool vsSaveViewList(list< ViewStructure > views, string fileName)
+bool vsSaveViewList(std::list< ViewStructure > views, std::string fileName)
 {
 if(views.size() == 0){
-    cout << "Empty vector" << endl;
+    std::cout << "Empty vector" << std::endl;
     return false;
   }
   
@@ -340,46 +340,46 @@ if(views.size() == 0){
   std::vector<double>:: iterator it_w;
   int i,j;  
   
-  ofstream myfile (fileName.c_str());
+  std::ofstream myfile (fileName.c_str());
   if (myfile.is_open())
   {
-    myfile << views.size() << endl;
+    myfile << views.size() << std::endl;
     it_v = views.begin();
-    myfile << it_v->q.size() << endl;
-    myfile << it_v->w.size() << endl;
+    myfile << it_v->q.size() << std::endl;
+    myfile << it_v->w.size() << std::endl;
     
     for (it_v = views.begin(); it_v!= views.end(); it_v++){
       // save q
       for(it_q = it_v->q.begin(); it_q != it_v->q.end(); it_q ++){
 	myfile << *it_q << " ";
       }
-      myfile << endl;
+      myfile << std::endl;
       
       // save w
       for(it_w = it_v->w.begin(); it_w != it_v->w.end(); it_w ++){
 	myfile << *it_w << " ";
       }
-      myfile << endl;
+      myfile << std::endl;
       
       // save HTM
       for(i = 0; i<4 ;i++){
 	for (j=0; j<4; j++){
 	  myfile << it_v->HTM(i,j) << " ";
 	}
-	myfile << endl;
+	myfile << std::endl;
       }
       
       //save eval
-      //cout << "eval " << it_v->eval << endl;
-      myfile << it_v->type << endl;
-      myfile << it_v->eval << endl;
+      //cout << "eval " << it_v->eval <<std::endl;
+      myfile << it_v->type << std::endl;
+      myfile << it_v->eval << std::endl;
     }
     
     myfile.close();
-    cout << "Views saved. File: " << fileName.c_str() << endl;
+    std::cout << "Views saved. File: " << fileName.c_str() << std::endl;
     return true;
   }
-  else cout << "Unable to open file" << endl;
+  else std::cout << "Unable to open file" << std::endl;
   return false;
 }
 
@@ -404,17 +404,17 @@ bool compareByEvalInverse(ViewStructure first, ViewStructure second)
 }
 
 
-void orderViewsHighToLow(list< ViewStructure >& viewsList)
+void orderViewsHighToLow(std::list< ViewStructure >& viewsList)
 {
   viewsList.sort(compareByEvalInverse);
 }
 
 
-void getNViewsFromList(list< ViewStructure >& viewsList, int n, list< ViewStructure >& result)
+void getNViewsFromList(std::list< ViewStructure >& viewsList, int n, std::list< ViewStructure >& result)
 {
  // if(n<1)
  //   return;
-  list<ViewStructure>::iterator it;
+  std::list<ViewStructure>::iterator it;
   it = viewsList.begin();
   int i = 0;
   result.clear();
@@ -425,7 +425,7 @@ void getNViewsFromList(list< ViewStructure >& viewsList, int n, list< ViewStruct
   }
 }
 
-ostream& operator << (ostream& out, ViewStructure& view)
+std::ostream& operator << (std::ostream& out, ViewStructure& view)
 {
   std::vector< double >::iterator it;
   
@@ -433,14 +433,14 @@ ostream& operator << (ostream& out, ViewStructure& view)
   for(it = view.q.begin(); it!= view.q.end(); it++){
     out << *it << " ";
   } 
-  out << " \n" << endl;
+  out << " \n" <<std::endl;
   
   out << "Pose: " << "x:" << view.w[0] << "  y:" << view.w[1] << "  z:" << view.w[2] << "\t\t"
-	<< "  yaw(z):" << view.w[3] << "  pitch(y):" << view.w[4]   << "  roll(x):" << view.w[5] << endl;	
-  out << "Pose in deg: " << view.w[3] * 180/M_PI << " " << view.w[4] * 180/M_PI << " " << view.w[5] * 180/M_PI << endl;
+	<< "  yaw(z):" << view.w[3] << "  pitch(y):" << view.w[4]   << "  roll(x):" << view.w[5] <<std::endl;	
+  out << "Pose in deg: " << view.w[3] * 180/M_PI << " " << view.w[4] * 180/M_PI << " " << view.w[5] * 180/M_PI <<std::endl;
   out << "Occupied:" << view.n_occupied << " \tUnknown:" << view.n_unmark  << " \tUtility:" << view.eval;
   	
-  out << endl;
+  out <<std::endl;
   
 }
 

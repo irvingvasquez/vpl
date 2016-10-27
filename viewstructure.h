@@ -32,7 +32,6 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp> 
 
-using namespace std;
 using namespace vpUtils;
 
 enum viewTypes { SURFACE_TYPE, EXPLORATION_TYPE};
@@ -76,17 +75,17 @@ double d;
 };
 
 
-class ViewList : public list<ViewStructure>
+class ViewList : public std::list<ViewStructure>
 { 
 protected:
 
 
 public:
-  bool save(string file_name);
+  bool save(std::string file_name);
   
-  bool saveAsMSLStates(string file_name);
+  bool saveAsMSLStates(std::string file_name);
   
-  bool read(string file_name);
+  bool read(std::string file_name);
   
   ViewStructure getBestView();
   
@@ -113,9 +112,9 @@ public:
 /**
  * Save a list of views
  */
-bool vsSaveViewList(std::list<ViewStructure> views, string fileName);
+bool vsSaveViewList(std::list<ViewStructure> views, std::string fileName);
 
-bool vsReadViewList(std::list<ViewStructure> &views, string fileName);
+bool vsReadViewList(std::list<ViewStructure> &views, std::string fileName);
 
 
 
