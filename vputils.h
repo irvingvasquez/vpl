@@ -5,6 +5,7 @@
 //#include "vpfilereader.h"
 #include "vptriangle.h"
 
+//TODO change the name of this file and namespace
 
 namespace vpUtils {
 

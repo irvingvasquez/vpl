@@ -33,6 +33,10 @@ include_directories(${OCTOMAP_DIR}/octomap/include)
 link_directories(${OCTOMAP_DIR}/lib ${OCTOMAP_DIR}/octovis/lib)
 set(LIBS_OCTOMAP octomap octomath octovis)
 
+#include_directories(/home/irving/projects/octomap-1.7.1/octomap/include)
+#link_directories(/home/irving/projects/octomap-1.7.1/lib /home/irving/projects/octomap-1.7.1/octovis/lib)
+#set(LIBS_OCTOMAP octomap octomath octovis)
+
 
 # ---------------------------- INIPARSER --------------------
 set(INIPARSER_DIR ${CMAKE_SOURCE_DIR}/../iniparser) 

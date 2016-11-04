@@ -44,14 +44,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <ctime>
 
-#include <math.h>
-
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 
 #include <octomap/octomap.h>
 #include <octomap/ColorOcTree.h>
 
+#include <math.h>
 #include <iniparser.h>
 
 #include "pmdefinitions.h"
