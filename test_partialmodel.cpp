@@ -33,7 +33,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 
-//TODO: terminar este programa, 1 generar una esfera de vistas
+//TODO: terminar este programa,
+// Generar un conjunto de puntos en una esfera unitaria
+// Generar una esfera de vistas
+// 
 
 
 #include <iostream>
@@ -115,23 +118,17 @@ int main(int argc, char **argv) {
     
     octree.savePartialModel(octree_file);
     
-    
-    
-    //exit(0);
-    
-//     
-//     
-//     octree.paintOccupiedInCapsule();
-//     
-//     octree.readCandidateViews(cviews_file);
-//     
-//     //octree.testEvaluation();
-//     octree.evaluateCandidateViews();
-//     
-//     octree.saveEvaluatedViews(evaluated_views);
-//     octree.saveEvaluations();
-//     
-//     octree.savePartialModel(octree_file);
-    
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+

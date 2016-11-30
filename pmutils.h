@@ -7,7 +7,7 @@
 
 //TODO change the name of this file and namespace
 
-namespace vpUtils {
+namespace PMUtils {
 
   double euclideanDistance (std::vector< int > A, std::vector< int > B);
     

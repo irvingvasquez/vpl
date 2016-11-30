@@ -353,10 +353,10 @@ int PMVOctreeHierarchicalRT::evaluateView(ViewStructure& v)
     
   if(valid_result){           
       /// Evaluate the result of the raytracing
-      v.n_unmark = result.n_unmark;
+      v.n_unknown = result.n_unknown;
       v.n_occupied = result.n_occupied;
       
-      if(v.n_unmark < minUnknown){
+      if(v.n_unknown < minUnknown){
 	return UNFEASIBLE_VIEW;
       }
       
@@ -421,7 +421,7 @@ void PMVOctreeHierarchicalRT::evaluateCandidateViews()
 	cout << "Unfeasible view" << std::endl;
 	removed_views ++;
       } else {
-	if(result.n_unmark > minUnknown)
+	if(result.n_unknown > minUnknown)
 	  stopCriteria = false;
 	
 	cout << "Evaluation " << i << ": " << result.evaluation << std::endl;
@@ -457,7 +457,7 @@ void PMVOctreeHierarchicalRT::evaluateCandidateViews()
 // 	else {
 // 	  EvaluationResult aux_result;
 // 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-// 	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
+// 	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unknown << " un_sc:" << aux_n_unknown_scene << std::endl; 
 // 	  result.addVoxelAmouts(aux_result);
 // 	}
 // 	break;
@@ -467,11 +467,11 @@ void PMVOctreeHierarchicalRT::evaluateCandidateViews()
 // 	break;
 // 	
 //       case UNMARK:
-// 	result.n_unmark += (*r_it)->nLeafs;
+// 	result.n_unknown += (*r_it)->nLeafs;
 // 	break;
 //       
 //       case UNMARK_SCENE:
-// 	result.n_unmark_scene += (*r_it)->nLeafs;
+// 	result.n_unknown_scene += (*r_it)->nLeafs;
 // 	break;
 // 	
 //       case RAY_LOST:
@@ -485,7 +485,7 @@ void PMVOctreeHierarchicalRT::evaluateCandidateViews()
 //   }
 //   
 // //   std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
-// //    		    << " Unk:" << result.n_unmark <<  " Unk_sce:" << result.n_unmark_scene 
+// //    		    << " Unk:" << result.n_unknown <<  " Unk_sce:" << result.n_unknown_scene 
 // //    		    << " lost:" << result.n_lost << std::endl;
 // 
 //   map->write("painted.ot");
@@ -514,19 +514,19 @@ bool PMVOctreeHierarchicalRT::hierarchicalRayTracing(BoostMatrix m, pmRayNode* r
 	} else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unknown << " un_sc:" << aux_n_unknown_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
     } else {
       if (answer == VXL_UNKNOWN || answer == VXL_UNKNOWN_TOUCHED){
 	if(depth == map->getTreeDepth() || rtIsLeaf(*r_it)){
 	  if(answer == VXL_UNKNOWN)
-	    result.n_unmark ++;
+	    result.n_unknown ++;
 	}
 	else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unknown << " un_sc:" << aux_n_unknown_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
       }
@@ -541,7 +541,7 @@ bool PMVOctreeHierarchicalRT::hierarchicalRayTracing(BoostMatrix m, pmRayNode* r
 	else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unknown << " un_sc:" << aux_n_unknown_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
 	break;
@@ -552,18 +552,18 @@ bool PMVOctreeHierarchicalRT::hierarchicalRayTracing(BoostMatrix m, pmRayNode* r
 	
       case UNMARK:
 	if(depth == map->getTreeDepth() || rtIsLeaf(*r_it)){
-	  result.n_unmark ++;
+	  result.n_unknown ++;
 	}
 	else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unknown << " un_sc:" << aux_n_unknown_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
 	break;
       
       case UNMARK_SCENE:
-	result.n_unmark_scene += (*r_it)->nLeafs;
+	result.n_unknown_scene += (*r_it)->nLeafs;
 	break;
 	
       case RAY_LOST:
@@ -577,7 +577,7 @@ bool PMVOctreeHierarchicalRT::hierarchicalRayTracing(BoostMatrix m, pmRayNode* r
   }
  */ 
 //   std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
-//    		    << " Unk:" << result.n_unmark <<  " Unk_sce:" << result.n_unmark_scene 
+//    		    << " Unk:" << result.n_unknown <<  " Unk_sce:" << result.n_unknown_scene 
 //    		    << " lost:" << result.n_lost << std::endl;
 
   //map->write("painted.ot");
@@ -605,19 +605,19 @@ bool PMVOctreeHierarchicalRT::recursiveHRayTracing(BoostMatrix m, pmRayNode* roo
 	} else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unknown << " un_sc:" << aux_n_unknown_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
     } else {
       if (answer == VXL_UNKNOWN || answer == VXL_UNKNOWN_TOUCHED){
 	if(depth == map->getTreeDepth() || rtIsLeaf(*r_it)){
 	  if(answer == VXL_UNKNOWN)
-	    result.n_unmark ++;
+	    result.n_unknown ++;
 	}
 	else {
 	  EvaluationResult aux_result;
 	  recursiveHRayTracing(m, *r_it, depth+1, aux_result);
-	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unmark << " un_sc:" << aux_n_unmark_scene << std::endl; 
+	  //cout << "After recursive: occ: " << aux_n_occupied << " un:" << aux_n_unknown << " un_sc:" << aux_n_unknown_scene << std::endl; 
 	  result.addVoxelAmouts(aux_result);
 	}
       }
@@ -892,11 +892,11 @@ bool PMVOctreeHierarchicalRT::recursiveHRayTracing(BoostMatrix m, pmRayNode* roo
 	  break;
 	  
 	case UNMARK:
-	  result.n_unmark += (*r_it)->nLeafs;
+	  result.n_unknown += (*r_it)->nLeafs;
 	  break;
 	
 	case UNMARK_SCENE:
-	  result.n_unmark_scene += (*r_it)->nLeafs;
+	  result.n_unknown_scene += (*r_it)->nLeafs;
 	  break;
 	  
 	case INVALID:
@@ -907,7 +907,7 @@ bool PMVOctreeHierarchicalRT::recursiveHRayTracing(BoostMatrix m, pmRayNode* roo
 	  break;
       }
   }
- // std::cout << "Occupied: " << n_occupied << " Unmark: " << n_unmark <<  " Unmark scene: " << n_unmark_scene <<  " occupied_scene:" << n_occupied_scene << " lost:" << ray_lost << std::endl;
+ // std::cout << "Occupied: " << n_occupied << " Unmark: " << n_unknown <<  " Unmark scene: " << n_unknown_scene <<  " occupied_scene:" << n_occupied_scene << " lost:" << ray_lost << std::endl;
 
   return true;
 }*/

@@ -29,11 +29,11 @@ VUFObjectFilters::VUFObjectFilters():VolumetricUtilityFunction()
 int VUFObjectFilters::evaluate(EvaluationResult& r)
 {     
   // New surface
-  if(r.n_unmark == 0 && r.n_unmark_scene ==0){
+  if(r.n_unknown == 0 && r.n_unknown_scene ==0){
 	return UNFEASIBLE_VIEW;
   } else {	
 	if(registrationConstraint(r)){
-	  r.evaluation = (float) r.n_unmark;
+	  r.evaluation = (float) r.n_unknown;
 	  return FEASIBLE_VIEW;
 	} else {
 	  r.evaluation = 0.0;

@@ -38,8 +38,8 @@ void EvaluationResultVector::saveVector(std::string file_name)
     //myfile << "";
     myfile << "# occupied occupied_scene unmark unmark_scene ray_lost computation_time" << std::endl;
     for(result_it = this->begin(); result_it != this->end(); result_it++){
-      myfile << result_it->n_occupied << " " << result_it->n_occupied_scene << " " << result_it->n_unmark 
-	      << " " << result_it->n_unmark_scene << " " << result_it->n_lost << " " << result_it->computation_time << std::endl;
+      myfile << result_it->n_occupied << " " << result_it->n_occupied_scene << " " << result_it->n_unknown 
+	      << " " << result_it->n_unknown_scene << " " << result_it->n_lost << " " << result_it->computation_time << std::endl;
     }
     myfile.close();
   }

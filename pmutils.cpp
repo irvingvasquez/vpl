@@ -1,7 +1,7 @@
-#include "vputils.h"
+#include "pmutils.h"
 
 
-bool vpUtils::raw2triangles(const std::string file_raw, const std::string file_tri)
+bool PMUtils::raw2triangles(const std::string file_raw, const std::string file_tri)
 {
   vpTriangleList tl;
   
@@ -12,7 +12,7 @@ bool vpUtils::raw2triangles(const std::string file_raw, const std::string file_t
 }
 
 
-bool vpUtils::saveCoordinatesAsVRML(std::vector< std::vector<double> > data, std::string file_name)
+bool PMUtils::saveCoordinatesAsVRML(std::vector< std::vector<double> > data, std::string file_name)
 {
   std::vector< std::vector<double> >::iterator it;
   octomap::Pointcloud pc;
@@ -28,7 +28,7 @@ bool vpUtils::saveCoordinatesAsVRML(std::vector< std::vector<double> > data, std
 }
 
 
-double vpUtils::euclideanDistance(std::vector< int > A, std::vector< int > B)
+double PMUtils::euclideanDistance(std::vector< int > A, std::vector< int > B)
 {
    std::vector<int>::iterator ita;
    std::vector<int>::iterator itb;
@@ -52,7 +52,7 @@ double vpUtils::euclideanDistance(std::vector< int > A, std::vector< int > B)
 }
 
 
-double vpUtils::euclideanDistance(std::vector< double > A, std::vector< double > B)
+double PMUtils::euclideanDistance(std::vector< double > A, std::vector< double > B)
 {
    std::vector<double>::iterator ita;
    std::vector<double>::iterator itb;
@@ -76,7 +76,7 @@ double vpUtils::euclideanDistance(std::vector< double > A, std::vector< double >
 }
 
 
-void vpUtils::printVector(std::vector< int > v)
+void PMUtils::printVector(std::vector< int > v)
 {
   std::vector<int>::iterator it;
   for(it = v.begin(); it!= v.end(); it++){
@@ -85,7 +85,7 @@ void vpUtils::printVector(std::vector< int > v)
   std::cout <<std::endl;
 }
 
-void vpUtils::printVector(std::vector< float > v)
+void PMUtils::printVector(std::vector< float > v)
 {
   std::vector<float>::iterator it;
   for(it = v.begin(); it!= v.end(); it++){
@@ -94,7 +94,7 @@ void vpUtils::printVector(std::vector< float > v)
   std::cout << std::endl;
 }
 
-void vpUtils::printVector(std::vector< double > v)
+void PMUtils::printVector(std::vector< double > v)
 {
   std::vector<double>::iterator it;
   for(it = v.begin(); it!= v.end(); it++){
@@ -105,7 +105,7 @@ void vpUtils::printVector(std::vector< double > v)
 
 
 
-bool vpUtils::utilsAreBoolVectorsEqual(std::vector< bool > A, std::vector< bool > B)
+bool PMUtils::utilsAreBoolVectorsEqual(std::vector< bool > A, std::vector< bool > B)
 {
   if(A.size() != B.size())
     return false;
@@ -125,7 +125,7 @@ bool vpUtils::utilsAreBoolVectorsEqual(std::vector< bool > A, std::vector< bool 
 }
 
 
-void vpUtils::utilsGetActivatedMotors(std::vector< int > u, std::vector< bool >& activations)
+void PMUtils::utilsGetActivatedMotors(std::vector< int > u, std::vector< bool >& activations)
 {
   activations.clear();
 //  activations.resize(u.size());
@@ -147,7 +147,7 @@ void vpUtils::utilsGetActivatedMotors(std::vector< int > u, std::vector< bool >&
 }
 
 
-int vpUtils::applyIncrement(const std::vector< int >& q_t, const std::vector< int >& control, std::vector< int >& q_tmas1)
+int PMUtils::applyIncrement(const std::vector< int >& q_t, const std::vector< int >& control, std::vector< int >& q_tmas1)
 {
     q_tmas1.clear();
     q_tmas1.resize(q_t.size());
@@ -164,7 +164,7 @@ int vpUtils::applyIncrement(const std::vector< int >& q_t, const std::vector< in
 }
 
 
-double vpUtils::compareFilePoints(std::string file_target, std::string file_reference, double gap)
+double PMUtils::compareFilePoints(std::string file_target, std::string file_reference, double gap)
 {
    //string file_a("/home/irving/projects/nbvPlanning-1.1/test/EVA/data/object_accumulated_points.dat");
    std::string file_a(file_target);

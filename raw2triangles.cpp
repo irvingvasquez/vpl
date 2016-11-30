@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "vputils.h"
+#include "pmutils.h"
 
 
 // When passing char arrays as parameters they must be pointers
@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 	string infile(argv[1]);
 	string outfile(argv[2]);
 	
-	vpUtils::raw2triangles(infile, outfile);
+	PMUtils::raw2triangles(infile, outfile);
 
         return 0;
     }

@@ -24,8 +24,8 @@ EvaluationResult::EvaluationResult()
   n_lost = 0;
   n_occupied = 0;
   n_occupied_scene = 0;
-  n_unmark = 0;
-  n_unmark_scene = 0;
+  n_unknown = 0;
+  n_unknown_scene = 0;
   evaluation = 0.0;
   computation_time = 0.0;
 }
@@ -36,8 +36,8 @@ void EvaluationResult::clear()
   n_lost = 0;
   n_occupied = 0;
   n_occupied_scene = 0;
-  n_unmark = 0;
-  n_unmark_scene = 0;
+  n_unknown = 0;
+  n_unknown_scene = 0;
   evaluation = 0.0;
   computation_time = 0.0;
 }
@@ -47,7 +47,7 @@ void EvaluationResult::addVoxelAmouts(EvaluationResult A)
   n_lost += A.n_lost;
   n_occupied += A.n_occupied;
   n_occupied_scene += A.n_occupied_scene;
-  n_unmark += A.n_unmark;
-  n_unmark_scene += A.n_unmark_scene;
+  n_unknown += A.n_unknown;
+  n_unknown_scene += A.n_unknown_scene;
 }
 

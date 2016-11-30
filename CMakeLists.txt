@@ -19,9 +19,9 @@ include_directories("${PROJECT_BINARY_DIR}")
 
 
 set(SRC_STRUCTURES coctreevpl.cpp)
-set(SRC_PARTIAL_MODEL partialmodelbase.cpp pmvolumetric.cpp pmvoctree.cpp pmvoctreeig.cpp)  
+set(SRC_PARTIAL_MODEL partialmodelbase.cpp pmvolumetric.cpp pmvoctree.cpp pmvoctreeig.cpp pmvoctreevasquez14.cpp)  
 # set(SRC_HRT pmraynode.cpp pmraytree.cpp pmvoctreehierarchicalrt.cpp)
-set(SRC_VIEW viewstructure.cpp vpfilereader.cpp vputils.cpp vptriangle.cpp vpvertex.cpp)
+set(SRC_VIEW viewstructure.cpp vpfilereader.cpp pmutils.cpp vptriangle.cpp vpvertex.cpp)
 set(SRC_OTHER evaluationresult.cpp evaluationresultvector.cpp volumetricutilityfunction.cpp vufobjectfilters.cpp)
 set(SRC_ALL ${SRC_PARTIAL_MODEL} ${SRC_VIEW} ${SRC_OTHER} ${SRC_STRUCTURES})
 #set(SRC_ALL ${SRC_HRT} )

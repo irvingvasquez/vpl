@@ -87,9 +87,9 @@ bool PMVOctreeVolume::rayTracingHTM(boost::numeric::ublas::matrix< double > m, E
      } else{
        if(isInDOV(origin, touched_position)){
 	  if(isInCapsule(touched_position)){
-	    result.n_unmark ++; 
+	    result.n_unknown ++; 
 	  } else if(isInScene(touched_position)){
-	    result.n_unmark_scene++;
+	    result.n_unknown_scene++;
 	  } else {
 	    result.n_lost++;
 	  }
@@ -102,7 +102,7 @@ bool PMVOctreeVolume::rayTracingHTM(boost::numeric::ublas::matrix< double > m, E
      delete direction;
   }
 //  std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
-// 		    << " Unk:" << result.n_unmark <<  " Unk_sce:" << result.n_unmark_scene 
+// 		    << " Unk:" << result.n_unknown <<  " Unk_sce:" << result.n_unknown_scene 
 // 		    << " lost:" << result.n_lost << std::endl;
 
   return true;

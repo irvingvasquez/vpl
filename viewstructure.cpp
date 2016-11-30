@@ -25,7 +25,7 @@ w(6),
 HTM(4,4)
 {
 n_occupied = 0;
-n_unmark = 0;
+n_unknown = 0;
 d = 0;
 type = 0;
 eval = 0.0;
@@ -438,7 +438,7 @@ std::ostream& operator << (std::ostream& out, ViewStructure& view)
   out << "Pose: " << "x:" << view.w[0] << "  y:" << view.w[1] << "  z:" << view.w[2] << "\t\t"
 	<< "  yaw(z):" << view.w[3] << "  pitch(y):" << view.w[4]   << "  roll(x):" << view.w[5] <<std::endl;	
   out << "Pose in deg: " << view.w[3] * 180/M_PI << " " << view.w[4] * 180/M_PI << " " << view.w[5] * 180/M_PI <<std::endl;
-  out << "Occupied:" << view.n_occupied << " \tUnknown:" << view.n_unmark  << " \tUtility:" << view.eval;
+  out << "Occupied:" << view.n_occupied << " \tUnknown:" << view.n_unknown  << " \tUtility:" << view.eval;
   	
   out <<std::endl;
   

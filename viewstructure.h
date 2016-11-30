@@ -27,12 +27,12 @@
 #include <fstream>
 #include <math.h>
 
-#include "vputils.h"
+#include "pmutils.h"
 
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp> 
 
-using namespace vpUtils;
+using namespace PMUtils;
 
 enum viewTypes { SURFACE_TYPE, EXPLORATION_TYPE};
 
@@ -64,7 +64,7 @@ int type;
 
 double eval;
 long int n_occupied;
-long int n_unmark;
+long int n_unknown;
 long int n_occplane;
 double d;
 

@@ -113,7 +113,7 @@ PMVOctree();
   
   virtual void getUnknownTriangles(vpTriangleList &tris);
   
-virtual double getUnknownVolume();
+  virtual double getUnknownVolume();
 
 protected:
   
@@ -127,7 +127,7 @@ protected:
    * Returns false if the origin is not free.
    * @param m [in] Homogenous transformation matrix. It will be applied to the sensor model
    * @param n_occupied [out]
-   * @param n_unmark [out]
+   * @param n_unknown [out]
    */
   bool rayTracingHTM(boost::numeric::ublas::matrix<double> m, EvaluationResult &result);
   

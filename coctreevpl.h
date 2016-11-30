@@ -39,7 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <list>
 #include <octomap/octomap.h>
 #include <octomap/ColorOcTree.h>
-#include "vputils.h"
+#include "pmutils.h"
 
 using namespace octomap;
 

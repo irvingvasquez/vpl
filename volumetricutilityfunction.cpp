@@ -27,7 +27,7 @@ VolumetricUtilityFunction::VolumetricUtilityFunction()
 
 int VolumetricUtilityFunction::evaluate(EvaluationResult& r)
 {
-  r.evaluation = r.n_unmark;
+  r.evaluation = r.n_unknown;
 }
 
 void VolumetricUtilityFunction::setMinimunOverlap(float m)
@@ -56,7 +56,7 @@ bool VUF_OverlapPercent::registrationConstraint(EvaluationResult r)
 {
   //return VolumetricUtilityFunction::registrationConstraint(r);
   float overlap;
-  overlap = (float) r.n_occupied /(r.n_occupied + r.n_unmark);
+  overlap = (float) r.n_occupied /(r.n_occupied + r.n_unknown);
   overlap = overlap * 100;
   
   //std::cout << r.n_occupied << " overlap: " << overlap << std::endl;
@@ -73,12 +73,12 @@ int VUF_OverlapPercent::evaluate(EvaluationResult& r)
 {
   //return VolumetricUtilityFunction::evaluate(r);
     // New surface
-  if(r.n_unmark == 0){
+  if(r.n_unknown == 0){
 	r.evaluation = 0.0;
 	return UNFEASIBLE_VIEW;
   } else {	
 	if(registrationConstraint(r)){
-	  r.evaluation = (float) r.n_unmark;
+	  r.evaluation = (float) r.n_unknown;
 	  return FEASIBLE_VIEW;
 	} else {
 	  r.evaluation = 0.0;

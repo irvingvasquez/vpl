@@ -130,9 +130,9 @@ int main(int argc, char **argv) {
       
       t1 = (double) (ends - start) / CLOCKS_PER_SEC;
       
-      if(rsl==FEASIBLE_VIEW && v.n_unmark > 16){
-	cout << "Octree evaluation: Unknown " << v.n_unmark << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t1 << std::endl;
-	myfile << v.n_unmark << "\t" << v.n_occupied << "\t" << t1 ;
+      if(rsl==FEASIBLE_VIEW && v.n_unknown > 16){
+	cout << "Octree evaluation: Unknown " << v.n_unknown << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t1 << std::endl;
+	myfile << v.n_unknown << "\t" << v.n_occupied << "\t" << t1 ;
 	
 	start = clock();
 	rsl = hrt_octree.evaluateView(v);
@@ -141,11 +141,11 @@ int main(int argc, char **argv) {
 	t2 = (double) (ends - start) / CLOCKS_PER_SEC ;
 	
 	if(rsl==FEASIBLE_VIEW)
-	  std::cout << "HRT Octree evaluation. Unknown " << v.n_unmark << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t2  << std::endl;
+	  std::cout << "HRT Octree evaluation. Unknown " << v.n_unknown << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t2  << std::endl;
 	else
-	  std::cout << "Unfeasible view.  Unknown " << v.n_unmark << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t2 << std::endl;
+	  std::cout << "Unfeasible view.  Unknown " << v.n_unknown << " occupied " << v.n_occupied << " eval " << v.eval << " time " << t2 << std::endl;
 	
-	myfile  << "\t" << v.n_unmark << "\t" << v.n_occupied << "\t" << t2;
+	myfile  << "\t" << v.n_unknown << "\t" << v.n_occupied << "\t" << t2;
 	
 	start = clock();
 	rsl = ig_octree.evaluateView(v);

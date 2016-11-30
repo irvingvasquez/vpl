@@ -296,9 +296,9 @@ bool PMVOctree::rayTracingHTM(boost::numeric::ublas::matrix< double > m, Evaluat
      } else if (answer == VXL_UNKNOWN || answer == VXL_UNKNOWN_NOT_CREATED){
        if(isInDOV(origin, touched_position)){
 	  if(isInCapsule(touched_position)){
-	    result.n_unmark ++; 
+	    result.n_unknown ++; 
 	  } else if(isInScene(touched_position)){
-	    result.n_unmark_scene++;
+	    result.n_unknown_scene++;
 	  } else {
 	    result.n_lost++;
 	  }
@@ -312,7 +312,7 @@ bool PMVOctree::rayTracingHTM(boost::numeric::ublas::matrix< double > m, Evaluat
      delete direction;
   }
 //  std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
-// 		    << " Unk:" << result.n_unmark <<  " Unk_sce:" << result.n_unmark_scene 
+// 		    << " Unk:" << result.n_unknown <<  " Unk_sce:" << result.n_unknown_scene 
 // 		    << " lost:" << result.n_lost << std::endl;
 
   //map->write("octree_painted.ot");
@@ -502,7 +502,7 @@ int PMVOctree::evaluateView(ViewStructure& v)
     /// Evaluate the result of the raytracing
     if( this->utilityFunction->evaluate(result) == FEASIBLE_VIEW){
 	v.eval = result.evaluation;
-	v.n_unmark = result.n_unmark;
+	v.n_unknown = result.n_unknown;
 	v.n_occupied = result.n_occupied;
 	return FEASIBLE_VIEW;
     }
@@ -554,13 +554,13 @@ void PMVOctree::evaluateCandidateViews()
       /// Evaluate the result of the raytracing
       if( this->utilityFunction->evaluate(result) == UNFEASIBLE_VIEW){
 	it_v = candidateViews.erase(it_v);
-	std::cout << "Unfeasible view" << std::endl;
+	//std::cout << "Unfeasible view" << std::endl;
 	removed_views ++;
       } else {
-	if(result.n_unmark > minUnknown)
+	if(result.n_unknown > minUnknown)
 	  stopCriteria = false;
 	
-	std::cout << "Evaluation " << i << ": " << result.evaluation << std::endl;
+	//std::cout << "Evaluation " << i << ": " << result.evaluation << std::endl;
 	it_v->eval = result.evaluation;
 	it_v ++;
       }

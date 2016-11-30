@@ -27,9 +27,9 @@ public:
 EvaluationResult();
 
 long int n_occupied;
-long int n_unmark;
+long int n_unknown;
 long int n_occupied_scene;
-long int n_unmark_scene;
+long int n_unknown_scene;
 long int n_lost;
 float evaluation;
 double computation_time;
@@ -42,8 +42,8 @@ void clear();
  * n_lost += A.n_lost;
   n_occupied += A.n_occupied;
   n_occupied_scene += A.n_occupied_scene;
-  n_unmark += A.n_unmark;
-  n_unmark_scene += A.n_unmark_scene;
+  n_unknown += A.n_unknown;
+  n_unknown_scene += A.n_unknown_scene;
  */
 void addVoxelAmouts(EvaluationResult A);
 };

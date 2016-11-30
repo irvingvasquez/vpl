@@ -24,6 +24,7 @@ PMVOctreeIG::PMVOctreeIG()
 
 }
 
+
 int PMVOctreeIG::evaluateView(ViewStructure& v)
 {
   if(!poitsToTheObject(v)){
@@ -42,13 +43,12 @@ int PMVOctreeIG::evaluateView(ViewStructure& v)
   if(valid_result){
     /// Evaluate the result of the raytracing
     if( this->utilityFunction->evaluate(result) == FEASIBLE_VIEW){
-	v.n_unmark = result.n_unmark;
+	v.n_unknown = result.n_unknown;
 	v.n_occupied = result.n_occupied;	
 	
 	return FEASIBLE_VIEW;
     }
   }
-  
   return UNFEASIBLE_VIEW;
 }
 
@@ -108,7 +108,7 @@ double PMVOctreeIG::rayTracingHTMIG(boost::numeric::ublas::matrix< double > m, E
   result.evaluation = ig_sum;
   
 //  std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
-// 		    << " Unk:" << result.n_unmark <<  " Unk_sce:" << result.n_unmark_scene 
+// 		    << " Unk:" << result.n_unknown <<  " Unk_sce:" << result.n_unknown_scene 
 // 		    << " lost:" << result.n_lost << std::endl;
 
   //map->write("octree_painted.ot");
