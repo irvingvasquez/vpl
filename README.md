@@ -1,4 +1,4 @@
-# Partial Model Library
+# View Planning Library
 
 Partial Model library provides a set of functions to handle visibility for next best view calculation. This library implements hierarchical and uniform ray tracing. Also this library implements the incorporation of sensor readings. PartialModelLib was developed by [J. Irving Vasquez-Gomez] under New BSD licence. This Library is based on the octomap library.
     
