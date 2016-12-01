@@ -2,7 +2,7 @@
 #include <mslvector.h>
 
 
-  template <typename T> 
+template <typename T> 
   void mslvector2stdvector(MSLVector &A, std::vector<T> &B){
     T value;
     B.clear();
@@ -10,9 +10,10 @@
       value = (T) A[i];
       B.push_back(value);
     } 
-  }
+}
   
-  template <typename T>
+  
+template <typename T>
   void stdvector2mslvector(std::vector<T> A, MSLVector &B){
     int size = A.size();
     MSLVector Aux(size);
@@ -20,4 +21,4 @@
       Aux[i] = A[i];
     }
     B = Aux;
-  }
+}

@@ -4,3 +4,4 @@ project(VPL)
 
 add_subdirectory(partialmodel)
 add_subdirectory(viewplanning)
+add_subdirectory(apps)
