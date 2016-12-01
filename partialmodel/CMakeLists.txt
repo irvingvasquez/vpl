@@ -55,8 +55,8 @@ add_library(PartialModel SHARED ${SRC_ALL})
 #add_executable(test_esfera_multi test_esfera_multioctree.cpp ${SRC_ALL})
 #target_link_libraries(test_esfera_multi ${LIBS_OCTOMAP}  ${LIBS_INIPARSER})
 
-add_executable(test_partialmodel test_partialmodel.cpp ${SRC_ALL})
-target_link_libraries(test_partialmodel ${LIBS_OCTOMAP}  ${LIBS_INIPARSER})
+#add_executable(test_partialmodel test_partialmodel.cpp ${SRC_ALL})
+#target_link_libraries(test_partialmodel ${LIBS_OCTOMAP}  ${LIBS_INIPARSER})
 
 #add_executable(paint_octree paint_octree.cpp ${SRC_ALL})
 #target_link_libraries(paint_octree ${LIBS_OCTOMAP}  ${LIBS_INIPARSER})
