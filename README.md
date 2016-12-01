@@ -1,16 +1,20 @@
 # View Planning Library
 
-Partial Model library provides a set of functions to handle visibility for next best view calculation. This library implements hierarchical and uniform ray tracing. Also this library implements the incorporation of sensor readings. PartialModelLib was developed by [J. Irving Vasquez-Gomez] under New BSD licence. This Library is based on the octomap library.
-    
 > CONACyT
 
 > Instituto Nacional de Astrofísica Óptica y Electrónica.
 
 > Centro de Innovación y Desarrollo Tecnológico 
 
+VPL(The acronym of view planning library) which provides a platform to develop view planning algorithms and perform comparisons quickly. VPL is written in C++ and it is based on a set of well known libraries: octomap and pcl. VPL provides the data structures to represent the space, provides visibility algorithms, implements several view planning algorithms reported in the literature and provides flexibility to link with range sensor simulators and motion planning algorithms. VPL was developed by [J. Irving Vasquez-Gomez] under New BSD licence.
+
+VPL is composed of 2 core libraries: PartialModel and ViewPlanning. PartialModel stores the information about object that is being reconstructed and provides a set of functions to handle visibility for next best view calculation. 
+ViewPlanning provides planning algorithms to achieve an automated reconstruction.
+
+
 ### Requirements
 
-Before installing Partial Model Library you need to install the following libraries:
+Before installing VPL you need to install the following libraries:
 - octomap
 - iniparser
 - boost
@@ -18,19 +22,18 @@ Before installing Partial Model Library you need to install the following librar
 
 ### Installation
 
-First, download and install [octomap] and [iniparser]. Modify the CMakeList.txt file to specify your installation addresses or follow the folder hierarchy that I have used. See "Full Next Best View Installation". 
+First, download and install [octomap] and [iniparser]. Modify the CMakeList.txt file to specify your installation addresses or follow the folder hierarchy that I have used. See "Full VPL Installation". 
 
 
-### Full Next Best View installation
+### Full VPL installation
 
-we recommend the following folder hierarchy:
+we recommend that VPL will be installed in the same folder that the required libraries:
 
-- ViewPlanning
-    - octomap-devel
-    - partialmodel
-    - iniparser
+- octomap-devel
+- iniparser
+- VPL
 
-To compile the library move to the partial model top folder and run:
+To compile the library move to the VPL top folder and run:
 
 ```sh
 cd partialmodel
