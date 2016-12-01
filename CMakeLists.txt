@@ -4,4 +4,5 @@ project(VPL)
 
 add_subdirectory(partialmodel)
 add_subdirectory(viewplanning)
+add_subdirectory(rangesimulator)
 add_subdirectory(apps)

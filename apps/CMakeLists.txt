@@ -63,9 +63,9 @@ set(LIBS_OCTOMAP octomap octomath octovis)
 #---------------- range Simulator ---------
   message("APPS will compile with octree range simulator")
   set(SRC_OCTREE_RSIM rssraytracingoctree.cpp)
-  include_directories(${RELATED_DIRS_DIRECTORY}/nbvrangesimulator)
-  link_directories(${RELATED_DIRS_DIRECTORY}/nbvrangesimulator/lib)
-  set(LIBS_RANGE_SIMULATOR rangeSimulator)
+  include_directories(${VPL_SOURCE_DIR}/rangesimulator)
+  link_directories(${VPL_SOURCE_DIR}/lib)
+  set(LIBS_RANGE_SIMULATOR RangeSimulator)
 endif()
 
 
