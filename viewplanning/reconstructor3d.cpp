@@ -266,7 +266,7 @@ bool Reconstructor3D::stopCriteriaSatisfied()
   if(waitForUser){
       
     std::cout << "Continue reconstruction? [y/n]:";
-    cin >> a;
+    std::cin >> a;
     if (a == 'n')
       return true;
     else
@@ -372,13 +372,13 @@ void Reconstructor3D::saveData()
 
 bool Reconstructor3D::startLogFile()
 {
-  ofstream file;
+  std::ofstream file;
   std::string file_name(dataFolder);
   file_name.append("/planning.log");
   bool append = false;
   
   if(append){
-    file.open(file_name.c_str(),ios_base::app);
+    file.open(file_name.c_str(),std::ios_base::app);
   }else {
     file.open(file_name.c_str());
   }
@@ -405,13 +405,13 @@ void Reconstructor3D::setPartialModel(PartialModelBase* pm)
 
 bool Reconstructor3D::saveToLogFile()
 {
-  ofstream file;
+  std::ofstream file;
   std::string file_name(dataFolder);
   file_name.append("/planning.log");
   bool append = true;
   
   if(append){
-    file.open(file_name.c_str(),ios_base::app);
+    file.open(file_name.c_str(),std::ios_base::app);
   }else {
     file.open(file_name.c_str());
   }

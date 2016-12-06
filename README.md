@@ -6,7 +6,7 @@
 
 > Centro de Innovación y Desarrollo Tecnológico 
 
-VPL(The acronym of view planning library) which provides a platform to develop view planning algorithms and perform comparisons quickly. VPL is written in C++ and it is based on a set of well known libraries: octomap and pcl. VPL provides the data structures to represent the space, provides visibility algorithms, implements several view planning algorithms reported in the literature and provides flexibility to link with range sensor simulators and motion planning algorithms. VPL was developed by [J. Irving Vasquez-Gomez] under New BSD licence.
+VPL(The acronym of view planning library) provides a platform to develop view planning algorithms and perform comparisons quickly. VPL is written in C++ and it is based on a set of well known libraries: octomap and pcl. VPL provides the data structures to represent the space, provides visibility algorithms, implements several view planning algorithms reported in the literature and provides flexibility to link with range sensor simulators and motion planning algorithms. VPL was developed by [J. Irving Vasquez-Gomez] under New BSD licence.
 
 VPL is composed of 2 core libraries: PartialModel and ViewPlanning. PartialModel stores the information about object that is being reconstructed and provides a set of functions to handle visibility for next best view calculation. 
 ViewPlanning provides planning algorithms to achieve an automated reconstruction.
@@ -36,7 +36,7 @@ we recommend that VPL will be installed in the same folder that the required lib
 To compile the library move to the VPL top folder and run:
 
 ```sh
-cd partialmodel
+cd VPL
 mkdir build
 cd build    
 cmake ..

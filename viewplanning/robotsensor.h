@@ -87,13 +87,13 @@ RobotSensor(vpRobot *r, RangeSensor *s);
      * Returns the same set of views but with HTM filled.
      * You can also use a getViewsFromComfigurations
      */
-    void computeViewsFromConfigurations(list<ViewStructure> &views);
+    void computeViewsFromConfigurations(std::list<ViewStructure> &views);
     
     /**
      * Receives a set of configurations and returns a set of views.
      * A view include besides the configuration, the Homogenous Transformation Matrix in Workspace
      */
-    void getViewsFromComfigurations(list<ViewStructure> &views, list< std::vector<double> > configurations);
+    void getViewsFromComfigurations(std::list<ViewStructure> &views, std::list< std::vector<double> > configurations);
     
     /**
     * Gets a random state between lower and upper states

@@ -5,10 +5,9 @@
 #include <vector>
 #include <mrpt/base/include/mrpt/poses.h>
 #include <boost/numeric/ublas/matrix.hpp>
-
+#include <viewstructure.h>
 
 using namespace mrpt::math;
-using namespace std;
 
 namespace vpl{
   
@@ -19,6 +18,8 @@ namespace vpl{
   bool userContinues();
   
   bool readTransformationMatrix(std::string filename, mrpt::poses::CPose3D &pose);
+  
+
 }
 
 

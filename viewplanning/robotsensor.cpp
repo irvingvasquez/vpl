@@ -144,7 +144,7 @@ void RobotSensor::convertPointsToRobotReference(std::vector< mrpt::poses::CPoint
 
 bool RobotSensor::saveLastPointCloud(std::string& file_name, double factor)
 {
-  ofstream file;
+  std::ofstream file;
   std::string aux = file_name;
   //string name;
   
@@ -192,7 +192,7 @@ bool RobotSensor::saveLastPointCloudMts(std::string& file_name)
 
 bool RobotSensor::saveSensorTrajectory(std::string& file_name, double factor)
 {
-  ofstream file;
+  std::ofstream file;
  
   std::stringstream extension;
   extension << "_" <<  pointCloudIdCounter << ".dat";
@@ -230,9 +230,9 @@ bool RobotSensor::saveSensorTrajectoryMts(std::string& file_name)
 }
 
 
-void RobotSensor::computeViewsFromConfigurations(list< ViewStructure >& views)
+void RobotSensor::computeViewsFromConfigurations(std::list< ViewStructure >& views)
 {
-   list<ViewStructure>::iterator view_it;
+   std::list<ViewStructure>::iterator view_it;
   std::vector<int> configuration;
   boost::numeric::ublas::matrix<double> HTM;
   boost::numeric::ublas::matrix<double> htmRobot;
@@ -251,9 +251,9 @@ void RobotSensor::computeViewsFromConfigurations(list< ViewStructure >& views)
 }
 
 
-void RobotSensor::getViewsFromComfigurations(list< ViewStructure >& views, list< std::vector< double > > configurations)
+void RobotSensor::getViewsFromComfigurations(std::list< ViewStructure >& views, std::list< std::vector< double > > configurations)
 {
-  list< std::vector<double> >::iterator it_q;
+  std::list< std::vector<double> >::iterator it_q;
   ViewStructure view;
 
   boost::numeric::ublas::matrix<double> HTM;

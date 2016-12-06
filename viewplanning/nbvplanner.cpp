@@ -155,5 +155,3 @@ bool NBVPlanner::savePlannerData()
   return true;
 }
 
-
-

@@ -142,7 +142,7 @@ bool vprFreeFlyer::init()
 }
 
 
-void vprFreeFlyer::generatePointedViews(list< ViewStructure > &viewList, std::string points_file, std::vector< double > object_center, double radio)
+void vprFreeFlyer::generatePointedViews(std::list< ViewStructure > &viewList, std::string points_file, std::vector< double > object_center, double radio)
 {
   std::vector< std::vector<double> > points;
   std::vector< std::vector<double> >::iterator point_it;

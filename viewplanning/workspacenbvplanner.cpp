@@ -25,7 +25,7 @@ WorkspaceNBVPlanner::WorkspaceNBVPlanner(RobotSensor* rs, PartialModelBase* pm):
 
 bool WorkspaceNBVPlanner::planNBV(ViewStructure& v)
 {
-  list<ViewStructure> evaluated_views;
+  std::list<ViewStructure> evaluated_views;
   
   partialModel->readCandidateViews(viewSphereFileName);
   partialModel->evaluateCandidateViews();
@@ -90,8 +90,8 @@ bool WorkspaceNBVPlanner::init()
   evaluatedViewsFile.assign(iniparser_getstring(ini_file, "workSpacePlanner:evaluated_views", "evaluated_views.vs"));
   evaluatedViewsFile = dataFolder + "/" + evaluatedViewsFile;
   
-  list<ViewStructure> pointedViews;
-  list< std::vector<double> > configurations;
+  std::list<ViewStructure> pointedViews;
+  std::list< std::vector<double> > configurations;
   
   generatePointedConfigurations(configurations, sphere_points, objectCenter, radio);
   robotWithSensor->getViewsFromComfigurations(pointedViews, configurations);
@@ -103,7 +103,7 @@ bool WorkspaceNBVPlanner::init()
 }
 
 
-void WorkspaceNBVPlanner::generatePointedConfigurations(list< std::vector< double > >& configurations, std::string points_file, std::vector< double > object_center, double radio)
+void WorkspaceNBVPlanner::generatePointedConfigurations(std::list< std::vector< double > >& configurations, std::string points_file, std::vector< double > object_center, double radio)
 {
   std::vector< std::vector<double> > points;
   std::vector< std::vector<double> >::iterator point_it;

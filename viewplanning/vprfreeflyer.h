@@ -61,7 +61,7 @@ virtual bool init();
    * Generates a set of views which point to a object
    * @param radio in mts
   */
-  void generatePointedViews(list< ViewStructure > &viewList, std::string points_file, std::vector< double > object_center, double radio);
+  void generatePointedViews(std::list< ViewStructure > &viewList, std::string points_file, std::vector< double > object_center, double radio);
   
 virtual void updateRobotLocalization(mrpt::poses::CPose3D transformation);
   

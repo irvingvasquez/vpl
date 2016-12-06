@@ -85,7 +85,7 @@ bool vpl::userContinues()
   
   while(!ok){
     std::cout << "Continue? [y/n]:";
-    cin >> a;
+    std::cin >> a;
     if (a == 'n') {
       return_value = false;
       ok = true;
@@ -161,4 +161,6 @@ bool vpl::readTransformationMatrix(std::string filename, mrpt::poses::CPose3D& p
   
   return true;
 }
+
+
 

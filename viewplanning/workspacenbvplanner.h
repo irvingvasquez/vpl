@@ -40,16 +40,16 @@ protected:
   // radio of the view sphere
   double radio;
   
-//   /**
-//    * Generates a set of views which point to a object
-//    * @param radio in mts
-//   */
-//   void generatePointedViews(list< ViewStructure > &viewList, std::string points_file, std::vector< double > object_center, double radio);
+  //   /**
+  //    * Generates a set of views which point to a object
+  //    * @param radio in mts
+  //   */
+  //   void generatePointedViews(list< ViewStructure > &viewList, std::string points_file, std::vector< double > object_center, double radio);
   
   /**
    * only works in workspace. And for freeflyer robot.
    */
-  void generatePointedConfigurations(list <vector <double> > &configurations, std::string points_file, std::vector<double> object_center, double radio);
+  void generatePointedConfigurations(std::list <vector <double> > &configurations, std::string points_file, std::vector<double> object_center, double radio);
 };
 
 #endif // WORKSPACENBVPLANNER_H

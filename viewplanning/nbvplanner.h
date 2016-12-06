@@ -84,6 +84,7 @@ protected:
   std::vector<float> motionPTimes;
   std::vector<double> distances_per_it;
   
+  
 };
 
 #endif // NBVPLANNER_H
