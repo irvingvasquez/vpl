@@ -2,7 +2,7 @@
 #ifndef RSSRAYTRACINGOCTREE_H
 #define RSSRAYTRACINGOCTREE_H
 
-#include <rangesimulatoroctree.h>
+#include "rangesimulatoroctree.h"
 #include <rangesensor.h>
 #include <iniparser.h>
 

@@ -5,7 +5,7 @@ project(rangesimulator)
 ########### First configure the following ###########
 set(RELATED_DIRS_DIRECTORY ${VPL_SOURCE_DIR}/..)
 
-set(SRC rangesimulatorbase.cpp rangesimulatoroctree.cpp reconstructionbenchmark.cpp recbenchmarklist.cpp)
+set(SRC rangesimulatorbase.cpp rangesimulatoroctree.cpp reconstructionbenchmark.cpp recbenchmarklist.cpp rssraytracingoctree.cpp)
 
  #---------------- View Planning Library ---------
 include_directories(${VPL_SOURCE_DIR}/viewplanning)

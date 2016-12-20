@@ -112,6 +112,8 @@ bool PartialModelBase::init()
   
   std::cout << "-------------------------------------" << std::endl;
   
+  delete ini_file;
+  
   return true;
 }
 
