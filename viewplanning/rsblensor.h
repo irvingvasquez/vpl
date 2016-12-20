@@ -17,8 +17,8 @@
 */
 
 
-#ifndef RSSIMULATED_H
-#define RSSIMULATED_H
+#ifndef RSBLENSOR_H
+#define RSBLENSOR_H
 
 #include "rangesensor.h"
 
@@ -26,11 +26,11 @@
  * Simulates a range sensor by reading the scan_file
  * This Classs was usually tested with the blensor simulator
  */
-class RSSimulated: public RangeSensor
+class RSBlensor: public RangeSensor
 {
 public:
   
-RSSimulated();
+RSBlensor();
 
 virtual bool init();
 
@@ -42,4 +42,4 @@ protected:
   
 };
 
-#endif // RSSIMULATED_H
+#endif // RSBLENSOR_H

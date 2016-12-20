@@ -3,6 +3,7 @@
 #include <rangesensor.h>
 #include <reconstructor3d.h>
 #include <robotsensor.h>
+#include <rsblensor.h>
 #include <robsennotransformation.h>
 #include <vpdefinitions.h>
 #include <vplutils.h>

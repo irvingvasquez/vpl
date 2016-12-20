@@ -20,6 +20,9 @@
 #ifndef EVALUATIONRESULT_H
 #define EVALUATIONRESULT_H
 
+/*
+ * Structure that describes how much voxels of each type were collected
+ */
 class EvaluationResult
 {
 

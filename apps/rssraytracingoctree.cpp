@@ -10,7 +10,7 @@ RSSRayTracingOCtree::RSSRayTracingOCtree()
 
 bool RSSRayTracingOCtree::init()
 {
-  RSSimulated::init();
+  RangeSensor::init();
   
   std::string rays_file;
   rays_file.assign(configFolder);

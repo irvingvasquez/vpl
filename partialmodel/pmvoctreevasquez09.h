@@ -26,75 +26,27 @@
  * 
  */
 
-#include "pmvoctreevasquez14.h"
+#ifndef PMVOCTREEVASQUEZ09_H
+#define PMVOCTREEVASQUEZ09_H
 
+#include "pmvoctree.h"
 
-PMVOctreeVasquez14::PMVOctreeVasquez14(double alphaOccupied, double alphaUnknown)
-{
-  alpha_occupied = alphaOccupied;
-  alpha_unknown = alphaUnknown;
-}
-
-
-int PMVOctreeVasquez14::evaluateView(ViewStructure& v)
-{
-  if(!poitsToTheObject(v)){
-    //cout << "Sorry no points :(" << std::endl;
-    return UNFEASIBLE_VIEW;
-  }
-  
-  EvaluationResult result;
-  
-  bool valid_result = rayTracingHTM(v.HTM, result);
-  
-  double f_area;
-  double f_occlusion;
-  double f_navigation;
-  double f_quality;
-  double total;
-  
-  if(valid_result){
-    /// Evaluate the result of the raytracing
-    total = (double)(result.n_occupied + result.n_unknown);
-    f_area = functionF(result.n_occupied/total, alpha_occupied) + functionF(result.n_unknown/total, alpha_unknown);
-    f_quality = 0;
-    f_navigation = 0;
-    f_occlusion = alpha_unknown/rays.size();
-    
-    // f_utility
-    v.eval = f_area * (f_quality + f_navigation + f_occlusion);
-    
-    return FEASIBLE_VIEW;
-  }
-  
-  return UNFEASIBLE_VIEW;
-}
-
-
-double PMVOctreeVasquez14::functionF(double x, double alpha)
+class PMVOctreeVasquez09 : public PMVOctree
 {
   
-  double a0,a1,a2,a3,amuc,y;
+public:
+  PMVOctreeVasquez09(double alphaOccupied, double alphaUnknown);
   
-  if(x>= 0 && x<=alpha){
-    a0 = -2/(alpha*alpha*alpha); 
-    a1 = 3/(alpha*alpha);
-    y = a0 * x*x*x + a1 * x*x;
-  }
-  else{
-    if(x>alpha && x<=1){
-      amuc = (alpha - 1)*(alpha - 1)*(alpha - 1);
-      a0 = -2/amuc;
-      a1 = (3*(alpha+1))/amuc;
-      a2 = -(6*alpha)/amuc;
-      a3 = (3*alpha-1)/amuc;
-      y = a0*x*x*x + a1*x*x + a2*x + a3;
-    }
-    else{
-      y = 0;
-    }
-  }
-  
-  return y;
-}
+  virtual int evaluateView(ViewStructure &v);
 
+protected:
+
+  double alpha_occupied;
+  double alpha_unknown; // named as occplane 
+
+private:
+  double functionF(double x, double alpha);
+  
+};
+
+#endif // PMVOCTREEVASQUEZ09_H

@@ -1,21 +1,12 @@
 #include <partialmodels.h>
 #include <vp.h>
+
 #include "rssraytracingoctree.h"
+
 
 int main(int argc, char **argv) {
     std::cout << "Consejo Nacional de Ciencia y Tecnología" << std::endl;
     std::cout << "Instituto Nacional de Astrofísica Óptica y Electrónica" << std::endl;
-    
-    
-    std::string config_file("probando");
-    config_file.append("/");
-    config_file.append("rangeSensor.ini");
-    dictionary * ini_file;
-    ini_file = iniparser_load(config_file.c_str());
-    if (ini_file ==NULL ) {
-	fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
-    }
-    delete ini_file;
     
     // octree resolution
     double resolution = 0.02;
@@ -71,7 +62,8 @@ int main(int argc, char **argv) {
     
     
     // --------------- Partial Model ------------
-    PartialModelBase *partial_model = new PMVOctree();
+    float alphaOcc = 0.2, alphaUnk = 0.8;
+    PartialModelBase *partial_model = new PMVOctreeVasquez09(alphaOcc, alphaUnk);
     
     partial_model->setConfigFolder(config_folder);
     partial_model->setDataFolder(data_folder);

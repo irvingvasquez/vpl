@@ -7,12 +7,13 @@ set(OCTREE_RANGE_SIMULATOR TRUE)
 set(FREE_FLYER_APP TRUE)
 set(RELATED_DIRS_DIRECTORY ${VPL_SOURCE_DIR}/..)
 
+
 #set(SRC_EXT_ROBOTS vprobot.cpp vprfreeflyer.cpp)
 #set(SRC_ROBOTS vprobot.cpp robotmobile.cpp robotarmmdh.cpp vprfreeflyer.cpp robotcomposed.cpp)
 #set(REALROBOT_SRC robotpioneer.cpp robotkatana.cpp)
 
 
-set(SRC_EXT_SENSORS rssimulated.cpp)
+set(SRC_EXT_SENSORS)
 #set(SRC_SENSORS rangesensor.cpp rskinect.cpp rssimulated.cpp)
 
 
@@ -29,12 +30,10 @@ set(SRC_EXT_SENSORS rssimulated.cpp)
 set(SRC_EXTENDED ${SRC_EXT_ROBOTS} ${SRC_EXT_SENSORS} ${SRC_EXT_NBVPLANNER} ${SRC_EXT_ROBOTSENSOR} ${SRC_EXT_RECONSTRUCTOR})
 
 
-
 # ---------------- INIPARSER  -----------------
 include_directories(${RELATED_DIRS_DIRECTORY}/iniparser/src)
 link_directories(${RELATED_DIRS_DIRECTORY}/iniparser)
 set(LIBS_INIPARSER iniparser)
- 
 
  #---------------- View Planning Library ---------
 include_directories(${VPL_SOURCE_DIR}/viewplanning)
@@ -62,6 +61,7 @@ set(LIBS_OCTOMAP octomap octomath octovis)
  if(OCTREE_RANGE_SIMULATOR)
 #---------------- range Simulator ---------
   message("APPS will compile with octree range simulator")
+  #message(${CORE_LIBS})
   set(SRC_OCTREE_RSIM rssraytracingoctree.cpp)
   include_directories(${VPL_SOURCE_DIR}/rangesimulator)
   link_directories(${VPL_SOURCE_DIR}/lib)
@@ -73,9 +73,14 @@ if(FREE_FLYER_APP)
   if(OCTREE_RANGE_SIMULATOR)
     #add_executable(vp_simulation_example vp_simulation_example.cpp ${SRC_ALL} ${SRC_OCTREE_RSIM})
     #target_link_libraries(vp_simulation_example ${ALL_LIBS} ${LIBS_RANGE_SIMULATOR})
+    
+    
   
-    add_executable(test_freeflyer test_freeflyer.cpp ${SRC_EXTENDED} ${SRC_OCTREE_RSIM})
-    target_link_libraries(test_freeflyer ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
+    add_executable(test_freeflyer test_freeflyer.cpp ${SRC_OCTREE_RSIM})
+    target_link_libraries(test_freeflyer ${LIBS_INIPARSER} ${LIBS_VIEW_PLANNING} ${LIBS_OCTOMAP} ${LIBS_MRPT} ${LIBS_RANGE_SIMULATOR})
+    
+    #add_executable(test_freeflyer_vasquez09 test_freeflyer_vasquez09.cpp)
+    #target_link_libraries(test_freeflyer_vasquez09 ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
   endif()
 endif()
 

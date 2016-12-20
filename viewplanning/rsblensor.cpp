@@ -17,16 +17,16 @@
 */
 
 
-#include "rssimulated.h"
+#include "rsblensor.h"
 
 
-RSSimulated::RSSimulated():RangeSensor()
+RSBlensor::RSBlensor():RangeSensor()
 {
 
 }
 
 
-bool RSSimulated::init()
+bool RSBlensor::init()
 {
   RangeSensor::init();
   
@@ -52,7 +52,7 @@ bool RSSimulated::init()
 
 
 
-long int RSSimulated::getPoints(std::vector< mrpt::poses::CPoint3D >& points)
+long int RSBlensor::getPoints(std::vector< mrpt::poses::CPoint3D >& points)
 {
   /// Read points from file
   

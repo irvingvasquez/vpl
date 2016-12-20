@@ -2,13 +2,14 @@
 #ifndef RSSRAYTRACINGOCTREE_H
 #define RSSRAYTRACINGOCTREE_H
 
-#include "rssimulated.h"
 #include <rangesimulatoroctree.h>
+#include <rangesensor.h>
+#include <iniparser.h>
 
 /**
  * Range sensor simulated with raytracing over octree
  */
-class RSSRayTracingOCtree: public RSSimulated
+class RSSRayTracingOCtree: public RangeSensor
 {
 public:
   RSSRayTracingOCtree();
@@ -18,7 +19,7 @@ public:
   virtual long int getPoints(std::vector< mrpt::poses::CPoint3D >& points);
 
 protected:
-  std::string scan_file;
+  //std::string scan_file;
   
   RangeSimulatorOctree rangeSensor;
 };

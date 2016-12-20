@@ -18,7 +18,7 @@
 
 
 #include "rangesensor.h"
-#include <boost/numeric/ublas/triangular.hpp>
+
 
 RangeSensor::RangeSensor()
 {
