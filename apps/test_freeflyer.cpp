@@ -11,6 +11,7 @@ int main(int argc, char **argv) {
   
     std::cout << "Consejo Nacional de Ciencia y Tecnología" << std::endl;
     std::cout << "Instituto Nacional de Astrofísica Óptica y Electrónica" << std::endl;
+    std::cout << "Centro de Innovación y Desarrollo Tecnológico en Cómputo" << std::endl;
     
     // octree resolution
     double resolution = 0.02;

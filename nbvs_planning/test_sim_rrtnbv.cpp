@@ -10,21 +10,28 @@
 #include "robotcomposed.h"
 
 int main(int argc, char **argv) {
+    
+    std::cout << "Consejo Nacional de Ciencia y Tecnología" << std::endl;
+    std::cout << "Instituto Nacional de Astrofísica Óptica y Electrónica" << std::endl;
+    std::cout << "Centro de Innovación y Desarrollo Tecnológico en Cómputo" << std::endl;
+    
+  
     //std::cout << "Hello, world!" << std::endl;
     double resolution = 0.02;
     double distance = 1.5;
     
     // ./program folder 
     
-    if (argc != 2) { // Check the value of argc. If not enough parameters have been passed, inform user and exit.
-        std::cout << "Usage is ./program <folder> \nNote: The folder must contain inside the folders config and data. \nExample: ./program /home/robot"; // Inform the user of how to use the program
-        //std::cin.get();
+    if (argc != 3) { // Check the value of argc. If not enough parameters have been passed, inform user and exit.
+        std::cout << "Usage is ./program <folder> <ref_model>\n Note: The folder must contain inside the folders config and data. \n<ref_model> describes the points of the target model in order to calculate the coverage.";
+	std:: cout << "\nExample:  ./test_sim_rrtnbv ../../data_example/rrt_nbvs ../../data_example/rrt_nbvs/config/dragon_ref_smalltable_nobase.dat\n"; 
+	// Inform the user of how to use the program
         exit(0);
     } 
     
+    
     std::string main_folder(argv[1]);
-    //cout << main_folder << std::endl;
-    //exit(0);
+    std::string ref_model(argv[2]);
     
     std::string config_folder(main_folder);
     config_folder.append("/config");
@@ -34,14 +41,15 @@ int main(int argc, char **argv) {
     
     std::string rays_file(main_folder);
     rays_file.append("/data/rays_0.dat");
-    std::string rays_file1(main_folder);
-    rays_file1.append("/data/rays_1.dat");
-    std::string rays_file2(main_folder);
-    rays_file2.append("/data/rays_2.dat");
-    std::string rays_file3(main_folder);
-    rays_file3.append("/data/rays_3.dat");
-    std::string rays_file4(main_folder);
-    rays_file4.append("/data/rays_4.dat");
+    
+//     std::string rays_file1(main_folder);
+//     rays_file1.append("/data/rays_1.dat");
+//     std::string rays_file2(main_folder);
+//     rays_file2.append("/data/rays_2.dat");
+//     std::string rays_file3(main_folder);
+//     rays_file3.append("/data/rays_3.dat");
+//     std::string rays_file4(main_folder);
+//     rays_file4.append("/data/rays_4.dat");
 
     
     // ---------------- robot ---------------------
@@ -76,11 +84,11 @@ int main(int argc, char **argv) {
     s->setDataFolder(data_folder);
     s->init();
     s->saveRaysForResolution(rays_file, resolution, distance);
-    s->saveRaysForResolution(rays_file1, resolution * 2, distance);
-    s->saveRaysForResolution(rays_file2, resolution * 4, distance);
-    s->saveRaysForResolution(rays_file3, resolution * 8, distance);
-    s->saveRaysForResolution(rays_file4, resolution * 16, distance);
-    
+//     s->saveRaysForResolution(rays_file1, resolution * 2, distance);
+//     s->saveRaysForResolution(rays_file2, resolution * 4, distance);
+//     s->saveRaysForResolution(rays_file3, resolution * 8, distance);
+//     s->saveRaysForResolution(rays_file4, resolution * 16, distance);
+//     
     
     // ---------------- RobotSensor ----------------
     RobotSensor *rs = new RobSenNoTransformation(r, s);
@@ -112,8 +120,10 @@ int main(int argc, char **argv) {
     rec->setPartialModel(partial_model);
     rec->setConfigFolder(config_folder);
     rec->setDataFolder(data_folder);
-    rec->ref_obj_pts_fn.assign("/home/irving/Blensor/scenes/bunny_ref_smalltable_nobase.dat");
+    // specify the file that will be the reference to calculate the coverage
+    rec->ref_obj_pts_fn.assign(ref_model);
     rec->tar_pts_fn.assign(partial_model->object_points_filename);
+    
     rec->init(); 
     rec->solveReconstruction();
     

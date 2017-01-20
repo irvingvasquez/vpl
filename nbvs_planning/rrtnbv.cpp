@@ -109,6 +109,7 @@ bool RRTNBV::EvaluateCandidate(MSLNode* node, MSLNode* parent)
   //double d = weightedDistance(this->P->InitialState, x);
   double d_accumulated = parent->accumulatedDistance + d;
   node->accumulatedDistance = d_accumulated;
+  
 
   
   ViewStructure v;

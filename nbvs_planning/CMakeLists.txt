@@ -70,7 +70,7 @@ include_directories(${RELATED_DIRS_DIRECTORY}/nbvmotionplanner)
 link_directories(${RELATED_DIRS_DIRECTORY}/nbvmotionplanner/lib)
 set(LIBS_MOTION_PLANNING MotionPlanning)
 
- 
+
 # #########################################################
 # # PQP
 # #########################################################
@@ -122,6 +122,7 @@ add_executable(test_sim_rrtnbv test_sim_rrtnbv.cpp ${SRC})
 target_link_libraries(test_sim_rrtnbv ${LIBS_ALL})
 
 
+
 #if(FREE_FLYER_APP)
 #  if(OCTREE_RANGE_SIMULATOR)
     #add_executable(vp_simulation_example vp_simulation_example.cpp ${SRC_ALL} ${SRC_OCTREE_RSIM})
@@ -134,9 +135,6 @@ target_link_libraries(test_sim_rrtnbv ${LIBS_ALL})
     #target_link_libraries(test_freeflyer_vasquez09 ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
 #  endif()
 #endif()
-
-
-
  
  
 
