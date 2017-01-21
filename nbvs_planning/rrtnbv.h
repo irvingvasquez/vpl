@@ -25,7 +25,7 @@
 #include "robotsensor.h"
 #include <viewstructure.h>
 #include <volumetricutilityfunction.h>
-
+#include <list> //rem
 
 
 class RRTNBV : public RRT
@@ -60,6 +60,8 @@ public:
 
   RRTNBV(Problem* problem);
   RRTNBV(Problem* problem, std::string config_folder);
+  
+  std::list< list<double> > t_evaluations; // rem
 };
 
 #endif // RRTNBV_H

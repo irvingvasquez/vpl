@@ -97,11 +97,19 @@ double RRTNBV::weightedDistance(const MSLVector& x1, const MSLVector& x2)
 
 bool RRTNBV::EvaluateCandidate(MSLNode* node, MSLNode* parent)
 {
+  bool success = false;
+  
   MSLVector x = node->State();
   std::vector<double> st(x.dim());
   for(int i = 0; i<x.dim();i++){
     st[i] = x[i];
   }
+  
+  MSLVector x_parent = parent->State(); // rem
+  std::vector<double> st_parent(x.dim()); // rem
+  for(int i = 0; i<x_parent.dim();i++){ // rem
+    st_parent[i] = x_parent[i]; // rem
+  } // rem
   
   //calcular la distancia
   MSLVector parent_x = parent->State();
@@ -110,16 +118,26 @@ bool RRTNBV::EvaluateCandidate(MSLNode* node, MSLNode* parent)
   double d_accumulated = parent->accumulatedDistance + d;
   node->accumulatedDistance = d_accumulated;
   
-
+  // TODO: rem, save or display the line between parent and node and evaluation
+  std::list<double> line; // rem
   
   ViewStructure v;
+  ViewStructure v_parent; //rem
   robotWithSensor->getViewFromState(v, st);
+  
+  robotWithSensor->getViewFromState(v_parent, st_parent); // rem
   //cout << v << std::endl;
+  line.insert(line.end(),v_parent.w.begin(),v_parent.w.end()); // rem 
+  line.insert(line.end(),v.w.begin(), v.w.end()); // rem
+  
+  
   if(partialModel->evaluateView(v)==FEASIBLE_VIEW){
       
       double f_dist = 1 / (1+d_accumulated);
       v.d = d_accumulated;
       v.eval = v.eval * f_dist;
+      
+      line.push_back(v.eval); // rem
       
       if(v.eval > nbv_v.eval){
 	//cout << parent_x << std::endl;
@@ -136,12 +154,17 @@ bool RRTNBV::EvaluateCandidate(MSLNode* node, MSLNode* parent)
 // 	cout << node->accumulatedDistance << std::endl;
 	
 // 	getchar();
-	
-	return true;
+	success = true;
+	//return true;
       }
+    } else {
+      line.push_back(0); // rem
+      success = false;
     }
     
-    return false;
+    t_evaluations.push_back(line); // rem
+    
+    return success;
 }
 
 
@@ -173,6 +196,8 @@ bool RRTNBV::Extend(const MSLVector& x, MSLTree* t, MSLNode*& nn, bool forward, 
 
 bool RRTNBV::Plan()
 {
+  t_evaluations.clear(); // rem
+  
   int i;
   double d;
   MSLNode *n,*nn,*n_goal;
@@ -213,7 +238,14 @@ bool RRTNBV::Plan()
 
   CumulativePlanningTime += ((double)used_time(t));
   std::cout << "Planning Time: " << CumulativePlanningTime << "s\n"; 
-
+  
+  
+  //save t_evaluations
+  vpFileReader file_r; // rem
+  std::cout << "saving evaluations..."; // rem
+  file_r.saveListOfLists<double>(t_evaluations, "t_evaluations.dat"); // rem
+  std::cout << " done" << std::endl; // rem
+  
   // Get the solution path
   if (foundNBV) {
     std::cout << "Success\n";

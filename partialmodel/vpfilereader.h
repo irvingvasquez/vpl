@@ -199,6 +199,47 @@ bool saveVectorOfVectors(std::vector< std::vector<T> > data, std::string file_na
   }
 }
 
+/**
+ * Saves a list of lists
+ */
+template <typename T>
+bool saveListOfLists(std::list< std::list<T> > data, std::string file_name, bool append=false){
+  std::ofstream file;
+  
+  if(append){
+    file.open(file_name.c_str(),std::ios_base::app);
+  }else {
+    file.open(file_name.c_str());
+  }
+  
+  int list_size = data.size();
+  int i = 0;
+  
+  if(file.is_open()){
+    
+    typename std::list< std::list<T> >::iterator it_lista = data.begin(); 
+    
+    while(it_lista != data.end()){
+      typename std::list<T>::iterator it_list_interior = it_lista->begin();
+      
+      while(it_list_interior != it_lista->end())
+      {
+	file << *it_list_interior << " "  ;
+	it_list_interior ++;
+      }
+    
+      file << std::endl;  
+      it_lista ++;
+    }
+    
+    file.close();
+    return true;
+  } else {
+    std::cout << "Unable to open file " << file_name.c_str() << std::endl;
+    return false;
+  }
+}
+
 
 /**
  *  Saves a vector in MSL format
