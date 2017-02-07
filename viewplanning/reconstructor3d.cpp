@@ -174,7 +174,8 @@ void Reconstructor3D::solveReconstruction()
   do{  
       std::cout << std::endl << std::endl <<"----------------------- View Planning Iteration " << iteration << "----------------" << std::endl;
       
-      if(waitForUser || iteration == 0)
+      //if(waitForUser || iteration == 0)
+      if(waitForUser)
 	if(!vpl::userContinues()){
 	  exit(0);
       }
@@ -189,7 +190,7 @@ void Reconstructor3D::solveReconstruction()
       scan_i_file_name = scanFileName;
       origin_i_file_name = originFileName;
       
-      if(waitForUser || iteration == 0)
+      if(waitForUser)
 	if(!vpl::userContinues()){
 	  exit(0);
       }

@@ -121,7 +121,8 @@ target_link_libraries(vp_simulation_example ${LIBS_ALL})
 add_executable(test_sim_rrtnbv test_sim_rrtnbv.cpp ${SRC})
 target_link_libraries(test_sim_rrtnbv ${LIBS_ALL})
 
-
+add_executable(test_sim_rrtnbv_if test_sim_rrtnbv_if.cpp ${SRC})
+target_link_libraries(test_sim_rrtnbv_if ${LIBS_ALL})
 
 #if(FREE_FLYER_APP)
 #  if(OCTREE_RANGE_SIMULATOR)

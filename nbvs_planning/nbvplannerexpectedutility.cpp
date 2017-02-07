@@ -308,8 +308,8 @@ bool NBVPlannerExpectedUtility::planNBV(ViewStructure& v)
     // TODO tal vez convendría seleccionar vistas que no esten cercanas
     MSLVector goal(itv->q.size());
     
-    for(int i = 0;i<itv->q.size(); i++)
-      goal[i] = itv->q[i];
+    for(int j = 0;j<itv->q.size(); j++)
+      goal[j] = itv->q[j];
       
     p->GoalState = goal;
       
@@ -711,8 +711,8 @@ bool NBVPlannerExpectedUtilityFast::planNBV(ViewStructure& v)
     // TODO tal vez convendría seleccionar vistas que no esten cercanas
     MSLVector goal(itv->q.size());
     
-    for(int i = 0;i<itv->q.size(); i++)
-      goal[i] = itv->q[i];
+    for(int j = 0;j<itv->q.size(); j++) //todo: check this, before it has i instead j
+      goal[j] = itv->q[j];
       
     p->GoalState = goal;
       

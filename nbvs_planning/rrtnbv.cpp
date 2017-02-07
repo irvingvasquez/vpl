@@ -36,9 +36,10 @@ RRTNBV::RRTNBV(Problem* problem): RRT(problem)
   std::cout << std::endl;
 }
 
-RRTNBV::RRTNBV(Problem* problem, std::string config_folder): RRT(problem)
+RRTNBV::RRTNBV(Problem* problem, std::string config_folder, std::string data_folder): RRT(problem)
 {
   setConfigFolder(config_folder);
+  setDataFolder(data_folder);
   
   vpFileReader reader;
   std::string config_file(configFolder);
@@ -50,6 +51,9 @@ RRTNBV::RRTNBV(Problem* problem, std::string config_folder): RRT(problem)
   reader.readMSLVector<double>(Weights, config_file);
   std::cout << "Weights: ";
   PMUtils::printVector(Weights);
+  
+  tree_file.assign(data_folder);
+  tree_file.append("/t_evaluations.dat");
   
   std::cout << std::endl;
 }
@@ -198,6 +202,8 @@ bool RRTNBV::Plan()
 {
   t_evaluations.clear(); // rem
   
+  std::cout << "Starting NBVS RRT with " << NumNodes << " nodes " << std::endl;
+  
   int i;
   double d;
   MSLNode *n,*nn,*n_goal;
@@ -243,7 +249,7 @@ bool RRTNBV::Plan()
   //save t_evaluations
   vpFileReader file_r; // rem
   std::cout << "saving evaluations..."; // rem
-  file_r.saveListOfLists<double>(t_evaluations, "t_evaluations.dat"); // rem
+  file_r.saveListOfLists<double>(t_evaluations, tree_file); // rem
   std::cout << " done" << std::endl; // rem
   
   // Get the solution path
@@ -275,6 +281,12 @@ void RRTNBV::setConfigFolder(std::string folder)
 {
   configFolder = folder;
 }
+
+void RRTNBV::setDataFolder(string folder)
+{
+  dataFolder = folder;
+}
+
 
 
 ViewStructure RRTNBV::getNBV()

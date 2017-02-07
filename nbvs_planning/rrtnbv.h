@@ -40,7 +40,6 @@ protected:
   ViewStructure nbv_v;
   bool foundNBV;
 
-
   MSLVector Interval;
   std::vector<double> Weights;
 
@@ -51,17 +50,21 @@ protected:
   virtual bool Extend(const MSLVector& x, MSLTree* t, MSLNode*& nn, bool forward, bool &new_nbv);
 
   std::string configFolder;
+  std::string dataFolder;
+  
 public:
   virtual bool Plan();
   void setPartialModel(PartialModelBase *pm);
   void setRobotWithSensor(RobotSensor *rs);
   void setConfigFolder(std::string folder);
+  void setDataFolder(std::string folder);
   ViewStructure getNBV();
 
   RRTNBV(Problem* problem);
-  RRTNBV(Problem* problem, std::string config_folder);
+  RRTNBV(Problem* problem, std::string config_folder, std::string data_folder);
   
   std::list< list<double> > t_evaluations; // rem
+  std::string tree_file;
 };
 
 #endif // RRTNBV_H

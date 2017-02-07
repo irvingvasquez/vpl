@@ -874,7 +874,7 @@ bool NBVPlannerExtendTree::planNBV(ViewStructure& v)
   Problem *p = new Problem(g, m, configFolder);
   
   //RRT *rrt= new RRTExtExt(p);
-  RRTNBV *rrt = new RRTNBV(p, configFolder);
+  RRTNBV *rrt = new RRTNBV(p, configFolder, dataFolder);
   rrt->setPartialModel(partialModel);
   rrt->setRobotWithSensor(robotWithSensor);
   

@@ -88,7 +88,7 @@ public:
                  bool ignoreUnknownCells=false, double maxRange=-1.0);
   
   /**
-   * Traces a Ray and returns the information gain of a ray
+   * Traces a Ray and returns the information gain of a ray. Avoids the integration of already touched voxels. Vasquez 17 and Vasquez 14.
    */
   virtual double castRayIG(const point3d& origin, const point3d& directionP, point3d& end,
                  bool ignoreUnknownCells=false, double maxRange=-1.0);
