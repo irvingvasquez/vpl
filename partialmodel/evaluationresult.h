@@ -34,6 +34,7 @@ long int n_unknown;
 long int n_occupied_scene;
 long int n_unknown_scene;
 long int n_lost;
+long int n_rear_side;
 float evaluation;
 double computation_time;
 

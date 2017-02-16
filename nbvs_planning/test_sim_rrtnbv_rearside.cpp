@@ -2,6 +2,7 @@
 #include <vp.h>
 #include <pmvoctree.h>
 #include <pmvoctreeig.h>
+#include <pmvorearsidevoxel.h>
 #include <rssraytracingoctree.h>
 
 #include "nbvplannerrgflt.h"
@@ -43,16 +44,7 @@ int main(int argc, char **argv) {
     std::string rays_file(main_folder);
     rays_file.append("/data/rays_0.dat");
     
-//     std::string rays_file1(main_folder);
-//     rays_file1.append("/data/rays_1.dat");
-//     std::string rays_file2(main_folder);
-//     rays_file2.append("/data/rays_2.dat");
-//     std::string rays_file3(main_folder);
-//     rays_file3.append("/data/rays_3.dat");
-//     std::string rays_file4(main_folder);
-//     rays_file4.append("/data/rays_4.dat");
-
-    
+   
     // ---------------- robot ---------------------
     RobotMobile *mobile = new RobotMobileDummie();
     mobile->setConfigFolder(config_folder);
@@ -85,11 +77,7 @@ int main(int argc, char **argv) {
     s->setDataFolder(data_folder);
     s->init();
     s->saveRaysForResolution(rays_file, resolution, distance);
-//     s->saveRaysForResolution(rays_file1, resolution * 2, distance);
-//     s->saveRaysForResolution(rays_file2, resolution * 4, distance);
-//     s->saveRaysForResolution(rays_file3, resolution * 8, distance);
-//     s->saveRaysForResolution(rays_file4, resolution * 16, distance);
-//     
+
     
     // ---------------- RobotSensor ----------------
     RobotSensor *rs = new RobSenNoTransformation(r, s);
@@ -102,7 +90,8 @@ int main(int argc, char **argv) {
     
     // --------------- Partial Model ------------
     //PartialModelBase *partial_model = new PMVOctree();
-    PartialModelBase *partial_model = new PMVOctreeIG();
+    //PartialModelBase *partial_model = new PMVOctreeIG();
+    PartialModelBase *partial_model = new PMVORearSideVoxel();
     partial_model->setConfigFolder(config_folder);
     partial_model->setDataFolder(data_folder);
     partial_model->init();

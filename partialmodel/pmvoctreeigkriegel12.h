@@ -34,11 +34,17 @@
 #include "coctreevpl.h"
 
 
+/**
+ * 
+ * Implementation status: ok
+ * Testing status: ok
+ */
 class COctreeKriegel12 : public COctreeVPL
 {
 protected:
   
 public:
+COctreeKriegel12(double resolution);
   
   /**
    * Traces a Ray and returns the information gain of a ray. Integrates even for already touched voxels. Kriegel 12
@@ -48,10 +54,25 @@ virtual double castRayIG(const point3d& origin, const point3d& directionP, point
 
 
 
-
+/**
+ * Partial Model based on a probabilistic octree
+ * Reported in: 
+ * Kriegel 12
+ * 
+ * Initialization:
+ * 	- Set config folder
+ * 	- Set data folder 
+ * 	- init()
+ * 	- readRays();
+ * 	- set utility function
+ * 
+ * Implementation status: ok
+ * Testing status: n/a
+ */
 class PMVOctreeIGKriegel12 : public PMVOctree
 {
 protected:
+   double rayTracingHTMIGKriegel(boost::numeric::ublas::matrix<double> m, EvaluationResult &result);
   
 public:
 PMVOctreeIGKriegel12();
@@ -59,6 +80,8 @@ PMVOctreeIGKriegel12();
 virtual bool init();
 
 virtual int evaluateView(ViewStructure& v);
+
+virtual float updateWithScan(std::string file_name_scan, std::string file_name_origin);
 };
 
 

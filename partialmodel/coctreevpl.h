@@ -59,7 +59,11 @@ enum VoxelTypes
   ///
   VXL_OCCUPIED_TOUCHED,
   ///
-  VXL_UNKNOWN_NOT_CREATED
+  VXL_UNKNOWN_NOT_CREATED,
+  ///
+  VXL_REAR_SIDE,
+  ///
+  VXL_UNDEFINED
 };
 
 
@@ -98,6 +102,7 @@ public:
    * This should be used after a ray tracing
    */
   void cleanTouchedVoxels();
+  
 		 
   /// 
   void setUnknownThres(double prob){unk_prob_thres_log = logodds(prob); }

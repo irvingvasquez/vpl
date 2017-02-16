@@ -21,15 +21,8 @@
 #define VOLUMETRICUTILITYFUNCTION_H
 
 #include "evaluationresult.h"
+#include "viewstructure.h"
 #include <iostream>
-
-/**
- * Results from the utility function
- */
-enum _VIEW_FEASIBILITY {
-  FEASIBLE_VIEW,
-  UNFEASIBLE_VIEW
-};
 
 
 class VolumetricUtilityFunction

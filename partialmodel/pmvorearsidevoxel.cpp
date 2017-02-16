@@ -26,24 +26,30 @@
  * 
  */
 
-#include "pmvoctreeigkriegel12.h"
+#include "pmvorearsidevoxel.h"
 
-COctreeKriegel12::COctreeKriegel12(double resolution): COctreeVPL(resolution)
+
+COctreeRearSideVoxel::COctreeRearSideVoxel(double resolution): COctreeVPL(resolution)
 {
+ // ok
+  octomap::ColorOcTreeNode::Color colorPink(255,0,255);
+  colorRearSide = colorPink;
   
 }
 
-
-//TODO: To modify this code to integrate even for already touched voxels
-
-double COctreeKriegel12::castRayIG(const point3d& origin, const point3d& directionP, point3d& end, bool ignoreUnknownCells, double maxRange)
+int COctreeRearSideVoxel::castRayVPL(const point3d& origin, const point3d& directionP, point3d& end, bool ignoreUnknownCells, double maxRange)
 {
-  double ig_sum = 0;
-  
+ /// ----------  see OcTreeBase::computeRayKeys  -----------
+    int lastTouchedVoxel = VXL_UNDEFINED;
+    bool unknownPassed = false;
+    point3d unknownEnd;
+    ColorOcTreeNode* lastNode;
+    
+    // Initialization phase -------------------------------------------------------
     OcTreeKey current_key;
     if ( !coordToKeyChecked(origin, current_key) ) {
       OCTOMAP_WARNING_STR("Coordinates out of bounds during ray casting");
-      return 0;
+      return false;
     }
 
     ColorOcTreeNode* startingNode = this->search(current_key);
@@ -52,12 +58,12 @@ double COctreeKriegel12::castRayIG(const point3d& origin, const point3d& directi
         // Occupied node found at origin 
         // (need to convert from key, since origin does not need to be a voxel center)
         end = this->keyToCoord(current_key);
-        return 0;
+        return true;
       }
     } else if(!ignoreUnknownCells){
       OCTOMAP_ERROR_STR("Origin node at " << origin << " for raycasting not found, does the node exist?");
       end = this->keyToCoord(current_key);
-      return 0;
+      return false;
     }
 
     point3d direction = directionP.normalized();
@@ -90,7 +96,7 @@ double COctreeKriegel12::castRayIG(const point3d& origin, const point3d& directi
 
     if (step[0] == 0 && step[1] == 0 && step[2] == 0){
     	OCTOMAP_ERROR("Raycasting in direction (0,0,0) is not possible!");
-    	return 0;
+    	return false;
     }
 
     // for speedup:
@@ -120,7 +126,7 @@ double COctreeKriegel12::castRayIG(const point3d& origin, const point3d& directi
         OCTOMAP_WARNING("Coordinate hit bounds in dim %d, aborting raycast\n", dim);
         // return border point nevertheless:
         end = this->keyToCoord(current_key);
-        return 0;
+        return false;
       }
 
       // advance in direction "dim"
@@ -138,44 +144,97 @@ double COctreeKriegel12::castRayIG(const point3d& origin, const point3d& directi
           dist_from_origin_sq += ((end(j) - origin(j)) * (end(j) - origin(j)));
         }
         if (dist_from_origin_sq > maxrange_sq)
-          return 0;
+          return false;
       }
       
-      ///  castRay Information Gain !!!!!
+      ///  castRayVPL  !!!!!
       ColorOcTreeNode* currentNode = this->search(current_key);
       if (currentNode){
         if (this->isNodeOccupied(currentNode)) {
-	  // verificar si el nodo ya fue tocado
-	  return ig_sum;
-          
-        } else if (this->isNodeUnknown(currentNode)) {
-	  //if(currentNode->getColor() == colorTouchedUnknown){
-	  // In Kriegel 12 the IG is integrated multiple times, this occur when a several rays pass though a same voxel
-	      // el nodo ya fue tocado
-	  //}else {
-	     if(inBBX(end)){
-	       
-	      //currentNode->setColor(colorTouchedUnknown);
-	      //touchedNodes.push_back(currentNode);
-	      double p = currentNode->getOccupancy();
-	       
-	      ig_sum = ig_sum + (-p * log(p) - (1-p) * log(1-p));
-	      //cout << "p " << p << " IG " << ig_sum <<std::endl;
-	     }
-	  //}
+	  // Isler cuenta para cada rayo, asi que no es necesario verificar si ya fue tocado ese voxel.
+	  if(lastTouchedVoxel == VXL_UNKNOWN){
+	    //lastNode->setColor(colorRearSide);
+	    //currentNode->setColor(colorTouchedOccupied);
+	    // agregarlo a la lista
+	    //touchedNodes.push_back(lastNode);
+	    //touchedNodes.push_back(currentNode);
+	    return VXL_REAR_SIDE;
+	  } else {
+	    //currentNode->setColor(colorTouchedOccupied);
+	    //touchedNodes.push_back(currentNode);
+	    return VXL_OCCUPIED;
+	  }
+        } else {
+	  if (this->isNodeUnknown(currentNode)) {
+	    // Como estamos contando voxeles rear side, si es unknown también pasará de largo el rayo, pero anotaremos que tipo fue el que pasamos.
+	    lastTouchedVoxel = VXL_UNKNOWN;
+	    if(!unknownPassed){
+	      unknownPassed = true;
+	      unknownEnd = end;
+	    }
+	  } else {
+	    lastTouchedVoxel = VXL_FREE;
+	  }
 	}
-	 // otherwise: node is free and valid, raycasting continues
+        // otherwise: node is free and valid, raycasting continues
+        lastNode = currentNode;
       } else if (!ignoreUnknownCells){ // no node found, this usually means we are in "unknown" areas
         //OCTOMAP_WARNING_STR("Search failed in OcTree::castRay() => an unknown area was hit in the map: " << end);
-        return ig_sum;
+	if(unknownPassed){
+	  end = unknownEnd;
+	  return VXL_UNKNOWN;
+	} else {
+	  return VXL_UNKNOWN_NOT_CREATED;
+	}
       }
     } // end while
 
-    return ig_sum;
+    return VXL_FREE;
 }
 
 
-bool PMVOctreeIGKriegel12::init()
+
+PMVORearSideVoxel::PMVORearSideVoxel()
+{
+ // ok
+}
+
+
+
+int PMVORearSideVoxel::evaluateView(ViewStructure& v)
+{
+  if(!poitsToTheObject(v)){
+    //cout << "Sorry no points :(" << std::endl;
+    return UNFEASIBLE_VIEW;
+  }
+  
+  EvaluationResult result;
+  
+  bool valid_result = rayTracingHTM(v.HTM, result);
+  
+  /// Evaluate the result of the raytracing
+  if(valid_result){
+      v.n_unknown = result.n_unknown;
+      v.n_occupied = result.n_occupied;
+      v.n_occplane = result.n_unknown;
+
+      // check for registration constraint
+      if(registrationConstraint(result)){
+	// evaluation of the view by counting the occplane voxels (unknown voxels of the surface)
+	v.eval = (float) result.n_rear_side;
+	return FEASIBLE_VIEW;
+      } else {
+	v.eval = 0.0;
+	return UNFEASIBLE_VIEW;
+      }
+  } else 
+  { 
+    v.eval = 0.0;
+    return UNFEASIBLE_VIEW;
+  }
+}
+
+bool PMVORearSideVoxel::init()
 {
   PMVolumetric::init();
   
@@ -183,7 +242,7 @@ bool PMVOctreeIGKriegel12::init()
   
   //map = new octomap::ColorOcTree(voxelResolution);
   //map = new COctreeVPL(voxelResolution);
-  map = new COctreeKriegel12(voxelResolution);
+  map = new COctreeRearSideVoxel(voxelResolution);
   
   map->colorOccupied = colorOccupied;
   map->colorUnknown = colorUnmark;
@@ -212,15 +271,9 @@ bool PMVOctreeIGKriegel12::init()
 }
 
 
-
-PMVOctreeIGKriegel12::PMVOctreeIGKriegel12()
+bool PMVORearSideVoxel::rayTracingHTM(boost::numeric::ublas::matrix< double > m, EvaluationResult& result)
 {
- // ok
-}
-
-double PMVOctreeIGKriegel12::rayTracingHTMIGKriegel(boost::numeric::ublas::matrix< double > m, EvaluationResult& result)
-{
-// Funcion revisada! ok!
+  // Funcion revisada! ok!
   double i_ray,j_ray,k_ray;
   
   std::vector< boost::numeric::ublas::matrix<double> >::iterator it;
@@ -252,7 +305,6 @@ double PMVOctreeIGKriegel12::rayTracingHTMIGKriegel(boost::numeric::ublas::matri
     return false;
   }
   
-  double ig_sum = 0;
   for(it = rays.begin(); it!= rays.end(); it++){
      /// The ray is rotated and traslated by the rotation matrix
      ray = *it;
@@ -266,65 +318,56 @@ double PMVOctreeIGKriegel12::rayTracingHTMIGKriegel(boost::numeric::ublas::matri
      //cout << "direction: " << direction->x() << " " << direction->y() << " " << direction->z() << std::endl;
      
      // if the casted ray returns true a occupied voxel was hit
-          
-     ig_sum = ig_sum + map->castRayIG(origin, *direction, touched_position);
-     
+     int answer = map->castRayVPL(origin, *direction, touched_position); 
+     if (answer == VXL_OCCUPIED){
+       if(isInDOV(origin,touched_position)) {
+	  if(isInCapsule(touched_position)){
+	    result.n_occupied ++;
+	  } else {
+	    result.n_occupied_scene ++;
+	  }
+       } else {
+	 result.n_lost ++;
+       }
+     } else if (answer == VXL_UNKNOWN || answer == VXL_UNKNOWN_NOT_CREATED){
+       if(isInDOV(origin, touched_position)){
+	  if(isInCapsule(touched_position)){
+	    result.n_unknown ++; 
+	  } else if(isInScene(touched_position)){
+	    result.n_unknown_scene++;
+	  } else {
+	    result.n_lost++;
+	  }
+       } else {
+	 result.n_lost ++;
+       }
+     } else {
+       if(answer == VXL_REAR_SIDE){
+	 result.n_rear_side++;
+	 // tambien incrementamos los unknown por que para alcanzar un rearside pasó por un uknown
+	 result.n_unknown++;
+       } else{
+	 result.n_lost ++;
+       }
+     }
      
      delete direction;
   }
-  result.evaluation = ig_sum;
-  
-//  std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
-// 		    << " Unk:" << result.n_unknown <<  " Unk_sce:" << result.n_unknown_scene 
-// 		    << " lost:" << result.n_lost << std::endl;
+  std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
+ 		    << " Unk:" << result.n_unknown <<  " Unk_sce:" << result.n_unknown_scene << " RearSide:" << result.n_rear_side  
+ 		    << " lost:" << result.n_lost << std::endl;
 
-  //map->write("octree_painted.ot");
-  map->cleanTouchedVoxels();
-  return ig_sum;
-}
-
-
-int PMVOctreeIGKriegel12::evaluateView(ViewStructure& v)
-{
-  if(!poitsToTheObject(v)){
-    //cout << "Sorry no points :(" << std::endl;
-    return UNFEASIBLE_VIEW;
+  // WARNING
+  if(result.n_rear_side != 0){
+    map->write("octree_painted.ot");
+    std::getchar();
   }
   
-  EvaluationResult result, countingIG;
-  double KriegelIG;
-  // first, perform a ray tracing to calculate feasibility
-  
-  bool valid_result = rayTracingHTM(v.HTM, result);
-  v.n_unknown = result.n_unknown;
-  v.n_occupied = result.n_occupied;
-  v.n_occplane = result.n_unknown;
-    
-  // Information Gain calculation
-  KriegelIG = rayTracingHTMIGKriegel(v.HTM, countingIG);
-  
-  if(valid_result){
-    // See at least an unknowm voxel?
-//    if(result.n_unknown == 0 && result.n_unknown_scene ==0){
-//      v.eval= 0.0;
-//      return UNFEASIBLE_VIEW;
-//    } else {	
-	// check for registration constraint
-	if(registrationConstraint(result)){
-	    //view evaluation with frustum information gain
-	    v.eval = KriegelIG;
-	    return FEASIBLE_VIEW;
-	} else {
-	   v.eval = 0.0;
-	   return UNFEASIBLE_VIEW;
-	}
-   // }
-  } 
-  
-  return UNFEASIBLE_VIEW;
+  map->cleanTouchedVoxels();
+  return true;
 }
 
-float PMVOctreeIGKriegel12::updateWithScan(std::string file_name_scan, std::string file_name_origin)
+float PMVORearSideVoxel::updateWithScan(std::__cxx11::string file_name_scan, std::__cxx11::string file_name_origin)
 {
   float r = PMVOctree::updateWithScan(file_name_scan, file_name_origin);
   map->expand();

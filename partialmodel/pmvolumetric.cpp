@@ -110,20 +110,20 @@ bool PMVolumetric::init()
     point3d sce_max(x2,y2,z2);
     SceneBBxMax = sce_max;
     
-    int uf_type = 0;
+/*    int uf_type = 0;
     uf_type = iniparser_getint(ini_file, "utilityFunction:type",0);
-    
-    if(uf_type == 1){
-      utilityFunction = new VUF_OverlapPercent();
-      utilityFunction->setMinimunOverlap(minOverlap);
-    } else {
-      //TODO select which utility function
-      utilityFunction = new VUFObjectFilters();
-      utilityFunction->setMinimunOverlap(minOverlap);
-    }
+ */   
+//     if(uf_type == 1){
+//       utilityFunction = new VUF_OverlapPercent();
+//       utilityFunction->setMinimunOverlap(minOverlap);
+//     } else {
+//       //TODO select which utility function
+//       utilityFunction = new VUFObjectFilters();
+//       utilityFunction->setMinimunOverlap(minOverlap);
+//     }
  
-    std::cout << "Utility function type: " << uf_type << std::endl;
-    std::cout << "-------------------------------------------" << std::endl;
+//     std::cout << "Utility function type: " << uf_type << std::endl;
+//     std::cout << "-------------------------------------------" << std::endl;
     
     return true;
 }
@@ -135,13 +135,14 @@ bool PMVolumetric::collisionFree(float x, float y, float z)
   return true;
 }
 
+//TODO
 void PMVolumetric::saveEvaluations()
 {
-  //PartialModelBase::saveEvaluations();
-  //saveEvaluationResultVector(evaluations, evaluationsFile);
-  evals.saveVector(evaluationsFile);
+//   //PartialModelBase::saveEvaluations();
+//   //saveEvaluationResultVector(evaluations, evaluationsFile);
+//   evals.saveVector(evaluationsFile);
 }
-
+// 
 
 void PMVolumetric::setMinimunNumberOfUnmarkVoxels(int n)
 {

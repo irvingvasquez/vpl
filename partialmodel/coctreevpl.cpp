@@ -360,6 +360,7 @@ void COctreeVPL::cleanTouchedVoxels()
 }
 
 
+
 /*
 bool COctreeVPL::castRay2(const point3d& origin, const point3d& directionP, point3d& end, bool ignoreUnknownCells, double maxRange, int atDeepth) const
 {

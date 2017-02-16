@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.6)
 project(nbvpartialmodel)
 
 set(SRC_STRUCTURES coctreevpl.cpp)
-set(SRC_PARTIAL_MODEL partialmodelbase.cpp pmvolumetric.cpp pmvoctree.cpp pmvoctreeig.cpp pmvoctreevasquez09.cpp)  
+set(SRC_PARTIAL_MODEL partialmodelbase.cpp pmvolumetric.cpp pmvoctree.cpp pmvoctreeig.cpp pmvoctreeigkriegel12.cpp pmvoctreevasquez09.cpp pmvorearsidevoxel.cpp)  
 # set(SRC_HRT pmraynode.cpp pmraytree.cpp pmvoctreehierarchicalrt.cpp)
 set(SRC_VIEW viewstructure.cpp vpfilereader.cpp pmutils.cpp vptriangle.cpp vpvertex.cpp)
 set(SRC_OTHER evaluationresult.cpp evaluationresultvector.cpp volumetricutilityfunction.cpp vufobjectfilters.cpp)

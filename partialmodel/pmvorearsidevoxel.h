@@ -26,30 +26,48 @@
  * 
  */
 
-#ifndef PMVOCTREEOCCUSIONAWARE_H
-#define PMVOCTREEOCCUSIONAWARE_H
+#ifndef PMVOREARSIDEVOXEL_H
+#define PMVOREARSIDEVOXEL_H
 
 #include "pmvoctree.h"
 
+#include "coctreevpl.h"
 
-class COctreeOccussionAware : public COctreeVPL
+class COctreeRearSideVoxel : public COctreeVPL
 {
 public:
-  
+COctreeRearSideVoxel(double resolution);
+
+octomap::ColorOcTreeNode::Color colorRearSide;
+
+protected:
+
+    /**
+   * Traces a Ray in the octree and returns the type of voxel found
+   * It has been modified to return rearside voxels
+   * It does not return unknown voxels
+   */
+virtual int castRayVPL(const point3d& origin, const point3d& directionP, point3d& end, bool ignoreUnknownCells = false, double maxRange = -1.0);
 };
 
 
-/*
- * Isler Occlusion aware total VI
- */
-class PMVOctreeOccusionAware : public PMVOctree
+class PMVORearSideVoxel : public PMVOctree
 {
 public:
-PMVOctreeOccusionAware();
+PMVORearSideVoxel();
+
+virtual int evaluateView(ViewStructure& v);
 
 virtual bool init();
 
-virtual int evaluateView(ViewStructure& v);
+virtual float updateWithScan(std::__cxx11::string file_name_scan, std::__cxx11::string file_name_origin);
+
+protected:
+  /**
+   * Gathers rearside voxels
+   * RearSide voxels are returned in result.unknown voxels
+   */
+  virtual bool rayTracingHTM(boost::numeric::ublas::matrix< double > m, EvaluationResult& result);
 };
 
-#endif // PMVOCTREEOCCUSIONAWARE_H
+#endif // PMVOREARSIDEVOXEL_H

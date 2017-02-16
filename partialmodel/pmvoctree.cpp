@@ -498,30 +498,63 @@ int PMVOctree::evaluateView(ViewStructure& v)
   
   bool valid_result = rayTracingHTM(v.HTM, result);
   
+  /// Evaluate the result of the raytracing
   if(valid_result){
-    /// Evaluate the result of the raytracing
-    if( this->utilityFunction->evaluate(result) == FEASIBLE_VIEW){
-	v.eval = result.evaluation;
-	v.n_unknown = result.n_unknown;
-	v.n_occupied = result.n_occupied;
-	return FEASIBLE_VIEW;
-    }
+      v.n_unknown = result.n_unknown;
+      v.n_occupied = result.n_occupied;
+      v.n_occplane = result.n_unknown;
+      
+      // See at least an unknowm voxel?
+      if(result.n_unknown == 0 && result.n_unknown_scene ==0){
+	    v.eval = 0.0;
+	    return UNFEASIBLE_VIEW;
+      } else {	
+	    // check for registration constraint
+	    if(registrationConstraint(result)){
+	      // evaluation of the view by counting the occplane voxels (unknown voxels of the surface)
+	      v.eval = (float) result.n_unknown;
+	      return FEASIBLE_VIEW;
+	    } else {
+	      v.eval = 0.0;
+	      return UNFEASIBLE_VIEW;
+	    }
+      }
+  } else 
+  { 
+    v.eval = 0.0;
+    return UNFEASIBLE_VIEW;
   }
-  
-  return UNFEASIBLE_VIEW;
 }
 
+
+
+
+bool PMVOctree::registrationConstraint(EvaluationResult r)
+{
+  //return VolumetricUtilityFunction::registrationConstraint(r);
+  float overlap;
+  overlap = (float) r.n_occupied /(r.n_occupied + r.n_unknown);
+  overlap = overlap * 100;
+  
+  //std::cout << r.n_occupied << " overlap: " << overlap << std::endl;
+  
+  if(overlap >= minOverlap)
+    return true;
+  else 
+    return false;
+}
 
 
 void PMVOctree::evaluateCandidateViews()
 {
   std::list<ViewStructure>::iterator it_v;
-  int removed_views=0;
-  clock_t start;
-  double diff;
-  bool valid_result;
-  EvaluationResult result;
-  int i =0;
+  ViewStructure view;
+  //int removed_views=0;
+  //clock_t start;
+  //double diff;
+  //bool valid_result;
+  //EvaluationResult result;
+  //int i =0;
   
   std::cout << "Evaluating candidate views with octree." << std::endl;
   
@@ -531,55 +564,30 @@ void PMVOctree::evaluateCandidateViews()
     return;
   }
   
-  stopCriteria = true;
-  evals.clear();
   
   it_v = candidateViews.begin();
+  
   while(it_v != candidateViews.end()){
-    i++; //display
-    
-    result.clear();
-    //printVector(it_v->q);
-    
-    start = clock();
-    
-    valid_result = rayTracingHTM(it_v->HTM, result);
-    diff = ( std::clock() - start ) / (double)CLOCKS_PER_SEC;
-    
-    result.computation_time = diff;
-    evals.push_back(result);
-    
-    if(valid_result){       
-      
-      /// Evaluate the result of the raytracing
-      if( this->utilityFunction->evaluate(result) == UNFEASIBLE_VIEW){
-	it_v = candidateViews.erase(it_v);
-	//std::cout << "Unfeasible view" << std::endl;
-	removed_views ++;
-      } else {
-	if(result.n_unknown > minUnknown)
-	  stopCriteria = false;
-	
-	//std::cout << "Evaluation " << i << ": " << result.evaluation << std::endl;
-	it_v->eval = result.evaluation;
-	it_v ++;
-      }
-    }
-    else {
-      
-      it_v = candidateViews.erase(it_v);
-      removed_views ++;
-    }
+    this->evaluateView(*it_v);
+    it_v ++;
+     
+//     if(valid_result){       
+//     
+//     }
+//     else {
+//       it_v = candidateViews.erase(it_v);
+//       removed_views ++;
+//     }
   }
   
-  std::cout << "Removed views: " << removed_views << std::endl;
+//  std::cout << "Removed views: " << removed_views << std::endl;
 }
 
 
-void PMVOctree::setUtilityFunction(VolumetricUtilityFunction* uf)
-{
-  utilityFunction = uf;
-}
+// void PMVOctree::setUtilityFunction(VolumetricUtilityFunction* uf)
+// {
+//   utilityFunction = uf;
+// }
 
 
 void PMVOctree::saveObjectAsRawT(std::string file_name)

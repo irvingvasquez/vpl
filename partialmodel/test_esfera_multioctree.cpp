@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
   
   uf->setMinimunOverlap(5);
   
-  esferota.setUtilityFunction(uf);
+  //esferota.setUtilityFunction(uf);
   
   esferota.updateWithScan(scan_file, origin_file);
   

@@ -122,7 +122,7 @@ protected:
   double maxRange;
   
   // Evaluaciones para guardar
-  EvaluationResultVector evals;
+  //EvaluationResultVector evals;
   
   /// resolution of the voxel
   float voxelResolution;  
@@ -154,7 +154,7 @@ protected:
   
   bool stopCriteria;
   
-  VolumetricUtilityFunction *utilityFunction;
+  //VolumetricUtilityFunction *utilityFunction;
   
   /**
    * Returns the list of eight vertices.

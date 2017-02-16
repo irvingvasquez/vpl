@@ -22,6 +22,20 @@
 
 #include "pmvoctree.h"
 
+/**
+ * Partial Model based on a probabilistic octree
+ * Reported in: 
+ * IROS17 submitted
+ * 
+ * Initialization:
+ * 	- Set config folder
+ * 	- Set data folder 
+ * 	- init()
+ * 	- readRays();
+ * 	- set utility function
+ * 
+*/
+
 class PMVOctreeIG : public PMVOctree
 {
 protected:
@@ -32,7 +46,7 @@ PMVOctreeIG();
 
 virtual int evaluateView(ViewStructure &v);
 
-
+virtual float updateWithScan(std::string file_name_scan, std::string file_name_origin);
 
 };
 

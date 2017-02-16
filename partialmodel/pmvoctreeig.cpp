@@ -32,23 +32,37 @@ int PMVOctreeIG::evaluateView(ViewStructure& v)
     return UNFEASIBLE_VIEW;
   }
   
-  EvaluationResult result;
+  EvaluationResult result,countingIG;
+  double frustumIG;
   
   // first, perform a ray tracing to calculate feasibility
-  
   bool valid_result = rayTracingHTM(v.HTM, result);
+  
   // Information Gain calculation
-  v.eval = rayTracingHTMIG(v.HTM, result);
+  frustumIG = rayTracingHTMIG(v.HTM, countingIG);
   
   if(valid_result){
-    /// Evaluate the result of the raytracing
-    if( this->utilityFunction->evaluate(result) == FEASIBLE_VIEW){
-	v.n_unknown = result.n_unknown;
-	v.n_occupied = result.n_occupied;	
-	
-	return FEASIBLE_VIEW;
-    }
-  }
+    v.n_unknown = result.n_unknown;
+    v.n_occupied = result.n_occupied;
+    v.n_occplane = result.n_unknown;
+      
+    // See at least an unknowm voxel?
+//    if(result.n_unknown == 0 && result.n_unknown_scene ==0){
+//      v.eval= 0.0;
+//      return UNFEASIBLE_VIEW;
+//    } else {	
+	// check for registration constraint
+	if(registrationConstraint(result)){
+	    //view evaluation with frustum information gain
+	    v.eval = frustumIG;
+	    return FEASIBLE_VIEW;
+	} else {
+	   v.eval = 0.0;
+	   return UNFEASIBLE_VIEW;
+	}
+   //}
+  } 
+  
   return UNFEASIBLE_VIEW;
 }
 
@@ -87,6 +101,12 @@ double PMVOctreeIG::rayTracingHTMIG(boost::numeric::ublas::matrix< double > m, E
     return false;
   }
   
+  //std::cout << "Nodes before expansion:" <<  map->getNumLeafNodes() << std::endl;
+  //map->expandUnknownVoxels();
+  //map->updateInnerOccupancy();
+  //map->expand();
+  //std::cout << "Nodes after expansion:" << map->getNumLeafNodes() << std::endl;
+  
   double ig_sum = 0;
   for(it = rays.begin(); it!= rays.end(); it++){
      /// The ray is rotated and traslated by the rotation matrix
@@ -114,4 +134,12 @@ double PMVOctreeIG::rayTracingHTMIG(boost::numeric::ublas::matrix< double > m, E
   //map->write("octree_painted.ot");
   map->cleanTouchedVoxels();
   return ig_sum;
+}
+
+
+float PMVOctreeIG::updateWithScan(std::string file_name_scan, std::string file_name_origin)
+{
+  float r = PMVOctree::updateWithScan(file_name_scan, file_name_origin);
+  map->expand();
+  return r;
 }

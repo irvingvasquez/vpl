@@ -37,6 +37,15 @@ using namespace PMUtils;
 enum viewTypes { SURFACE_TYPE, EXPLORATION_TYPE};
 
 /**
+ * Results from the evaluation of a view
+ */
+enum _VIEW_FEASIBILITY {
+  FEASIBLE_VIEW,
+  UNFEASIBLE_VIEW
+};
+
+
+/**
  * 
  * Robot configuration: q
  * Sensor pose:  w[x, y, z, yaw(z), pitch(y), roll(x)]

@@ -37,12 +37,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PMVOCTREE_H
 
 #include "pmvolumetric.h"
-#include "volumetricutilityfunction.h"
 #include "coctreevpl.h"
 
 
 /**
- * Octree class for view planning in 3D object Reconstruction.
+ * Partial Model based on a probabilistic octree
+ * Reported in: 
+ * Vasquez-Gomez, J. I., Sucar, L. E., & Murrieta-Cid, R. (2017). View/state planning for three-dimensional object reconstruction under uncertainty. Autonomous Robots, 41(1), 89-109.
  * 
  * Initialization:
  * 	- Set config folder
@@ -50,6 +51,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * 	- init()
  * 	- readRays();
  * 	- set utility function
+ * 
 */
 
 class PMVOctree :  public PMVolumetric
@@ -92,9 +94,9 @@ PMVOctree();
    */
   void insertFreeSpace(double x1, double y1, double z1, double x2, double y2, double z2);  
   
-//   void saveEvaluations();
+  //void saveEvaluations();
   
-  void setUtilityFunction(VolumetricUtilityFunction *uf);
+  //void setUtilityFunction(VolumetricUtilityFunction *uf);
   
   virtual void saveObjectAsRawT(std::string file_name);
 
@@ -129,8 +131,12 @@ protected:
    * @param n_occupied [out]
    * @param n_unknown [out]
    */
-  bool rayTracingHTM(boost::numeric::ublas::matrix<double> m, EvaluationResult &result);
+  virtual bool rayTracingHTM(boost::numeric::ublas::matrix<double> m, EvaluationResult &result);
   
+  virtual bool registrationConstraint(EvaluationResult r);
+private:
+  
+ 
 };
 
 #endif // PMVOCTREE_H

@@ -26,6 +26,7 @@ EvaluationResult::EvaluationResult()
   n_occupied_scene = 0;
   n_unknown = 0;
   n_unknown_scene = 0;
+  n_rear_side = 0;
   evaluation = 0.0;
   computation_time = 0.0;
 }
