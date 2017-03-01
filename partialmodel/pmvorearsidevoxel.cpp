@@ -234,6 +234,7 @@ int PMVORearSideVoxel::evaluateView(ViewStructure& v)
   }
 }
 
+
 bool PMVORearSideVoxel::init()
 {
   PMVolumetric::init();
@@ -353,15 +354,15 @@ bool PMVORearSideVoxel::rayTracingHTM(boost::numeric::ublas::matrix< double > m,
      
      delete direction;
   }
-  std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
- 		    << " Unk:" << result.n_unknown <<  " Unk_sce:" << result.n_unknown_scene << " RearSide:" << result.n_rear_side  
- 		    << " lost:" << result.n_lost << std::endl;
-
-  // WARNING
-  if(result.n_rear_side != 0){
-    map->write("octree_painted.ot");
-    std::getchar();
-  }
+//   std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
+//  		    << " Unk:" << result.n_unknown <<  " Unk_sce:" << result.n_unknown_scene << " RearSide:" << result.n_rear_side  
+//  		    << " lost:" << result.n_lost << std::endl;
+// 
+//   // WARNING
+//   if(result.n_rear_side != 0){
+//     map->write("octree_painted.ot");
+//     std::getchar();
+//   }
   
   map->cleanTouchedVoxels();
   return true;

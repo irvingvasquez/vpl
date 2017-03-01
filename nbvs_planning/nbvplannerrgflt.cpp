@@ -594,7 +594,7 @@ bool NBVPlannerRGFltOneGoal::planNBV(ViewStructure& v)
   
   itv = views_list.begin();
   int k=0;
-  while(!success && itv!= views_list.end() && k<10 ){
+  while(!success && itv!= views_list.end() && k<nViews ){
       //cout << "Selected. " << *itv << std::endl;
     
       k++;

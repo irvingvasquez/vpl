@@ -24,6 +24,7 @@
 
 /**
  * Partial Model based on a probabilistic octree
+ * Frustum Information Gain
  * Reported in: 
  * IROS17 submitted
  * 
