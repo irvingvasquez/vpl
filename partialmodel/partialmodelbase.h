@@ -181,6 +181,8 @@ PartialModelBase();
    */
   virtual bool saveObstacle(std::string file_name)=0;
   
+  virtual bool saveVisibleUnknown(std::string file_name_vertex, std::string file_name_normal)=0;
+  
   virtual void getOccupiedTriangles(vpTriangleList &tris) = 0;
   
   virtual void getUnknownTriangles(vpTriangleList &tris) = 0;

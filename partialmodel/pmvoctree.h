@@ -106,6 +106,8 @@ PMVOctree();
   
   virtual bool saveUnknownVolumeAsRawT(std::string file_name);
   
+  virtual bool saveVisibleUnknown(std::string file_name_vertex, std::string file_name_normal);
+  
   /**
    * Saves the occupied  and unknown voxels as Obs
    */

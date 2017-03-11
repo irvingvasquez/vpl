@@ -104,6 +104,7 @@ public:
    */
   void setMinimunNumberOfUnmarkVoxels(int n);
   
+  virtual bool saveVisibleUnknown(std::string file_name_vertex, std::string file_name_normal)=0;
   
 protected:
   std::vector<point3d> touched_voxels;

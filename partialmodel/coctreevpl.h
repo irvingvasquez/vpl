@@ -118,6 +118,12 @@ public:
       return (occupancyNode.getLogOdds() < this->occ_prob_thres_log && occupancyNode.getLogOdds() >= this->unk_prob_thres_log);
   }
   
+  /// queries whether a node is occupied according to the tree's parameter for "occupancy"
+  bool isNodeFree(const OcTreeNode* occupancyNode) const{
+      return (occupancyNode->getLogOdds() < this->unk_prob_thres_log);
+  }
+    
+  bool isUnknownVisible(point3d point);
   
   /**
    * Returns centers of all Uknown voxels, here all voxels that are inside the unknown probability range are used, 
@@ -140,7 +146,11 @@ public:
   octomap::ColorOcTreeNode::Color colorTouchedOccupied;
   octomap::ColorOcTreeNode::Color colorOccupied;
   
-  
+  /**
+   * a visible unknown voxel is a unknown voxel that is 6-adjacent to a free voxel
+   * status: revised
+   */  
+  void getVisibleUnknownVoxels(point3d_list& node_centers, point3d_list& voxel_normals);
   
   
 protected:

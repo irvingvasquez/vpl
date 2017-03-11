@@ -219,8 +219,8 @@ long int PMVOctree::paintVoxels(COctreeVPL* octree)
       }
     } else if(octree->isNodeUnknown(&(*it))){
       if(isInCapsule(it.getCoordinate())){
-	(*it).setLogOdds(logodds(0.5));
-	(*it).setColor(colorOrange);
+	(*it).setLogOdds(logodds(0.5)); // WARNING ?
+	(*it).setColor(colorYellow);
       } else{
 	(*it).setColor(colorGray);
       }
@@ -639,6 +639,50 @@ bool PMVOctree::saveObstacle(std::string file_name)
   
   triangles.saveToMSLTriangle(file_name);
 }
+
+
+bool PMVOctree::saveVisibleUnknown(std::string file_name_vertex, std::string file_name_normal)
+{
+  point3d_list vertices;
+  point3d_list normals;
+  point3d_list::iterator itv;
+  point3d_list::iterator itn;
+  std::vector<double> point(3);
+  std::vector< std::vector<double> > data;
+  vpFileReader fr;
+  
+  map->getVisibleUnknownVoxels(vertices, normals);
+  itv = vertices.begin();
+  itn = normals.begin();
+  
+  // convert to file format
+  while(itv != vertices.end()){
+    point[0] = itv->x();
+    point[1] = itv->y();
+    point[2] = itv->z();
+    
+    data.push_back(point);
+    itv ++;
+  }
+  
+  
+  fr.saveDoubleCoordinates(file_name_vertex, data);
+  data.clear();
+  
+  // convert to file format
+  while(itn != normals.end()){
+    point[0] = itn->x();
+    point[1] = itn->y();
+    point[2] = itn->z();
+    
+    data.push_back(point);
+    itn ++;
+  }
+  fr.saveDoubleCoordinates(file_name_normal, data);
+  
+  return true;
+}
+
 
 
 void PMVOctree::getOccupiedTriangles(vpTriangleList& tris)

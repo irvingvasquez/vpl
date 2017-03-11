@@ -152,6 +152,12 @@ bool NBVPlanner::savePlannerData()
   file_name = dataFolder + "/unknown.raw";
   partialModel->saveUnknownVolumeAsRawT(file_name); 
   
+  
+  file_name.clear();
+  file_name = dataFolder + "/OccupiedVertices.dat";
+  std::string file_name2;
+  file_name2 = dataFolder + "/OccupiedNormals.dat";
+  partialModel->saveVisibleUnknown(file_name, file_name2);
   return true;
 }
 
