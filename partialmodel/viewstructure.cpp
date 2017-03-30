@@ -429,15 +429,15 @@ std::ostream& operator << (std::ostream& out, ViewStructure& view)
 {
   std::vector< double >::iterator it;
   
-  out << "Configuration: ";
+  out << "Robot Configuration: ";
   for(it = view.q.begin(); it!= view.q.end(); it++){
     out << *it << " ";
   } 
   out << " \n" <<std::endl;
   
-  out << "Pose: " << "x:" << view.w[0] << "  y:" << view.w[1] << "  z:" << view.w[2] << "\t\t"
+  out << "Sensor Pose: " << "x:" << view.w[0] << "  y:" << view.w[1] << "  z:" << view.w[2] << "\t\t"
 	<< "  yaw(z):" << view.w[3] << "  pitch(y):" << view.w[4]   << "  roll(x):" << view.w[5] <<std::endl;	
-  out << "Pose in deg: " << view.w[3] * 180/M_PI << " " << view.w[4] * 180/M_PI << " " << view.w[5] * 180/M_PI <<std::endl;
+  out << "Sesor Orientation in deg: " << view.w[3] * 180/M_PI << " " << view.w[4] * 180/M_PI << " " << view.w[5] * 180/M_PI <<std::endl;
   out << "Occupied:" << view.n_occupied << " \tUnknown:" << view.n_unknown  << " \tUtility:" << view.eval;
   	
   out <<std::endl;

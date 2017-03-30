@@ -123,7 +123,9 @@ public:
       return (occupancyNode->getLogOdds() < this->unk_prob_thres_log);
   }
     
-  bool isUnknownVisible(point3d point);
+  bool isAdjacentToFree(point3d point);
+  
+  bool isAdjacentToOccupied(point3d point);
   
   /**
    * Returns centers of all Uknown voxels, here all voxels that are inside the unknown probability range are used, 
@@ -151,6 +153,11 @@ public:
    * status: revised
    */  
   void getVisibleUnknownVoxels(point3d_list& node_centers, point3d_list& voxel_normals);
+  
+  /**
+   * A frontier unknown voxel is a unknown voxel that is 6-adjacent to a free voxel and to a occupied voxel
+   */
+  void getFrontierUnknownVoxels(point3d_list& node_centers, point3d_list& voxel_normals);
   
   
 protected:

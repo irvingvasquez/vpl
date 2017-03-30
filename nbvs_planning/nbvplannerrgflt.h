@@ -91,7 +91,6 @@ virtual bool init();
 };
 
 
-
 /**
  * Selects only one goal for the RRT
  */
@@ -108,7 +107,6 @@ NBVPlannerRGFltOneGoal(RobotSensor* rs, PartialModelBase* pm);
 };
 
 
-
 class NBVPlannerExtendTree : public NBVPlannerRGFlt
 {
   public:
@@ -121,6 +119,8 @@ NBVPlannerExtendTree(RobotSensor* rs, PartialModelBase* pm);
 
 //  virtual void copySolution(list< MSLVector > path, list< MSLVector > policy1, list< MSLVector > policy2);
 };
+
+
 
 
 #endif // NBVPLANNERRGFLT_H

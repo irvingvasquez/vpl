@@ -154,10 +154,10 @@ bool NBVPlanner::savePlannerData()
   
   
   file_name.clear();
-  file_name = dataFolder + "/OccupiedVertices.dat";
+  file_name = dataFolder + "/FrontierVertices.dat";
   std::string file_name2;
-  file_name2 = dataFolder + "/OccupiedNormals.dat";
-  partialModel->saveVisibleUnknown(file_name, file_name2);
+  file_name2 = dataFolder + "/FrontierNormals.dat";
+  partialModel->saveFrontierUnknown(file_name, file_name2);
   return true;
 }
 

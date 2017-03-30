@@ -288,7 +288,6 @@ void RRTNBV::setDataFolder(string folder)
 }
 
 
-
 ViewStructure RRTNBV::getNBV()
 {
   return nbv_v;

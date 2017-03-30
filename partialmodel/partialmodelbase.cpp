@@ -108,6 +108,23 @@ bool PartialModelBase::init()
   std::cout << "  Director ray: " << directorRay << std::endl;
   std::cout << "  Minimun DOV: " << minDOV << std::endl;
   std::cout << "  Maximun DOV: " << maxDOV << std::endl;
+  
+  x = iniparser_getdouble(ini_file, "sensorPose:x", 0);
+  y = iniparser_getdouble(ini_file, "sensorPose:y", 0);
+  z = iniparser_getdouble(ini_file, "sensorPose:z", 0);
+  double yaw, pitch, roll;
+  yaw = iniparser_getdouble(ini_file, "sensorPose:yaw", 0);
+  pitch = iniparser_getdouble(ini_file, "sensorPose:pitch", 0);
+  roll = iniparser_getdouble(ini_file, "sensorPose:roll", 0);
+  sensorReferenceFramePose.resize(6);
+  sensorReferenceFramePose[0] = x;
+  sensorReferenceFramePose[1] = y;
+  sensorReferenceFramePose[2] = z;
+  sensorReferenceFramePose[3] = yaw;
+  sensorReferenceFramePose[4] = pitch;
+  sensorReferenceFramePose[5] = roll;
+  std::cout << "Sensor pose: "; PMUtils::printVector(sensorReferenceFramePose); 
+  
   std::cout << "Object Center: " << p << "  radius:" << objectSphereRadius << std::endl;
   
   std::cout << "-------------------------------------" << std::endl;
@@ -396,10 +413,12 @@ bool PartialModelBase::poitsToTheObject(ViewStructure& v)
    point3d ray(directorRay);
    ray.rotate_IP(v.w[5],v.w[4],v.w[3]);
    
+   //std::cout << "rotated director ray" << ray << std::endl;
+   
    point3d origin(v.w[0],v.w[1],v.w[2]);
    
    if(rayIntersectObjectSphere(ray, origin)){
-    //cout << "points :)" << std::endl;
+//     std::cout << "points to the object :)" << std::endl;
     return true;
    }
    
@@ -435,4 +454,21 @@ void PartialModelBase::getOBB(double& x1, double& y1, double& z1, double& x2, do
   x2 = x_cap_2;
   y2 = y_cap_2;
   z2 = z_cap_2;
+}
+
+
+void PartialModelBase::evaluateCandidateViews(ViewList& views)
+{
+  std::cout << "Evaluating candidate views" << std::endl;
+  ViewList::iterator it_v;
+  it_v = views.begin();
+  ViewStructure temp_view;
+  
+  while(it_v != views.end()){
+    temp_view = *it_v;
+    this->evaluateView(temp_view);
+    std::cout << temp_view << std::endl;
+    *it_v = temp_view;
+    it_v ++;
+  }
 }

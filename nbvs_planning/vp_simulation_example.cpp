@@ -47,14 +47,6 @@ int main(int argc, char **argv) {
     
     std::string rays_file(main_folder);
     rays_file.append("/data/rays_0.dat");
-//     std::string rays_file1(main_folder);
-//     rays_file1.append("/data/rays_1.dat");
-//     std::string rays_file2(main_folder);
-//     rays_file2.append("/data/rays_2.dat");
-//     std::string rays_file3(main_folder);
-//     rays_file3.append("/data/rays_3.dat");
-//     std::string rays_file4(main_folder);
-//     rays_file4.append("/data/rays_4.dat");
 
     
     // ------------------- Robot ---------------------------

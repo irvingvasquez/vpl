@@ -81,6 +81,8 @@ PartialModelBase();
   
   virtual void evaluateCandidateViews()=0;
   
+  void evaluateCandidateViews(ViewList &views);
+  
   virtual int evaluateView(ViewStructure &v)=0;
   
   virtual bool stopCriteriaReached()=0;
@@ -179,9 +181,11 @@ PartialModelBase();
   /**
    * Saves the occupied  and unknown voxels as Obs
    */
-  virtual bool saveObstacle(std::string file_name)=0;
+  virtual bool saveObstacle(std::string file_name)=0;  
   
   virtual bool saveVisibleUnknown(std::string file_name_vertex, std::string file_name_normal)=0;
+  
+  virtual bool saveFrontierUnknown(std::string file_name_vertex, std::string file_name_normal)=0;
   
   virtual void getOccupiedTriangles(vpTriangleList &tris) = 0;
   
@@ -194,24 +198,16 @@ PartialModelBase();
   
   bool poitsToTheObject(ViewStructure &v);
   
-  bool pointsToASphere(ViewStructure &v, double center_x, double center_y, double center_z, double radius);
+  
   
   /**
    * Accumulated points from the reconstructions
    */
   std::string object_points_filename;
   
-  
-  /// Stadistical variables
-  // float std_utility;
-  // float std_surface_u;
-  // float std_unk_voxel;
-  // float std_occ_voxel;
-  // float std_updt_t;
-  // float std_evaluation_t;
-  
-  
 protected:
+  
+  bool pointsToASphere(ViewStructure &v, double center_x, double center_y, double center_z, double radius);
   
   /// Object accumulated point cloud
   Pointcloud objectPointCloud;
@@ -242,7 +238,6 @@ protected:
   */
   bool isInDOV(octomap::point3d origin, octomap::point3d point);
   
-  //bool paintPartialModel;
   
   octomap::point3d *scanOrigin;
   octomap::Pointcloud *scanCloudOrigins;
@@ -284,7 +279,7 @@ protected:
   void computeRayFromPointToPoint(BoostMatrix pointA, BoostMatrix pointB,  double & i, double &j, double &k);
   
   
-  //------------- utils --------------------
+  //------------- colors --------------------
   octomap::ColorOcTreeNode::Color colorTouchedUnkmark;
   octomap::ColorOcTreeNode::Color colorUnmark;
   octomap::ColorOcTreeNode::Color colorTouchedOccupied;
@@ -302,6 +297,11 @@ protected:
    * Stadistical variables. Used for compare reconstructions:
    */
   std::vector<long int> unknownVoxelsInOBBx;
+  
+  /*
+   * this should be specified in case that the sensor point to another direction for example the kinect reference frame is not the usual
+   */
+  std::vector<double> sensorReferenceFramePose;
   
 private:
   

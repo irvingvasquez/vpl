@@ -64,6 +64,9 @@ PMVOctree();
   
   virtual bool savePartialModel(std::string file_name);
   
+  /*
+   * status: not working
+   */
   virtual bool loadPartialModel(std::string file_name);
   
   virtual void evaluateCandidateViews();
@@ -77,9 +80,6 @@ PMVOctree();
   */ 
   virtual long int readRays(std::string file_address);
   
-
-   
-  //virtual void paintOccupiedInCapsule();
   
   /**
    * Paints in blue occupied voxels that are inside the object capsule.
@@ -94,10 +94,6 @@ PMVOctree();
    */
   void insertFreeSpace(double x1, double y1, double z1, double x2, double y2, double z2);  
   
-  //void saveEvaluations();
-  
-  //void setUtilityFunction(VolumetricUtilityFunction *uf);
-  
   virtual void saveObjectAsRawT(std::string file_name);
 
   virtual void saveObjectAsObst(std::string file_name);
@@ -107,6 +103,8 @@ PMVOctree();
   virtual bool saveUnknownVolumeAsRawT(std::string file_name);
   
   virtual bool saveVisibleUnknown(std::string file_name_vertex, std::string file_name_normal);
+  
+  virtual bool saveFrontierUnknown(std::string file_name_vertex, std::string file_name_normal);
   
   /**
    * Saves the occupied  and unknown voxels as Obs
@@ -118,7 +116,7 @@ PMVOctree();
   virtual void getUnknownTriangles(vpTriangleList &tris);
   
   virtual double getUnknownVolume();
-
+  
 protected:
   
   /// Octree representation

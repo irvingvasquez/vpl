@@ -189,23 +189,6 @@ void PMVOctree::insertFreeSpace(double x1, double y1, double z1, double x2, doub
 
 
 
-// void PMVOctree::paintOccupiedInCapsule()
-// {
-//   octomap::ColorOcTree::leaf_iterator it= map->begin_leafs();
-//   while(it != map->end_leafs()){
-//     if(it->getOccupancy() > 0.5){ 
-//       if(isInCapsule(it.getCoordinate())){
-// 	(*it).setColor(colorBlue);
-//       }
-//     }
-//     it ++;
-//   }
-//   
-//   map->updateInnerOccupancy();
-// }
-
-
-
 long int PMVOctree::paintVoxels(COctreeVPL* octree)
 {
   octomap::ColorOcTree::leaf_iterator it= octree->begin_leafs();
@@ -311,9 +294,9 @@ bool PMVOctree::rayTracingHTM(boost::numeric::ublas::matrix< double > m, Evaluat
      
      delete direction;
   }
-//  std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
-// 		    << " Unk:" << result.n_unknown <<  " Unk_sce:" << result.n_unknown_scene 
-// 		    << " lost:" << result.n_lost << std::endl;
+//   std::cout << "RT. Occ:" << result.n_occupied << " Occ_sce:" << result.n_occupied_scene 
+//  		    << " Unk:" << result.n_unknown <<  " Unk_sce:" << result.n_unknown_scene 
+//  		    << " lost:" << result.n_lost << std::endl;
 
   //map->write("octree_painted.ot");
   map->cleanTouchedVoxels();
@@ -423,31 +406,7 @@ bool PMVOctree::savePartialModel(std::string file_name)
 
 bool PMVOctree::loadPartialModel(std::string file_name)
 {
-  if(map!= NULL)
-    delete map;
- 
-  AbstractOcTree *tree = tree->read(file_name);
-  map = dynamic_cast<COctreeVPL*>(tree);
-  
-  /*
-  std::cout << "Reading file: " << file_name << std::endl; 
-  AbstractOcTree* readTreeAbstract;
-  readTreeAbstract = AbstractOcTree::read(file_name);
-  //EXPECT_TRUE(readTreeAbstract);
-  std::cout << "Readed: " << readTreeAbstract->getTreeType() << std::endl;
-  //EXPECT_EQ(colorTree.getTreeType(),  readTreeAbstract->getTreeType());
-  ColorOcTree* readColorTree = dynamic_cast<ColorOcTree*>(readTreeAbstract);
- 
-  //readColorTree->write("leido.ot");
-  // Convert 
-  
-  map = new COctreeVPL(voxelResolution);
-  
-  ColorOcTree::iterator it;
-  map-> ;
-  */
-  
-  return true;
+  return false;
 }
 
 
@@ -490,7 +449,7 @@ float PMVOctree::updateWithScan(std::string file_name_scan, std::string file_nam
 int PMVOctree::evaluateView(ViewStructure& v)
 {
   if(!poitsToTheObject(v)){
-    //cout << "Sorry no points :(" << std::endl;
+//     std::cout << "Sorry no points :(" << std::endl;
     return UNFEASIBLE_VIEW;
   }
   
@@ -521,6 +480,7 @@ int PMVOctree::evaluateView(ViewStructure& v)
       }
   } else 
   { 
+    std::cout << " no valid :S" << std::endl;
     v.eval = 0.0;
     return UNFEASIBLE_VIEW;
   }
@@ -531,7 +491,6 @@ int PMVOctree::evaluateView(ViewStructure& v)
 
 bool PMVOctree::registrationConstraint(EvaluationResult r)
 {
-  //return VolumetricUtilityFunction::registrationConstraint(r);
   float overlap;
   overlap = (float) r.n_occupied /(r.n_occupied + r.n_unknown);
   overlap = overlap * 100;
@@ -549,12 +508,6 @@ void PMVOctree::evaluateCandidateViews()
 {
   std::list<ViewStructure>::iterator it_v;
   ViewStructure view;
-  //int removed_views=0;
-  //clock_t start;
-  //double diff;
-  //bool valid_result;
-  //EvaluationResult result;
-  //int i =0;
   
   std::cout << "Evaluating candidate views with octree." << std::endl;
   
@@ -570,24 +523,8 @@ void PMVOctree::evaluateCandidateViews()
   while(it_v != candidateViews.end()){
     this->evaluateView(*it_v);
     it_v ++;
-     
-//     if(valid_result){       
-//     
-//     }
-//     else {
-//       it_v = candidateViews.erase(it_v);
-//       removed_views ++;
-//     }
   }
-  
-//  std::cout << "Removed views: " << removed_views << std::endl;
 }
-
-
-// void PMVOctree::setUtilityFunction(VolumetricUtilityFunction* uf)
-// {
-//   utilityFunction = uf;
-// }
 
 
 void PMVOctree::saveObjectAsRawT(std::string file_name)
@@ -685,6 +622,49 @@ bool PMVOctree::saveVisibleUnknown(std::string file_name_vertex, std::string fil
 
 
 
+bool PMVOctree::saveFrontierUnknown(std::string file_name_vertex, std::string file_name_normal)
+{
+  point3d_list vertices;
+  point3d_list normals;
+  point3d_list::iterator itv;
+  point3d_list::iterator itn;
+  std::vector<double> point(3);
+  std::vector< std::vector<double> > data;
+  vpFileReader fr;
+  
+  map->getFrontierUnknownVoxels(vertices, normals);
+  itv = vertices.begin();
+  itn = normals.begin();
+  
+  // convert to file format
+  while(itv != vertices.end()){
+    point[0] = itv->x();
+    point[1] = itv->y();
+    point[2] = itv->z();
+    
+    data.push_back(point);
+    itv ++;
+  }
+  
+  fr.saveDoubleCoordinates(file_name_vertex, data);
+  data.clear();
+  
+  // convert to file format
+  while(itn != normals.end()){
+    point[0] = itn->x();
+    point[1] = itn->y();
+    point[2] = itn->z();
+    
+    data.push_back(point);
+    itn ++;
+  }
+  fr.saveDoubleCoordinates(file_name_normal, data);
+  
+  return true;
+}
+
+
+
 void PMVOctree::getOccupiedTriangles(vpTriangleList& tris)
 {
   //point3d_list occ_centers;
@@ -745,6 +725,3 @@ double PMVOctree::getUnknownVolume()
   
   return accumulated_volume;
 }
-
-
-

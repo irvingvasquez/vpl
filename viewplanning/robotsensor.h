@@ -146,7 +146,7 @@ protected:
      */
   std::vector<double> sensorPose;
   
-  /**
+    /**
     * Sensor pose respect to the Robot
     */
     mrpt::poses::CPose3D SensorPose;

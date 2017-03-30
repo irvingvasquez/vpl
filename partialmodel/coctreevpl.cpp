@@ -1200,7 +1200,74 @@ void COctreeVPL::getVisibleUnknownVoxels(point3d_list& node_centers, point3d_lis
   {
       if(this->isNodeUnknown(*it)){
 	point3d p = it.getCoordinate();
-	if(this->isUnknownVisible(p)){
+	if(this->isAdjacentToFree(p)){
+	  if(this->inBBX(p)){
+	    
+	    //aproximate the surface normal and verify if it is occupied border
+	    n_object = 0;
+	    object = zero;
+	    n_space = 0;
+	    space = zero;
+	    
+	    for(float z = -1.0; z <=1.0; z += 1.0){
+	      for(float y = -1.0; y <= 1.0; y += 1.0){
+		for(float x = -1.0; x <= 1.0; x += 1.0){
+		  query = ( point3d(x, y, z) * (float)resolution ) + p;
+		  result = this->search(query);
+
+		  if(isNodeOccupied(result)){
+		    n_object ++;
+		    object = object + (query - bbx_center) ;
+		  } else {
+		    if(isNodeUnknown(result)){
+		      n_object ++;
+		      object = object + (query - bbx_center);
+		    }
+		    else {
+		      n_space ++;
+		      space = space + (query - bbx_center);
+		    }
+		  }
+		}
+	      }
+	    }
+	    
+	    if(n_space != 0){
+	      node_centers.push_back(p);
+	      
+	      object = object * (float)(1/n_object);
+	      space = space * (float)((1/n_space));
+	      normal = space - object;
+	      normal.normalize();
+	      voxel_normals.push_back(normal);
+	    }
+	  } 
+	}
+      }
+  }
+}
+
+
+void COctreeVPL::getFrontierUnknownVoxels(point3d_list& node_centers, point3d_list& voxel_normals)
+{
+  point3d query;
+  OcTreeNode* result = NULL;
+  point3d zero(0,0,0);
+  point3d object;
+  double n_object=0;
+  point3d space;
+  double n_space=0;
+  point3d normal;
+  
+  point3d bbx_center = (bbx_min*0.5) + (bbx_max*0.5); 
+   
+  // traverse at the maximum depth
+  for( COctreeVPL::leaf_iterator it=this->begin_leafs(), end=this->end_leafs(); it!=end; ++it)
+  {
+      if(this->isNodeUnknown(*it)){
+	point3d p = it.getCoordinate();
+	// test frontier definition
+	if(this->isAdjacentToFree(p) && this->isAdjacentToOccupied(p)){
 	  if(this->inBBX(p)){
 	    
 	    //aproximate the surface normal and verify if it is occupied border
@@ -1249,7 +1316,7 @@ void COctreeVPL::getVisibleUnknownVoxels(point3d_list& node_centers, point3d_lis
 
 
 
-bool COctreeVPL::isUnknownVisible(point3d point)
+bool COctreeVPL::isAdjacentToFree(point3d point)
 {
     point3d query;
     OcTreeNode* result = NULL;
@@ -1284,3 +1351,38 @@ bool COctreeVPL::isUnknownVisible(point3d point)
     return false;
 }
 
+
+bool COctreeVPL::isAdjacentToOccupied(point3d point)
+{
+    point3d query;
+    OcTreeNode* result = NULL;
+    float x=0,y=0,z=0;
+    
+    for(float z = -1.0; z <=1.0; z += 2.0){
+      query = ( point3d(x, y, z) * (float)resolution ) + point;
+      result = this->search(query);
+      if( isNodeOccupied(result))
+	return true;
+    }
+    
+    x=0;y=0;z=0;
+    
+    for(float y = -1.0; y <= 1.0; y += 2.0){
+      query = ( point3d(x, y, z) * (float)resolution ) + point;
+      //std::cout << "query:" << query << std::endl;
+      result = this->search(query);
+      if( isNodeOccupied(result))
+	return true;
+    }
+    
+    x=0;y=0;z=0;
+    
+    for(float x = -1.0; x <= 1.0; x += 2.0){
+      query = ( point3d(x, y, z) * (float)resolution ) + point;
+      result = this->search(query);
+      if( isNodeOccupied(result))
+	return true;
+    }
+    
+    return false;
+}

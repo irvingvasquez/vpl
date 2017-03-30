@@ -5,6 +5,9 @@
 //#include "vpfilereader.h"
 #include "vptriangle.h"
 
+#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/io.hpp> 
+
 //TODO change the name of this file and namespace
 
 namespace PMUtils {
@@ -33,4 +36,11 @@ namespace PMUtils {
    * Reads the files and return the percentage of matched points based on the reference file
    */
   double compareFilePoints(std::string file_target, std::string file_reference, double gap);
+  
+  /*
+  * gets the homogeneous transformation matrix from a pose (x,y,z, yaw(z), pitch(y), roll(x))
+  * status: not tested
+  */
+  void getHTMfromPose(std::vector<double> pose, boost::numeric::ublas::matrix<double> &HTM);
+
 }

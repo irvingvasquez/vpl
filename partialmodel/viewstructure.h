@@ -48,7 +48,7 @@ enum _VIEW_FEASIBILITY {
 /**
  * 
  * Robot configuration: q
- * Sensor pose:  w[x, y, z, yaw(z), pitch(y), roll(x)]
+ * Sensor pose:  w[x, y, z, yaw(z), pitch(y), roll(x)] radians
  * homogeneous transformtation matrix of the eye in hand sensor: HTM 
  */
 class ViewStructure
@@ -58,12 +58,15 @@ public:
 ViewStructure();
 
 /**
- * Sensor pose
- * q [x, y, z, yaw(z), pitch(y), roll(x)]
+ * Robot configuration, In case that it has associated a robot
  */
 std::vector<double> q;
 
-/// workspace projection
+/**
+ * Sensor pose
+ * q [x, y, z, yaw(z), pitch(y), roll(x)]
+ * accordinly to a 3D pose of MRPT
+ */
 std::vector<double> w;
 
 ///Homogeneous transformtation matrix
