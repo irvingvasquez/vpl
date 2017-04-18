@@ -40,7 +40,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "partialmodelbase.h"
 #include "evaluationresultvector.h"
-#include "vufobjectfilters.h"
 
 
 /**

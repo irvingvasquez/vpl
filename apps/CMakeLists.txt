@@ -35,7 +35,7 @@ include_directories(${RELATED_DIRS_DIRECTORY}/iniparser/src)
 link_directories(${RELATED_DIRS_DIRECTORY}/iniparser)
 set(LIBS_INIPARSER iniparser)
 
- #---------------- View Planning Library ---------
+#---------------- View Planning Library ---------
 include_directories(${VPL_SOURCE_DIR}/viewplanning)
 include_directories(${VPL_SOURCE_DIR}/partialmodel)
 link_directories(${VPL_SOURCE_DIR}/lib)

@@ -3,10 +3,9 @@ cmake_minimum_required(VERSION 2.6)
 project(nbvpartialmodel)
 
 set(SRC_STRUCTURES coctreevpl.cpp)
-set(SRC_PARTIAL_MODEL partialmodelbase.cpp pmvolumetric.cpp pmvoctree.cpp pmvoctreeig.cpp pmvoctreeigkriegel12.cpp pmvoctreevasquez09.cpp pmvorearsidevoxel.cpp)  
-# set(SRC_HRT pmraynode.cpp pmraytree.cpp pmvoctreehierarchicalrt.cpp)
+set(SRC_PARTIAL_MODEL partialmodelbase.cpp pmvolumetric.cpp pmvoctree.cpp pmvoctreeig.cpp pmvoctreeigkriegel12.cpp pmvoctreevasquez09.cpp pmvorearsidevoxel.cpp)
 set(SRC_VIEW viewstructure.cpp vpfilereader.cpp pmutils.cpp vptriangle.cpp vpvertex.cpp)
-set(SRC_OTHER evaluationresult.cpp evaluationresultvector.cpp volumetricutilityfunction.cpp vufobjectfilters.cpp)
+set(SRC_OTHER evaluationresult.cpp evaluationresultvector.cpp)
 set(SRC_ALL ${SRC_PARTIAL_MODEL} ${SRC_VIEW} ${SRC_OTHER} ${SRC_STRUCTURES})
 #set(SRC_ALL ${SRC_HRT} )
 
@@ -42,12 +41,6 @@ add_library(PartialModel SHARED ${SRC_ALL})
 
 
 # ///////////////////// other testing programs ////////////////////////////
-
-#add_executable(test_multires_octree test_multires_octree.cpp ${SRC_ALL})
-#target_link_libraries(test_multires_octree ${LIBS_OCTOMAP}  ${LIBS_INIPARSER}) 
-
-#add_executable(test_hrt test_hrt.cpp ${SRC_ALL})
-#target_link_libraries(test_hrt ${LIBS_OCTOMAP} ${LIBS_INIPARSER} ${Boost_LIBRARIES} -lboost_system)
 
 #add_executable(test_esfera test_esfera_octree.cpp ${SRC_ALL})
 #target_link_libraries(test_esfera ${LIBS_OCTOMAP}  ${LIBS_INIPARSER})

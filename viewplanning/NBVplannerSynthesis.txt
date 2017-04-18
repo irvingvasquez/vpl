@@ -1,0 +1,123 @@
+  /*
+   * Synthesis methods compute the NBV usually by geometrical analysis of the reconstructed object.
+   */
+  virtual bool synthesis(std::list< ViewStructure > &viewList)=0;
+  
+  
+  
+bool PMVOctree::synthesis(std::list< ViewStructure >& viewList)
+{
+  // good distance for the sensor, in meters
+  double distance = 1;
+  double yaw, pitch, roll;
+  
+  viewList.clear();
+  
+  point3d_list frontiers;
+  point3d_list normals;
+  
+  point3d_list::iterator itv;
+  point3d_list::iterator itn;
+  //std::vector<double> point(3);
+  point3d position, dir;
+  std::vector< std::vector<double> > data;
+  vpFileReader fr;
+    
+  map->getFrontierUnknownVoxels(frontiers, normals);
+  itv = frontiers.begin();
+  itn = normals.begin();
+  
+  BoostMatrix RayPose(4,4);
+  BoostMatrix SensorPose(4,4);
+  BoostMatrix HTM(4,4);
+  std::vector<double> robot_config(6);
+  std::vector<double> sensor_pose(6);
+  
+  // convert to file format
+  while(itv != frontiers.end() && itn != normals.end()){
+    position = (*itv) + ((*itn)*distance);
+    dir = (*itn)*-1;
+//     std::cout << "dir: " << dir << std::endl;
+    
+    // calcular los angulos de rotación
+    yaw = atan2(dir.y(), dir.x());
+//     std::cout << "yaw: " << yaw << std::endl;
+    //norm = sqrt( pow(pointing_v[0],2) + pow(pointing_v[1],2) + pow(pointing_v[2],2) );
+    double norm = sqrt(dir.x()*dir.x() + dir.y()*dir.y() + dir.z()*dir.z());
+    pitch = asin( itn->z() / norm);
+    pitch = -pitch; // I did this because the positive angles lie before the x-y plane.  
+//     std::cout << "pitch: " << pitch << std::endl;
+    roll = 0;
+    
+    // determinar la configuración especificada en grados
+    robot_config[0] = (double) (position.x() );
+    robot_config[1] = (double) (position.y() );
+    robot_config[2] = (double) (position.z() );
+    robot_config[3] = (double) (yaw * 180/M_PI);
+    robot_config[4] = (double) (pitch * 180/M_PI);
+    robot_config[5] = (double) (roll * 180/M_PI);
+    
+    sensor_pose[0] = position.x();
+    sensor_pose[1] = position.y();
+    sensor_pose[2] = position.z();
+    sensor_pose[3] = yaw;
+    sensor_pose[4] = pitch;
+    sensor_pose[5] = roll;
+    
+    // determinar la matriz de transformación homogenea
+//     PMUtils::printVector(sensor_pose);
+    PMUtils::getHTMfromPose(sensor_pose, SensorPose);
+    
+//     std::cout << "SensorHTM:" << SensorPose << "\n" << std::endl;
+    
+    // TEST
+  /*  BoostMatrix p(4,1);
+    p(0,0) = 1;
+    p(1,0) = 0;
+    p(2,0) = 0;
+    p(3,0) = 1;
+    std::cout << "multi:" << boost::numeric::ublas::prod(SensorPose, p);
+ */   
+//     PMUtils::printVector(sensorReferenceFramePose);
+    PMUtils::getHTMfromPose(sensorReferenceFramePose, RayPose);
+//     std::cout << "ray pose:" << RayPose << "\n" << std::endl;
+        
+    //TEST
+/*    p(0,0) = 0;
+    p(1,0) = 0;
+    p(2,0) = 2;
+    p(3,0) = 1;
+    std::cout << "multi kinect:" << boost::numeric::ublas::prod(RayPose, p);
+  */  
+    HTM = boost::numeric::ublas::prod(SensorPose, RayPose);
+//     std::cout << "HTM:" << HTM << "\n" << std::endl;
+//     std::cout << "multi kinect all:" << boost::numeric::ublas::prod(HTM, p);
+    
+    // llenar la vista
+    ViewStructure v;
+    v.q = robot_config;
+    v.HTM = HTM;
+    v.w = sensor_pose;
+    
+//     std::cout << v << std::endl;
+    viewList.push_back(v);
+    itv ++;
+    itn ++;
+    
+ /*   BoostMatrix cero_origin(4,1);
+    cero_origin(0,0) = 0;
+    cero_origin(1,0) = 0;
+    cero_origin(2,0) = 0;
+    cero_origin(3,0) = 1;
+  */  
+  /*  BoostMatrix dirray(4,1);
+    dirray(0,0) = 0;
+    dirray(1,0) = 0;
+    dirray(2,0) = 1;
+    dirray(3,0) = 1;
+   */ 
+//     std::cout << boost::numeric::ublas::prod(HTM, cero_origin);
+//     std::cout << boost::numeric::ublas::prod(HTM, dirray);
+//     getchar();
+  }
+}
