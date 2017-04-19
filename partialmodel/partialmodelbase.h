@@ -51,10 +51,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <octomap/ColorOcTree.h>
 
 #include <math.h>
-#include <iniparser.h>
+//#include <iniparser.h>
+#include <mrpt/system/filesystem.h>
+#include <mrpt/utils/CConfigFile.h>
 
 #include "vpfilereader.h"
 #include "viewstructure.h"
+
+
 
 using namespace octomap;
 typedef boost::numeric::ublas::matrix<double> BoostMatrix;
@@ -196,8 +200,6 @@ PartialModelBase();
   void getOBB(double &x1, double &y1, double &z1, double &x2, double &y2, double &z2);
   
   bool poitsToTheObject(ViewStructure &v);
-  
-  
   
   /**
    * Accumulated points from the reconstructions

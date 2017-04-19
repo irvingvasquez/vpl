@@ -41,39 +41,34 @@ bool PMVolumetric::init()
     config_file.append("/");
     config_file.append("partialModelConfig.ini");
   
-    dictionary * ini_file;
+    mrpt::utils::CConfigFile parser;
+    ASSERT_FILE_EXISTS_(config_file);
+    parser.setFileName(config_file);
     
-    ini_file = iniparser_load(config_file.c_str());
-    if (ini_file ==NULL ) {
-      fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
-      return false ;
-    }
-    //iniparser_dump(ini_file, stderr);
+    voxelResolution = parser.read_double("volumetric", "resolution", -1, true);
     
-    voxelResolution = iniparser_getdouble(ini_file,"volumetric:resolution", -1);
+    weight = parser.read_double("volumetric", "weight", 0.5, true);
     
-    weight = iniparser_getdouble(ini_file, "volumetric:weight", 0.5);
+    freeSpace = parser.read_bool("volumetric", "freeSpace", false, true);
     
-    freeSpace = iniparser_getboolean(ini_file,"volumetric:freeSpace", false);
+    collisionGap = parser.read_double("volumetric", "collisionGap", 0.1, true);
     
-    collisionGap = iniparser_getdouble(ini_file, "volumetric:collisionGap", 0.1);
+    minUnknown = parser.read_int("volumetric", "minUnknown", 100);
     
-    minUnknown = iniparser_getint(ini_file, "volumetric:minUnknown", 100);
-    
-    minOverlap = iniparser_getint(ini_file, "volumetric:minOverlap", 1); 
+    minOverlap = parser.read_int("volumetric", "minOverlap", 1); 
     
     if(freeSpace){
-      x_free_1 = iniparser_getdouble(ini_file,"freeSpaceCoord:x1", -1);
-      x_free_2 = iniparser_getdouble(ini_file,"freeSpaceCoord:x2", -1);
+      x_free_1 = parser.read_double("freeSpaceCoord", "x1", -1, true);
+      x_free_2 = parser.read_double("freeSpaceCoord", "x2", -1, true);
       
-      y_free_1 = iniparser_getdouble(ini_file,"freeSpaceCoord:y1", -1);
-      y_free_2 = iniparser_getdouble(ini_file,"freeSpaceCoord:y2", -1);
+      y_free_1 = parser.read_double("freeSpaceCoord", "y1", -1, true);
+      y_free_2 = parser.read_double("freeSpaceCoord", "y2", -1, true);
       
-      z_free_1 = iniparser_getdouble(ini_file,"freeSpaceCoord:z1", -1);
-      z_free_2 = iniparser_getdouble(ini_file,"freeSpaceCoord:z2", -1);
+      z_free_1 = parser.read_double("freeSpaceCoord", "z1", -1, true);
+      z_free_2 = parser.read_double("freeSpaceCoord", "z2", -1, true);
     }
     
-    maxRange = iniparser_getdouble(ini_file, "volumetric:maxRange", -1);
+    maxRange = parser.read_double( "volumetric", "maxRange", -1, true);
     
     std::cout << "---------- Volumetric configuration -------" << std::endl;
     std::cout << "Voxel reslution:" << voxelResolution << std::endl;
@@ -85,12 +80,12 @@ bool PMVolumetric::init()
     std::cout << "max range:" << maxRange << std::endl;
     
     float x1, x2, y1, y2, z1, z2;
-    x1 = iniparser_getdouble(ini_file, "objectCapsule:x1", 0);
-    x2 = iniparser_getdouble(ini_file, "objectCapsule:x2", 0);
-    y1 = iniparser_getdouble(ini_file, "objectCapsule:y1", 0);
-    y2 = iniparser_getdouble(ini_file, "objectCapsule:y2", 0);
-    z1 = iniparser_getdouble(ini_file, "objectCapsule:z1", 0);
-    z2 = iniparser_getdouble(ini_file, "objectCapsule:z2", 0);
+    x1 = parser.read_double("objectCapsule", "x1", 0, true);
+    x2 = parser.read_double("objectCapsule", "x2", 0, true);
+    y1 = parser.read_double("objectCapsule", "y1", 0, true);
+    y2 = parser.read_double("objectCapsule", "y2", 0, true);
+    z1 = parser.read_double("objectCapsule", "z1", 0, true);
+    z2 = parser.read_double("objectCapsule", "z2", 0, true);
     
     point3d obj_min(x1,y1,z1);
     ObjectBBxMin = obj_min;
@@ -98,33 +93,18 @@ bool PMVolumetric::init()
     point3d obj_max(x2,y2,z2);
     ObjectBBxMax = obj_max;
     
-    x1 = iniparser_getdouble(ini_file, "sceneCapsule:x1", 0);
-    x2 = iniparser_getdouble(ini_file, "sceneCapsule:x2", 0);
-    y1 = iniparser_getdouble(ini_file, "sceneCapsule:y1", 0);
-    y2 = iniparser_getdouble(ini_file, "sceneCapsule:y2", 0);
-    z1 = iniparser_getdouble(ini_file, "sceneCapsule:z1", 0);
-    z2 = iniparser_getdouble(ini_file, "sceneCapsule:z2", 0);
+    x1 = parser.read_double("sceneCapsule", "x1", 0, true);
+    x2 = parser.read_double("sceneCapsule", "x2", 0, true);
+    y1 = parser.read_double("sceneCapsule", "y1", 0, true);
+    y2 = parser.read_double("sceneCapsule", "y2", 0, true);
+    z1 = parser.read_double("sceneCapsule", "z1", 0, true);
+    z2 = parser.read_double("sceneCapsule", "z2", 0, true);
     
     point3d sce_min(x1,y1,z1);
     SceneBBxMin = sce_min;
     point3d sce_max(x2,y2,z2);
     SceneBBxMax = sce_max;
-    
-/*    int uf_type = 0;
-    uf_type = iniparser_getint(ini_file, "utilityFunction:type",0);
- */   
-//     if(uf_type == 1){
-//       utilityFunction = new VUF_OverlapPercent();
-//       utilityFunction->setMinimunOverlap(minOverlap);
-//     } else {
-//       //TODO select which utility function
-//       utilityFunction = new VUFObjectFilters();
-//       utilityFunction->setMinimunOverlap(minOverlap);
-//     }
- 
-//     std::cout << "Utility function type: " << uf_type << std::endl;
-//     std::cout << "-------------------------------------------" << std::endl;
-    
+       
     return true;
 }
 

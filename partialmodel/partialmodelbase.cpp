@@ -50,33 +50,29 @@ bool PartialModelBase::init()
   config_file.append("/");
   config_file.append("partialModelConfig.ini");
   
-  dictionary * ini_file;
-  
-  ini_file = iniparser_load(config_file.c_str());
-  if (ini_file ==NULL ) {
-        fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
-        return false ;
-  }
-  //iniparser_dump(ini_file, stderr);
-  
-  std::cout << "------------- Partial Model Configuration ------------" << std::endl;
+  mrpt::utils::CConfigFile parser;
+  ASSERT_FILE_EXISTS_(config_file);
+  parser.setFileName(config_file);
+
+     
+  std::cout << "\n------------- Partial Model Configuration ------------" << std::endl;
   
   float x1, x2, y1, y2, z1, z2;
-  x1 = iniparser_getdouble(ini_file, "objectCapsule:x1", 0);
-  x2 = iniparser_getdouble(ini_file, "objectCapsule:x2", 0);
-  y1 = iniparser_getdouble(ini_file, "objectCapsule:y1", 0);
-  y2 = iniparser_getdouble(ini_file, "objectCapsule:y2", 0);
-  z1 = iniparser_getdouble(ini_file, "objectCapsule:z1", 0);
-  z2 = iniparser_getdouble(ini_file, "objectCapsule:z2", 0);
+  x1 = parser.read_double("objectCapsule", "x1", 0, true);  
+  x2 = parser.read_double("objectCapsule", "x2", 0, true);  
+  y1 = parser.read_double("objectCapsule", "y1", 0, true);  
+  y2 = parser.read_double("objectCapsule", "y2", 0, true);
+  z1 = parser.read_double("objectCapsule", "z1", 0, true);
+  z2 = parser.read_double("objectCapsule", "z2", 0, true);
   
   setObjectCapsule(x1,y1,z1,x2,y2,z2);
   
-  x1 = iniparser_getdouble(ini_file, "sceneCapsule:x1", 0);
-  x2 = iniparser_getdouble(ini_file, "sceneCapsule:x2", 0);
-  y1 = iniparser_getdouble(ini_file, "sceneCapsule:y1", 0);
-  y2 = iniparser_getdouble(ini_file, "sceneCapsule:y2", 0);
-  z1 = iniparser_getdouble(ini_file, "sceneCapsule:z1", 0);
-  z2 = iniparser_getdouble(ini_file, "sceneCapsule:z2", 0);
+  x1 = parser.read_double("sceneCapsule", "x1", 0, true);
+  x2 = parser.read_double("sceneCapsule", "x2", 0, true);
+  y1 = parser.read_double("sceneCapsule", "y1", 0, true);
+  y2 = parser.read_double("sceneCapsule", "y2", 0, true);
+  z1 = parser.read_double("sceneCapsule", "z1", 0, true);
+  z2 = parser.read_double("sceneCapsule", "z2", 0, true);
   
   setScene(x1,y1,z1,x2,y2,z2);
   
@@ -84,23 +80,23 @@ bool PartialModelBase::init()
   evaluationsFile.assign(dataFolder);
   evaluationsFile.append("/partial_model_evaluations.dat");
   
-  minDOV = iniparser_getdouble(ini_file, "sensor:minDOV", 0);
-  maxDOV = iniparser_getdouble(ini_file, "sensor:maxDOV", 50);
+  minDOV = parser.read_double("sensor", "minDOV", 0, true);
+  maxDOV = parser.read_double("sensor", "maxDOV", 50, true);
   
-  //rbb_size = iniparser_getdouble(ini_file, "partialModel:rbb_size", 0);
+  //rbb_size = parser.read_double(ini_file, "partialModel:rbb_size", 0);
   
-  double x = iniparser_getdouble(ini_file, "objectCenter:x", 0);
-  double y = iniparser_getdouble(ini_file, "objectCenter:y", 0);
-  double z = iniparser_getdouble(ini_file, "objectCenter:z", 0);
-  double r = iniparser_getdouble(ini_file, "objectCenter:radio", 1.0);
+  double x = parser.read_double("objectCenter", "x", 0, true);
+  double y = parser.read_double("objectCenter", "y", 0, true);
+  double z = parser.read_double("objectCenter", "z", 0, true);
+  double r = parser.read_double("objectCenter", "radio", 1.0, true);
   point3d p(x,y,z);
   objectSphereCenter = p;
   objectSphereRadius = r;
   objRadius2 = objectSphereRadius;// * objectSphereRadius;
   
-  x = iniparser_getdouble(ini_file, "directorRay:x", 0);
-  y = iniparser_getdouble(ini_file, "directorRay:y", 0);
-  z = iniparser_getdouble(ini_file, "directorRay:z", 0);
+  x = parser.read_double("directorRay", "x", 0, true);
+  y = parser.read_double("directorRay", "y", 0, true);
+  z = parser.read_double("directorRay", "z", 0, true);
   point3d dr(x,y,z);
   directorRay = dr;
  
@@ -109,13 +105,14 @@ bool PartialModelBase::init()
   std::cout << "  Minimun DOV: " << minDOV << std::endl;
   std::cout << "  Maximun DOV: " << maxDOV << std::endl;
   
-  x = iniparser_getdouble(ini_file, "sensorPose:x", 0);
-  y = iniparser_getdouble(ini_file, "sensorPose:y", 0);
-  z = iniparser_getdouble(ini_file, "sensorPose:z", 0);
+  x = parser.read_double("sensorPose", "x", 0, true);
+  y = parser.read_double("sensorPose", "y", 0, true);
+  z = parser.read_double("sensorPose", "z", 0, true);
+  
   double yaw, pitch, roll;
-  yaw = iniparser_getdouble(ini_file, "sensorPose:yaw", 0);
-  pitch = iniparser_getdouble(ini_file, "sensorPose:pitch", 0);
-  roll = iniparser_getdouble(ini_file, "sensorPose:roll", 0);
+  yaw = parser.read_double("sensorPose", "yaw", 0, true);
+  pitch = parser.read_double("sensorPose", "pitch", 0, true);
+  roll = parser.read_double("sensorPose", "roll", 0, true);
   sensorReferenceFramePose.resize(6);
   sensorReferenceFramePose[0] = x;
   sensorReferenceFramePose[1] = y;
@@ -123,14 +120,11 @@ bool PartialModelBase::init()
   sensorReferenceFramePose[3] = yaw;
   sensorReferenceFramePose[4] = pitch;
   sensorReferenceFramePose[5] = roll;
-  std::cout << "Sensor pose: "; PMUtils::printVector(sensorReferenceFramePose); 
   
+  std::cout << "Sensor pose: "; PMUtils::printVector(sensorReferenceFramePose); 
   std::cout << "Object Center: " << p << "  radius:" << objectSphereRadius << std::endl;
   
   std::cout << "-------------------------------------" << std::endl;
-  
-  delete ini_file;
-  
   return true;
 }
 

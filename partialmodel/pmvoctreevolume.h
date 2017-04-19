@@ -20,7 +20,7 @@
 #ifndef PMVOCTREEVOLUME_H
 #define PMVOCTREEVOLUME_H
 
-#include <pmvoctree.h>
+#include "pmvoctree.h"
 
 
 class PMVOctreeVolume : public PMVOctree

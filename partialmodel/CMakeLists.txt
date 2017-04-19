@@ -7,7 +7,6 @@ set(SRC_PARTIAL_MODEL partialmodelbase.cpp pmvolumetric.cpp pmvoctree.cpp pmvoct
 set(SRC_VIEW viewstructure.cpp vpfilereader.cpp pmutils.cpp vptriangle.cpp vpvertex.cpp)
 set(SRC_OTHER evaluationresult.cpp evaluationresultvector.cpp)
 set(SRC_ALL ${SRC_PARTIAL_MODEL} ${SRC_VIEW} ${SRC_OTHER} ${SRC_STRUCTURES})
-#set(SRC_ALL ${SRC_HRT} )
 
 
 # ----------------------------- Octomap --------------------
@@ -17,23 +16,27 @@ include_directories(${OCTOMAP_DIR}/octomap/include)
 link_directories(${OCTOMAP_DIR}/lib ${OCTOMAP_DIR}/octovis/lib)
 set(LIBS_OCTOMAP octomap octomath octovis)
 
-
-# ---------------------------- INIPARSER --------------------
-set(INIPARSER_DIR ${VPL_SOURCE_DIR}/../iniparser) ## Needs configuration
-
-include_directories(${INIPARSER_DIR}/src)
-link_directories(${INIPARSER_DIR})
-set(LIBS_INIPARSER iniparser)
-
+# ---------------- MRPT ---------------------
+ find_package(MRPT REQUIRED)
+ include_directories(${MRPT_INCLUDE_DIRS})
+ link_directories(${MRPT_LINK_DIRECTORIES})
+ set(LIBS_MRPT mrpt-base)
 
 #----------------------------- BOOST --------------------
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories( ${Boost_INCLUDE_DIR} )
 
-
 # -------------------------------------------------
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${VPL_SOURCE_DIR}/lib)
 add_library(PartialModel SHARED ${SRC_ALL})
+
+
+# ---------------------------- INIPARSER --------------------
+#set(INIPARSER_DIR ${VPL_SOURCE_DIR}/../iniparser) ## Needs configuration
+
+#include_directories(${INIPARSER_DIR}/src)
+#link_directories(${INIPARSER_DIR})
+#set(LIBS_INIPARSER iniparser)
 
 
 # ///////////////////// other testing programs ////////////////////////////
