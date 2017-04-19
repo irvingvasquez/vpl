@@ -31,10 +31,6 @@ find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories( ${Boost_INCLUDE_DIR} )
 
 
-#-----------------------------------------------
-#add_executable(nbvpartialmodel main.cpp ${SRC_ALL})
-#target_link_libraries(nbvpartialmodel ${LIBS_OCTOMAP} ${LIBS_INIPARSER})
-
 # -------------------------------------------------
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${VPL_SOURCE_DIR}/lib)
 add_library(PartialModel SHARED ${SRC_ALL})

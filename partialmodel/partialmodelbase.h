@@ -53,12 +53,11 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <math.h>
 #include <iniparser.h>
 
-#include "pmdefinitions.h"
 #include "vpfilereader.h"
 #include "viewstructure.h"
 
 using namespace octomap;
-
+typedef boost::numeric::ublas::matrix<double> BoostMatrix;
 
 /**
  * The partial model stores information about the scene and provides functions that are needed to evaluate a candidate sensor view. 

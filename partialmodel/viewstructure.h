@@ -64,7 +64,7 @@ std::vector<double> q;
 
 /**
  * Sensor pose
- * q [x, y, z, yaw(z), pitch(y), roll(x)]
+ * w [x, y, z, yaw(z), pitch(y), roll(x)]
  * accordinly to a 3D pose of MRPT
  */
 std::vector<double> w;

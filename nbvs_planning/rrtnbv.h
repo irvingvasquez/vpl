@@ -24,7 +24,6 @@
 #include <partialmodelbase.h>
 #include "robotsensor.h"
 #include <viewstructure.h>
-#include <volumetricutilityfunction.h>
 #include <list> //rem
 
 
