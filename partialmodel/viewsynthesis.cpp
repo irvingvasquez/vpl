@@ -30,11 +30,35 @@
 
 ViewSynthesis::ViewSynthesis()
 {
-  max_views = -1;
+  n_max = -1;
 }
 
 
 RandomViewSynthesis::RandomViewSynthesis(int n, ViewStructure min, ViewStructure max):ViewSynthesis()
 {
-  max_views = n;
+  n_max = n;
+  min_view = min;
+  max_view = max;
+}
+
+
+void RandomViewSynthesis::getViews(ViewList& views)
+{
+  views.clear();
+  
+  ViewStructure view;
+  double random, interval, rand_interval;
+  
+  srand (time(NULL));
+  
+  for(int i=0;i<n_max;i++){
+    for(int j=0;j<6;j++){
+      random = (double) rand()/RAND_MAX; 
+      interval = max_view.w[j] - min_view.w[j];
+      rand_interval = random * interval;
+      view.w[j] = min_view.w[j] + rand_interval;
+    }
+    
+    views.push_back(view);
+  }
 }

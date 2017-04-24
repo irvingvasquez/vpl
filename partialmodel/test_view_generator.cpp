@@ -1,59 +1,37 @@
-
-#include "pmvoctree.h"
-#include "pmvoctreehierarchicalrt.h"
-#include "vufobjectfilters.h"
-
 #include <math.h>
-#include <octomap/math/Utils.h>
-
-#include "coctreevpl.h"
+#include "viewstructure.h"
+#include "viewsynthesis.h"
+#include <string>
 
 int main(int argc, char **argv) {
+  if (argc != 3) { // Check the value of argc. If not enough parameters have been passed, inform user and exit.
+        std::cout << "Usage is ./test_view_generator <n_views> <outfile>\n"; // Inform the user of how to use the program
+        //std::cin.get();
+        exit(0);
+  }
+  int n= atoi(argv[1]); 
+  std::string file(argv[2]);
+  
+  if(n<0){
+     std::cout << "Amount of views must be positive\n"; // Inform the user of how to use the program
+     //std::cin.get();
+     exit(0);
+  }
+   
+  
+  ViewStructure min;
+  min.setPose(-5.0,-5.0,0,0,0,0);
 
+  ViewStructure max;
+  max.setPose(5.0,5.0,5.0,3.14,3.14,3.14);
   
+  ViewList list;
   
-  std::string config_folder("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/config");
-  std::string data_folder("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data");
-  std::string octree_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/test_cotree.ot");
-  std::string file_rays("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/config/rays_0.dat");
-  std::string scan_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/scan_1.dat");
-  std::string origin_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/scan_origin_1.dat");
-  std::string cviews_file("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/config/sphere.vs");
+  RandomViewSynthesis generator(n, min, max);
   
+  generator.getViews(list);
   
-  std::vector< std::vector<double> > a;
-  vpFileReader r;
-  r.readDoubleCoordinates(scan_file, a);
-  
-  
-  //PMVMultiOctree2 esferota;
-  PMVOctreeHierarchicalRT esferota;
-  //PMVOctree esferota;
-  VUFObjectFilters *uf = new VUFObjectFilters();
-  
-  esferota.setConfigFolder(config_folder);
-  esferota.setDataFolder(data_folder);
-  esferota.init();
-  esferota.readRays(file_rays);
-  
-  uf->setMinimunOverlap(5);
-  
-  esferota.setUtilityFunction(uf);
-  
-  esferota.updateWithScan(scan_file, origin_file);
-  
-  esferota.readCandidateViews(cviews_file);
-  
-  //esferota.evaluateCandidateViews();
-  //esferota.saveEvaluations();
-  
-  //esferota.paintOccupiedInCapsule();
-  //esferota.paintOccluded();
-  esferota.savePartialModel(octree_file);
-  std::string tris("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/occupied.raw");  
-  std::string obst_filename("/home/irving/projects/nbvPlanning-1.1/problems/crv13_Uniform_RT/data/Obst"); 
-  esferota.saveObjectAsRawT(tris);
-  esferota.saveObjectAsObst(obst_filename);
+  list.save(file);
   
   return 0;
 }

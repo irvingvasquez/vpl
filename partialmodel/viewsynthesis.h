@@ -30,6 +30,8 @@
 #define VIEWSYNTHESIS_H
 
 #include "viewstructure.h"
+#include <time.h>
+#include <stdlib.h>
 
 /*
  * Synthesis methods compute the NBV or a set of promising views by geometrical analysis of the reconstructed object.
@@ -38,11 +40,11 @@ class ViewSynthesis
 {
 public:
 ViewSynthesis();
-getViews(ViewList &views)=0;
+virtual void getViews(ViewList &views)=0;
 
 protected:
   // maximum number of generated views, -1 no limit
-  int max_views;
+  int n_max;
 };
 
 class RandomViewSynthesis :public ViewSynthesis
@@ -50,7 +52,11 @@ class RandomViewSynthesis :public ViewSynthesis
 public:
   RandomViewSynthesis(int n, ViewStructure min, ViewStructure max);
   
+virtual void getViews(ViewList& views);
+
 protected:
+  ViewStructure min_view;
+  ViewStructure max_view;
   
 };
 

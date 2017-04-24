@@ -57,6 +57,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "vpfilereader.h"
 #include "viewstructure.h"
+#include "pmutils.h"
 
 
 

@@ -5,7 +5,7 @@ project(nbvpartialmodel)
 set(SRC_STRUCTURES coctreevpl.cpp)
 set(SRC_PARTIAL_MODEL partialmodelbase.cpp pmvolumetric.cpp pmvoctree.cpp pmvoctreeig.cpp pmvoctreeigkriegel12.cpp pmvoctreevasquez09.cpp pmvorearsidevoxel.cpp)
 set(SRC_VIEW viewstructure.cpp vpfilereader.cpp pmutils.cpp vptriangle.cpp vpvertex.cpp)
-set(SRC_OTHER evaluationresult.cpp evaluationresultvector.cpp)
+set(SRC_OTHER evaluationresult.cpp evaluationresultvector.cpp viewsynthesis.cpp)
 set(SRC_ALL ${SRC_PARTIAL_MODEL} ${SRC_VIEW} ${SRC_OTHER} ${SRC_STRUCTURES})
 
 
@@ -41,8 +41,8 @@ add_library(PartialModel SHARED ${SRC_ALL})
 
 # ///////////////////// other testing programs ////////////////////////////
 
-#add_executable(test_esfera test_esfera_octree.cpp ${SRC_ALL})
-#target_link_libraries(test_esfera ${LIBS_OCTOMAP}  ${LIBS_INIPARSER})
+add_executable(view_generator test_view_generator.cpp ${SRC_ALL})
+target_link_libraries(view_generator ${LIBS_OCTOMAP} ${LIBS_MRPT})
 
 #add_executable(test_esfera_multi test_esfera_multioctree.cpp ${SRC_ALL})
 #target_link_libraries(test_esfera_multi ${LIBS_OCTOMAP}  ${LIBS_INIPARSER})

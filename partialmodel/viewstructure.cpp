@@ -1,21 +1,36 @@
 /*
-    <one line to give the program's name and a brief idea of what it does.>
-    Copyright (C) 2012  <copyright holder> <email>
+ * 
+ * 
+Partial Model Library
+Copyright (c) 2016, J. Irving Vasquez ivasquez@ccc.inaoep.mx
+Consejo Nacional de Ciencia y Tecnología (CONACYT)
+All rights reserved.
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
 
 #include "viewstructure.h"
 
@@ -24,13 +39,55 @@ q(6),
 w(6),
 HTM(4,4)
 {
-n_occupied = 0;
-n_unknown = 0;
-d = 0;
-type = 0;
-eval = 0.0;
+  n_occupied = 0;
+  n_unknown = 0;
+  d = 0;
+  type = 0;
+  eval = 0.0;
+  pose_lenght = 6;
+
+  HTM(0,0) = 0.0;
+  HTM(0,1) = 0.0;
+  HTM(0,2) = 0.0;
+  HTM(0,3) = 0.0;
+
+  HTM(1,0) = 0.0;
+  HTM(1,1) = 0.0;
+  HTM(1,2) = 0.0;
+  HTM(1,3) = 0.0;
+
+  HTM(2,0) = 0.0;
+  HTM(2,1) = 0.0;
+  HTM(2,2) = 0.0;
+  HTM(2,3) = 0.0;
+
+  HTM(3,0) = 0.0;
+  HTM(3,1) = 0.0;
+  HTM(3,2) = 0.0;
+  HTM(3,3) = 1.0;
 }
 
+
+void ViewStructure::setPose(std::vector< double > pose)
+{
+  if(pose.size()!=6)
+    return;
+  
+  this->w = pose;
+}
+
+void ViewStructure::setPose(double x, double y, double z, double yaw, double pitch, double roll)
+{
+  w[0] = x;
+  w[1] = y;
+  w[2] = z;
+  w[3] = yaw;
+  w[4] = pitch;
+  w[5] = roll;
+}
+
+
+// WARNING added a comparison over w also
 bool ViewStructure::operator==(const ViewStructure& theOther) const
 {
   if(q.size() != theOther.q.size())
@@ -38,6 +95,14 @@ bool ViewStructure::operator==(const ViewStructure& theOther) const
   
   for(int i =0; i<q.size(); i++){
     if(q[i] != theOther.q[i])
+      return false;
+  }
+  
+  if(w.size() != theOther.w.size())
+    return false;
+  
+  for(int i =0; i<w.size(); i++){
+    if(w[i] != theOther.w[i])
       return false;
   }
   
@@ -66,8 +131,8 @@ ViewStructure bestViewOfList(std::list< ViewStructure >& viewsList)
   }
   
   //cout << "B: " <<std::endl;
-  printVector(best_view.q);
-  std::cout << "Max eval :" << max_eval;
+  //printVector(best_view.q);
+  //std::cout << "Max eval :" << max_eval;
   return best_view;
 }
 
@@ -98,8 +163,8 @@ ViewStructure ViewList::getBestView()
   }
   
   //cout << "B: " <<std::endl;
-  printVector(best_view.q);
-  std::cout << "Max eval :" << max_eval;
+  //printVector(best_view.q);
+  //std::cout << "Max eval :" << max_eval;
   return best_view;
 }
 
@@ -400,7 +465,6 @@ bool compareByEvalInverse(ViewStructure first, ViewStructure second)
     return true;
   else
     return false;
-
 }
 
 
