@@ -32,6 +32,9 @@
 #include "viewstructure.h"
 #include <time.h>
 #include <stdlib.h>
+#include <vector>
+#include <stdio.h>
+#include <cstring>
 
 /*
  * Synthesis methods compute the NBV or a set of promising views by geometrical analysis of the reconstructed object.
@@ -45,6 +48,7 @@ virtual void getViews(ViewList &views)=0;
 protected:
   // maximum number of generated views, -1 no limit
   int n_max;
+  
 };
 
 class RandomViewSynthesis :public ViewSynthesis
@@ -55,9 +59,65 @@ public:
 virtual void getViews(ViewList& views);
 
 protected:
+  // cube encapsulator
   ViewStructure min_view;
   ViewStructure max_view;
-  
 };
+
+
+/*
+ * View sphere generation by icosahedron tesselation
+ * Parameters: radious, sphere center, tesselation level
+ */
+class ViewSphereSynthesis: public ViewSynthesis
+{
+public:
+  /*
+   * Parameters: radious, sphere center, tesselation level
+   */
+ViewSphereSynthesis(double r, double x, double y, double z, int level=1);
+  
+virtual void getViews(ViewList& views);
+
+protected:
+  double radius;
+  double cx, cy,cz;
+  // level of subdivisions	
+  int tesselation_level;
+  
+  int n_vertices;
+  int n_faces;
+  int n_edges;
+  float *vertices;
+  int *faces; 
+  
+  int edge_run; 
+  int *start; 
+  int *end; 
+  int *midpoint; 
+  
+  /**
+   * Returns a set of points that represent a sphere of radius 1
+   */
+  int getSpherePositionsByTesselation(int level, std::vector< std::vector<double> > &points);
+  
+  void initIcosahedro();
+  
+  void subdivide();
+  
+  int midpointSearch(int index_start, int index_end);
+  
+  void copySphere(std::vector< std::vector<double> > &points);
+  
+  float **mFMatrix(int nrl,int nrh,int ncl,int nch);
+  
+  void mFreeFMatrix(float **m,int nrl,int nrh,int ncl,int nch);
+
+  /**
+   * only works in workspace. And for freeflyer robot.
+   */
+  void getPointedViews(std::vector< std::vector<double> > points, ViewList &views);
+};
+
 
 #endif // VIEWSYNTHESIS_H

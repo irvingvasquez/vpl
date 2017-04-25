@@ -41,8 +41,11 @@ add_library(PartialModel SHARED ${SRC_ALL})
 
 # ///////////////////// other testing programs ////////////////////////////
 
-add_executable(view_generator test_view_generator.cpp ${SRC_ALL})
-target_link_libraries(view_generator ${LIBS_OCTOMAP} ${LIBS_MRPT})
+add_executable(random_view_generator test_view_generator.cpp ${SRC_ALL})
+target_link_libraries(random_view_generator ${LIBS_OCTOMAP} ${LIBS_MRPT})
+
+add_executable(view_sphere_generator test_view_sphere.cpp ${SRC_ALL})
+target_link_libraries(view_sphere_generator  ${LIBS_OCTOMAP} ${LIBS_MRPT})
 
 #add_executable(test_esfera_multi test_esfera_multioctree.cpp ${SRC_ALL})
 #target_link_libraries(test_esfera_multi ${LIBS_OCTOMAP}  ${LIBS_INIPARSER})

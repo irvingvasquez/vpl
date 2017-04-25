@@ -19,7 +19,7 @@ set(SRC_ROBOTSENSOR robotsensor.cpp robsennotransformation.cpp)
 set(SRC_NBVPLANNER nbvplanner.cpp  workspacenbvplanner.cpp)
 
 #set(SRC_RECONSTRUCTOR reconstructor3d.cpp r3ddirectpositioning.cpp vplutils.cpp)
-set(SRC_RECONSTRUCTOR reconstructor3d.cpp r3ddirectpositioning.cpp vplutils.cpp spheregenerator.cpp)
+set(SRC_RECONSTRUCTOR reconstructor3d.cpp r3ddirectpositioning.cpp vplutils.cpp)
 
 set(SRC_ALL ${SRC_ROBOTS} ${SRC_SENSORS} ${SRC_NBVPLANNER} ${SRC_ROBOTSENSOR} ${SRC_RECONSTRUCTOR})
 
