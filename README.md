@@ -16,7 +16,7 @@ ViewPlanning provides planning algorithms to achieve an automated reconstruction
 
 Before installing VPL you need to install the following libraries:
 - octomap
-- iniparser
+- MRPT
 - boost
 
 
@@ -30,8 +30,6 @@ First, download and install [octomap] and [iniparser]. Modify the CMakeList.txt 
 we recommend that VPL will be installed in the same folder that the required libraries:
 
 - octomap-devel
-- iniparser
-- VPL
 
 To compile the library move to the VPL top folder and run:
 
@@ -47,5 +45,6 @@ cmake ..
 
    [octomap]: <https://octomap.github.io/>
    [iniparser]: <https://github.com/ndevilla/iniparser>
+   [MRPT]: <http://www.mrpt.org/>
    [J. Irving Vasquez-Gomez]: <https://jivasquez.wordpress.com>
 
