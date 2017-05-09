@@ -115,18 +115,13 @@ bool Reconstructor3D::init()
   config_file.append("/");
   config_file.append("plannerConfig.ini");
   
-  dictionary * ini_file;
-    
-  ini_file = iniparser_load(config_file.c_str());
-  if (ini_file ==NULL ) {
-      fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
-      return false ;
-  }
-  //iniparser_dump(ini_file, stderr);
+  mrpt::utils::CConfigFile parser;
+  ASSERT_FILE_EXISTS_(config_file);
+  parser.setFileName(config_file);
   
-  waitForUser = iniparser_getboolean(ini_file, "Reconstructor3D:waitForUser", true);
-  updateRobotLocalization = iniparser_getboolean(ini_file, "Reconstructor3D:updateRobotLocalization", false);
-  maxIterations = iniparser_getint(ini_file, "Reconstructor3D:maxIterations", 10);
+  waitForUser = parser.read_bool("Reconstructor3D", "waitForUser", true);
+  updateRobotLocalization = parser.read_bool("Reconstructor3D", "updateRobotLocalization", false);
+  maxIterations = parser.read_int("Reconstructor3D", "maxIterations", 10);
     
   std::cout << "---------- Reconstructor 3D -------" << std::endl;
   std::cout << "Wait for user:" << waitForUser << std::endl;
@@ -136,12 +131,12 @@ bool Reconstructor3D::init()
   double x,y,z,yaw,pitch,roll;
   
   
-  x = iniparser_getdouble(ini_file, "RobotPose:x",0);
-  y = iniparser_getdouble(ini_file, "RobotPose:y",0);
-  z  = iniparser_getdouble(ini_file, "RobotPose:z",0);
-  yaw  = iniparser_getdouble(ini_file, "RobotPose:yaw",0);
-  pitch  = iniparser_getdouble(ini_file, "RobotPose:pitch",0);
-  roll  = iniparser_getdouble(ini_file, "RobotPose:roll",0);
+  x = parser.read_double("RobotPose", "x", 0);
+  y = parser.read_double("RobotPose", "y", 0);
+  z  = parser.read_double("RobotPose", "z", 0);
+  yaw  = parser.read_double("RobotPose", "yaw", 0);
+  pitch  = parser.read_double("RobotPose", "pitch", 0);
+  roll  = parser.read_double("RobotPose", "roll", 0);
   mrpt::poses::CPose3D T(x,y,z,yaw,pitch,roll);
   
   robot_sensor->updateRobotLocalization(T);

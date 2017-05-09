@@ -9,8 +9,8 @@ set(RELATED_DIRS_DIRECTORY ${VPL_SOURCE_DIR}/..)
 set(SRC_ROBOTS vprobot.cpp vprfreeflyer.cpp)
 #set(REALROBOT_SRC robotpioneer.cpp robotkatana.cpp)
 
-set(SRC_SENSORS rangesensor.cpp rsblensor.cpp)
-#set(SRC_SENSORS rangesensor.cpp rskinect.cpp rssimulated.cpp)
+set(SRC_SENSORS rangesensor.cpp)
+#set(SRC_SENSORS rangesensor.cpp rskinect.cpp rssimulated.cpp rsblensor.cpp)
 #set(SRC_OCTREE_RSIM rssraytracingoctree.cpp)
 
 set(SRC_ROBOTSENSOR robotsensor.cpp robsennotransformation.cpp)
@@ -23,12 +23,6 @@ set(SRC_RECONSTRUCTOR reconstructor3d.cpp r3ddirectpositioning.cpp vplutils.cpp)
 
 set(SRC_ALL ${SRC_ROBOTS} ${SRC_SENSORS} ${SRC_NBVPLANNER} ${SRC_ROBOTSENSOR} ${SRC_RECONSTRUCTOR})
 
-
-# ---------------- INIPARSER  -----------------
-include_directories(${RELATED_DIRS_DIRECTORY}/iniparser/src)
-link_directories(${RELATED_DIRS_DIRECTORY}/iniparser)
-set(LIBS_INIPARSER iniparser)
- 
 
 #---------------- Partial Model Library ---------
 include_directories(${VPL_SOURCE_DIR}/partialmodel)
@@ -50,7 +44,7 @@ set(LIBS_OCTOMAP octomap octomath octovis)
  set(LIBS_MRPT mrpt-base)
 
 
-set (ALL_LIBS ${LIBS_INIPARSER} ${LIBS_PARTIAL_MODEL} ${LIBS_OCTOMAP} ${LIBS_MRPT})
+set (ALL_LIBS ${LIBS_PARTIAL_MODEL} ${LIBS_OCTOMAP} ${LIBS_MRPT})
 
 # -------------------------------------------------
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${VPL_SOURCE_DIR}/lib)

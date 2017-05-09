@@ -20,7 +20,7 @@
 #ifndef RECONSTRUCTOR3D_H
 #define RECONSTRUCTOR3D_H
 
-#include <views.h>
+#include <viewstructure.h>
 
 #include <list>
 #include <string>

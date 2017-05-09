@@ -37,9 +37,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PMVOLUMETRIC_H
 
 #include "vptriangle.h"
-
 #include "partialmodelbase.h"
-#include "evaluationresultvector.h"
+#include "evaluationresult.h"
 
 
 /**

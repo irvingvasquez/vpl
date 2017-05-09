@@ -4,7 +4,6 @@
 
 #include "rangesimulatoroctree.h"
 #include <rangesensor.h>
-#include <iniparser.h>
 
 /**
  * Range sensor simulated with raytracing over octree

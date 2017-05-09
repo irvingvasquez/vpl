@@ -1,23 +1,23 @@
 #include <math.h>
-#include "viewstructure.h"
-#include "viewsynthesis.h"
+#include <viewstructure.h>
+#include <viewsynthesis.h>
 #include <string>
 
 int main(int argc, char **argv) {
-  if (argc != 3) { // Check the value of argc. If not enough parameters have been passed, inform user and exit.
-        std::cout << "Usage is ./test_view_generator <n_views> <outfile>\n"; // Inform the user of how to use the program
+  if (argc != 4) { // Check the value of argc. If not enough parameters have been passed, inform user and exit.
+        std::cout << "Usage is ./test_view_generator <radius> <subs_level> <outfile>\n"; // Inform the user of how to use the program
         //std::cin.get();
         exit(0);
   }
-  int n= atoi(argv[1]); 
-  std::string file(argv[2]);
+  float r= atof(argv[1]);
+  int n= atoi(argv[2]); 
+  std::string file(argv[3]);
   
   if(n<0){
      std::cout << "Amount of views must be positive\n"; // Inform the user of how to use the program
      //std::cin.get();
      exit(0);
   }
-   
   
   ViewStructure min;
   min.setPose(-5.0,-5.0,0,0,0,0);
@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
   
   ViewList list;
   
-  RandomViewSynthesis generator(n, min, max);
+  ViewSphereSynthesis generator(r, 0, 0, 0, n);
   
   generator.getViews(list);
   

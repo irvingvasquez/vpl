@@ -45,25 +45,18 @@ bool NBVPlanner::init()
   config_file.append("/");
   config_file.append("plannerConfig.ini");
   
-  dictionary * ini_file;
-    
-  ini_file = iniparser_load(config_file.c_str());
-  if (ini_file ==NULL ) {
-      fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
-      exit(0);
-      return false ;
-  }
+  mrpt::utils::CConfigFile parser;
+  ASSERT_FILE_EXISTS_(config_file);
+  parser.setFileName(config_file);
   
-  plannerDeltaT = iniparser_getdouble(ini_file, "MotionPlanning:deltaT", 1.0);
-  rrtNodes = iniparser_getint(ini_file, "MotionPlanning:NumNodes", 10000);
+  plannerDeltaT = parser.read_double("MotionPlanning", "deltaT", 1.0, true);
+  rrtNodes = parser.read_int("MotionPlanning", "NumNodes", 10000, true);
   
   std::cout << "---------- NBV Planner -------" << std::endl;
   std::cout << "Delta T: " << plannerDeltaT << std::endl;
   std::cout << "Number of Nodes: " << rrtNodes << std::endl;
   std::cout << "------------------------------" << std::endl;
   
-  //plannerDeltaT = 1;
-  //rrtNodes = 10000;
   return true;
 }
 

@@ -33,16 +33,11 @@ bool R3DDirectPositioning::init()
   config_file.append("/");
   config_file.append("plannerConfig.ini");
   
-  dictionary * ini_file;
-    
-  ini_file = iniparser_load(config_file.c_str());
-  if (ini_file ==NULL ) {
-      fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
-      return false ;
-  }
-  //iniparser_dump(ini_file, stderr);
+  mrpt::utils::CConfigFile parser;
+  ASSERT_FILE_EXISTS_(config_file);
+  parser.setFileName(config_file);
   
-  gap_points = iniparser_getdouble(ini_file, "Reconstructor3D:gap", 0.005);
+  gap_points = parser.read_double("Reconstructor3D", "gap", 0.005);
     
   std::cout << "\n---------- Direct positioning reconstructor 3D -------" << std::endl;
   std::cout << "Gap: " << gap_points << std::endl; 

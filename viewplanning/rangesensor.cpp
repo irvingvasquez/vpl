@@ -101,29 +101,24 @@ bool RangeSensor::init()
   config_file.append("/");
   config_file.append("rangeSensor.ini");
   
-  dictionary * ini_file;
+  mrpt::utils::CConfigFile parser;
+  ASSERT_FILE_EXISTS_(config_file);
+  parser.setFileName(config_file);
     
-  ini_file = iniparser_load(config_file.c_str());
-  if (ini_file ==NULL ) {
-      fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
-      return false ;
-  }
-    //iniparser_dump(ini_file, stderr);
+  h_aperture = parser.read_double("rangeSensor", "h_aperture", 1);
     
-  h_aperture = iniparser_getdouble(ini_file,"rangeSensor:h_aperture", 1);
+  v_aperture = parser.read_double("rangeSensor", "v_aperture", 1);
     
-  v_aperture = iniparser_getdouble(ini_file, "rangeSensor:v_aperture", 1);
+  h_points = parser.read_int("rangeSensor", "h_points", 1);
     
-  h_points = iniparser_getint(ini_file,"rangeSensor:h_points", 1);
-    
-  v_points = iniparser_getint(ini_file, "rangeSensor:v_points", 0.1);
+  v_points = parser.read_int("rangeSensor", "v_points", 0.1);
   
   info.clear();
-  info.assign(iniparser_getstring(ini_file, "rangeSensor:info", "error"));
+  info.assign( parser.read_string("rangeSensor", "info", "error"));
   
-  director_ray[0] = iniparser_getdouble(ini_file, "directorRay:x", -1);
-  director_ray[1]  = iniparser_getdouble(ini_file, "directorRay:y", -1);
-  director_ray[2]  = iniparser_getdouble(ini_file, "directorRay:z", -1);
+  director_ray[0] = parser.read_double("directorRay", "x", -1);
+  director_ray[1]  = parser.read_double("directorRay", "y", -1);
+  director_ray[2]  = parser.read_double("directorRay", "z", -1);
     
   std::cout << "\n---------- Range sensor -------" << std::endl;
   std::cout << "Horizontal aperture: " << h_aperture << std::endl;

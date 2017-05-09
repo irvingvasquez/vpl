@@ -18,10 +18,10 @@ include_directories(${RELATED_DIRS_DIRECTORY}/octomap-devel/octomap/include)
 link_directories(${RELATED_DIRS_DIRECTORY}/octomap-devel/lib)
 set(LIBS_OCTOMAP octomap octomath octovis)
 
-# ---------------- INIPARSER  -----------------
-include_directories(${RELATED_DIRS_DIRECTORY}/iniparser/src)
-link_directories(${RELATED_DIRS_DIRECTORY}/iniparser)
-set(LIBS_INIPARSER iniparser)
+# # ---------------- INIPARSER  -----------------
+# include_directories(${RELATED_DIRS_DIRECTORY}/iniparser/src)
+# link_directories(${RELATED_DIRS_DIRECTORY}/iniparser)
+# set(LIBS_INIPARSER iniparser)
 
 # ---------------- MRPT ---------------------
 find_package(MRPT REQUIRED)
@@ -31,7 +31,7 @@ link_directories(${MRPT_LINK_DIRECTORIES})
 set(LIBS_MRPT mrpt-base)
 
 #--------------------------------------------
-set(LIBS_ALL ${LIBS_VIEW_PLANNING} ${LIBS_OCTOMAP} ${LIBS_INIPARSER} ${LIBS_MRPT}) 
+set(LIBS_ALL ${LIBS_VIEW_PLANNING} ${LIBS_OCTOMAP} ${LIBS_MRPT}) 
 
 #add_executable(rangesimulator main.cpp ${SRC})
 #target_link_libraries(rangesimulator ${LIBS_ALL})

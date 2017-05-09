@@ -315,26 +315,21 @@ bool NBVPlannerRGFlt::init()
   config_file.append("/");
   config_file.append("plannerConfig.ini");
   
-  dictionary * ini_file;
-    
-  ini_file = iniparser_load(config_file.c_str());
-  if (ini_file ==NULL ) {
-      fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
-      return false ;
-  }
-  //iniparser_dump(ini_file, stderr);
+    mrpt::utils::CConfigFile parser;
+  ASSERT_FILE_EXISTS_(config_file);
+  parser.setFileName(config_file);
   
-  nViews = iniparser_getint(ini_file, "NBVPlanner:nViews", 0);
-  max_i = iniparser_getint(ini_file, "NBVPlanner:maxI", 3000);
+  nViews = parser.read_int("NBVPlanner", "nViews", 0);
+  max_i = parser.read_int("NBVPlanner", "maxI", 3000);
   
-  readCandidateViews = iniparser_getboolean(ini_file, "NBVPlanner:readCandidateViews", false);
+  readCandidateViews = parser.read_bool("NBVPlanner", "readCandidateViews", false);
   
-  readOnce = iniparser_getboolean(ini_file, "NBVPlanner:readOnce", false);
+  readOnce = parser.read_bool("NBVPlanner", "readOnce", false);
   alreadyReadedOnce = false;
   deleteUnfeasibleUnknown = false;
   
   viewsFile.clear();
-  viewsFile.assign(iniparser_getstring(ini_file, "NBVPlanner:viewsFile", ""));
+  viewsFile.assign(parser.read_string("NBVPlanner", "viewsFile", ""));
   std::cout << "Read Candidate views:" << readCandidateViews << std::endl;
   if(readCandidateViews)
     std::cout << "Views File:" << viewsFile.c_str() << std::endl;

@@ -1,13 +1,9 @@
-#include <partialmodels.h>
+
 #include <vp.h>
 #include <rssraytracingoctree.h>
+#include <pmvoctree.h>
 
-int main(int argc, char **argv) {
-   // TODO: if i do not put the following lines then it does not link
-    dictionary * ini_file;
-    ini_file = iniparser_load("testing");
-    delete ini_file;
-  
+int main(int argc, char **argv) { 
   
     std::cout << "Consejo Nacional de Ciencia y Tecnología" << std::endl;
     std::cout << "Instituto Nacional de Astrofísica Óptica y Electrónica" << std::endl;

@@ -130,25 +130,6 @@ target_link_libraries(test_sim_rrtnbv_Kriegel ${LIBS_ALL})
 add_executable(test_sim_rrtnbv_rearside test_sim_rrtnbv_rearside.cpp ${SRC})
 target_link_libraries(test_sim_rrtnbv_rearside ${LIBS_ALL})
 
-#if(FREE_FLYER_APP)
-#  if(OCTREE_RANGE_SIMULATOR)
-    #add_executable(vp_simulation_example vp_simulation_example.cpp ${SRC_ALL} ${SRC_OCTREE_RSIM})
-    #target_link_libraries(vp_simulation_example ${ALL_LIBS} ${LIBS_RANGE_SIMULATOR})
-  
-    #add_executable(test_freeflyer test_freeflyer.cpp ${SRC_EXTENDED} ${SRC_OCTREE_RSIM})
-    #target_link_libraries(test_freeflyer ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
-    
-    #add_executable(test_freeflyer_vasquez09 test_freeflyer_vasquez09.cpp ${SRC_EXTENDED} ${SRC_OCTREE_RSIM})
-    #target_link_libraries(test_freeflyer_vasquez09 ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
-#  endif()
-#endif()
- 
- 
-
-#set (ALL_LIBS ${LIBS_INIPARSER} ${LIBS_PARTIAL_MODEL} ${LIBS_OCTOMAP} ${LIBS_MRPT} ${LIBS_MP})
-
-
-
 ######################################################### 
 
 

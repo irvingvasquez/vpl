@@ -26,12 +26,14 @@
 #include <mrpt/base/include/mrpt/poses.h>
 #include <mrpt/utils.h>
 
+#include <mrpt/system/filesystem.h>
+#include <mrpt/utils/CConfigFile.h>
+
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 
-#include <views.h>
-#include <iniparser.h>
 #include <viewstructure.h>
+#include <pmutils.h>
 
 using namespace PMUtils;
 

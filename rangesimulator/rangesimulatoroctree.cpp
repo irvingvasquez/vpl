@@ -32,42 +32,37 @@ bool RangeSimulatorOctree::init()
    config_file.append("/");
    config_file.append("rangeSimulator.ini");
   
-   dictionary * ini_file;
+   mrpt::utils::CConfigFile parser;
+   ASSERT_FILE_EXISTS_(config_file);
+   parser.setFileName(config_file);
     
-   ini_file = iniparser_load(config_file.c_str());
-   if (ini_file ==NULL ) {
-     fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
-      return false ;
-    }
-   //iniparser_dump(ini_file, stderr);
-    
-   voxelResolution = iniparser_getdouble(ini_file,"volumetric:resolution", -1);
-   maxLenght = iniparser_getdouble(ini_file,"volumetric:maxLenght", 0); 
+   voxelResolution = parser.read_double("volumetric", "resolution", -1);
+   maxLenght = parser.read_double("volumetric", "maxLenght", 0); 
    measureUnknown = false;
-   freeSpace = iniparser_getboolean(ini_file,"volumetric:freeSpace", false);
+   freeSpace = parser.read_bool("volumetric", "freeSpace", false);
    
    float x,y,z,yaw,pitch,roll;
    
-   x  = iniparser_getdouble(ini_file, "transformation:x", 0);
-   y = iniparser_getdouble(ini_file, "transformation:y", 0);
-   z = iniparser_getdouble(ini_file, "transformation:z", 0);
-   yaw = iniparser_getdouble(ini_file, "transformation:yaw", 0);
-   pitch = iniparser_getdouble(ini_file, "transformation:pitch", 0);
-   roll = iniparser_getdouble(ini_file, "transformation:roll", 0);
-   scene_scale = iniparser_getdouble(ini_file, "transformation:scale", 1);
+   x  = parser.read_double( "transformation", "x", 0);
+   y = parser.read_double( "transformation", "y", 0);
+   z = parser.read_double( "transformation", "z", 0);
+   yaw = parser.read_double( "transformation", "yaw", 0);
+   pitch = parser.read_double( "transformation", "pitch", 0);
+   roll = parser.read_double( "transformation", "roll", 0);
+   scene_scale = parser.read_double( "transformation", "scale", 1);
    
    octomap::pose6d poseT(x,y,z,yaw,pitch,roll);
    scene_transformation = poseT;
    
    if(freeSpace){
-      x_free_1 = iniparser_getdouble(ini_file,"freeSpaceCoord:x1", -1);
-      x_free_2 = iniparser_getdouble(ini_file,"freeSpaceCoord:x2", -1);
+      x_free_1 = parser.read_double("freeSpaceCoord", "x1", -1);
+      x_free_2 = parser.read_double("freeSpaceCoord", "x2", -1);
       
-      y_free_1 = iniparser_getdouble(ini_file,"freeSpaceCoord:y1", -1);
-      y_free_2 = iniparser_getdouble(ini_file,"freeSpaceCoord:y2", -1);
+      y_free_1 = parser.read_double("freeSpaceCoord", "y1", -1);
+      y_free_2 = parser.read_double("freeSpaceCoord", "y2", -1);
       
-      z_free_1 = iniparser_getdouble(ini_file,"freeSpaceCoord:z1", -1);
-      z_free_2 = iniparser_getdouble(ini_file,"freeSpaceCoord:z2", -1);
+      z_free_1 = parser.read_double("freeSpaceCoord", "z1", -1);
+      z_free_2 = parser.read_double("freeSpaceCoord", "z2", -1);
    }
    
    model = new octomap::ColorOcTree(voxelResolution);
@@ -76,16 +71,16 @@ bool RangeSimulatorOctree::init()
    //model->prune();
       
    std::string model_f;
-   model_f.assign( iniparser_getstring(ini_file, "scene:file", "scene.wrl") );
+   model_f.assign( parser.read_string("scene", "file", "scene.wrl") );
    modelFile.clear();
    modelFile.assign(configFolder);
    modelFile.append("/");
    modelFile.append(model_f);
    
-   isRawFormat = iniparser_getboolean(ini_file, "scene:rawformat", true);
+   isRawFormat = parser.read_bool("scene", "rawformat", true);
    
    std::string rays_f;
-   rays_f.assign( iniparser_getstring(ini_file, "sensor:raysfile", "sensor.dat") );
+   rays_f.assign( parser.read_string("sensor", "raysfile", "sensor.dat") );
    sensorFile.clear();
    sensorFile.assign(configFolder);
    sensorFile.append("/");

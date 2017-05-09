@@ -78,16 +78,11 @@ bool NBVPlannerExpectedUtility::init()
   config_file.append("/");
   config_file.append("plannerConfig.ini");
   
-  dictionary * ini_file;
-    
-  ini_file = iniparser_load(config_file.c_str());
-  if (ini_file ==NULL ) {
-      fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
-      exit(0);
-      return false ;
-  }
+  mrpt::utils::CConfigFile parser;
+  ASSERT_FILE_EXISTS_(config_file);
+  parser.setFileName(config_file);
   
-  LSamples = iniparser_getint(ini_file, "ExpectedUtility:LSamples", 10);
+  LSamples = parser.read_int("ExpectedUtility", "LSamples", 10);
   
   std::cout << "---------- NBV Planner ExpectedUtility -------" << std::endl;
   std::cout << "L Samples: " << LSamples << std::endl;

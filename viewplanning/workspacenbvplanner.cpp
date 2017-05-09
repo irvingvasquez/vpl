@@ -59,14 +59,9 @@ bool WorkspaceNBVPlanner::init()
   config_file.append("/");
   config_file.append("plannerConfig.ini");
   
-  dictionary * ini_file;
-    
-  ini_file = iniparser_load(config_file.c_str());
-  if (ini_file ==NULL ) {
-      fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
-      return false ;
-  }
-  //iniparser_dump(ini_file, stderr);
+  mrpt::utils::CConfigFile parser;
+  ASSERT_FILE_EXISTS_(config_file);
+  parser.setFileName(config_file);
   
   double x1,y1,z1,x2,y2,z2;
   partialModel->getOBB(x1,y1,z1,x2,y2,z2);
@@ -79,23 +74,17 @@ bool WorkspaceNBVPlanner::init()
   objectCenter[2] = (z2+z1)/2;
   std::cout << "View sphere center: [" << objectCenter[0] << ", " << objectCenter[1] << ", " << objectCenter[2] << "]" << std:: endl;
   
-  radio = iniparser_getdouble(ini_file, "workSpacePlanner:radius", 1);
+  radio = parser.read_double("workSpacePlanner", "radius", 1);
   std::cout << "Sphere points radious: " << radio << std::endl;
   
-  //std::string sphere_points;
-  //sphere_points.assign(iniparser_getstring(ini_file, "workSpacePlanner:spherePointsFile", "error"));
-  //sphere_points = configFolder + "/" + sphere_points;
-  //std::cout << "Sphere points file: " << sphere_points.c_str() << std::endl;
-  
   viewSphereFileName.clear();
-  //viewSphereFileName.assign(iniparser_getstring(ini_file, "workSpacePlanner:view_sphere", "view_sphere.vs"));
   viewSphereFileName = dataFolder + "/view_sphere.vs";
   
   evaluatedViewsFile.clear();
-  evaluatedViewsFile.assign(iniparser_getstring(ini_file, "workSpacePlanner:evaluated_views", "evaluated_views.vs"));
+  evaluatedViewsFile.assign( parser.read_string("workSpacePlanner", "evaluated_views", "evaluated_views.vs"));
   evaluatedViewsFile = dataFolder + "/" + evaluatedViewsFile;
   
-  int tesselation_level = iniparser_getint(ini_file, "workSpacePlanner:tesselationLevel", 1);
+  int tesselation_level = parser.read_int("workSpacePlanner", "tesselationLevel", 1);
   std::cout << "Tesselation level: " << tesselation_level << std::endl; 
   
   ViewSphereSynthesis generator(radio, objectCenter[0], objectCenter[1], objectCenter[2], tesselation_level);
@@ -104,9 +93,6 @@ bool WorkspaceNBVPlanner::init()
   
   // This step is needed because the rays depend on the sensor pose with respect of the robot
   robotWithSensor->getViewsFromComfigurations(pointedViews);
-  
-  //generatePointedViews(pointedViews, sphere_points, objectCenter, radio);
-  //vsSaveViewList(pointedViews, viewSphereFileName);
   
   return true;
 }

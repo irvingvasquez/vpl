@@ -19,9 +19,9 @@
 #define NBVPLANNER_H
 
 #include "robotsensor.h"
-#include <partialmodels.h>
-#include <views.h>
-// #include <model.h>
+#include <partialmodelbase.h>
+#include <viewstructure.h>
+
 
 class NBVPlanner
 {

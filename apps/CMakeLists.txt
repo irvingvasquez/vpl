@@ -30,11 +30,6 @@ set(RELATED_DIRS_DIRECTORY ${VPL_SOURCE_DIR}/..)
 #set(SRC_EXTENDED ${SRC_EXT_ROBOTS} ${SRC_EXT_SENSORS} ${SRC_EXT_NBVPLANNER} ${SRC_EXT_ROBOTSENSOR} ${SRC_EXT_RECONSTRUCTOR})
 
 
-# ---------------- INIPARSER  -----------------
-include_directories(${RELATED_DIRS_DIRECTORY}/iniparser/src)
-link_directories(${RELATED_DIRS_DIRECTORY}/iniparser)
-set(LIBS_INIPARSER iniparser)
-
 #---------------- View Planning Library ---------
 include_directories(${VPL_SOURCE_DIR}/viewplanning)
 include_directories(${VPL_SOURCE_DIR}/partialmodel)
@@ -55,7 +50,7 @@ set(LIBS_OCTOMAP octomap octomath octovis)
 # include_directories(/usr/include/mrpt/gui/include)
  set(LIBS_MRPT mrpt-base)
  
- set (CORE_LIBS ${LIBS_INIPARSER} ${LIBS_VIEW_PLANNING} ${LIBS_OCTOMAP} ${LIBS_MRPT})
+ set (CORE_LIBS ${LIBS_VIEW_PLANNING} ${LIBS_OCTOMAP} ${LIBS_MRPT})
  
  
  if(OCTREE_RANGE_SIMULATOR)
@@ -71,11 +66,6 @@ endif()
 
 if(FREE_FLYER_APP)
   if(OCTREE_RANGE_SIMULATOR)
-    #add_executable(vp_simulation_example vp_simulation_example.cpp ${SRC_ALL} ${SRC_OCTREE_RSIM})
-    #target_link_libraries(vp_simulation_example ${ALL_LIBS} ${LIBS_RANGE_SIMULATOR})
-    
-    
-  
     add_executable(test_freeflyer test_freeflyer.cpp)
     target_link_libraries(test_freeflyer ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
     
@@ -85,6 +75,11 @@ if(FREE_FLYER_APP)
 endif()
 
 
+add_executable(random_view_generator test_view_generator.cpp ${SRC_ALL})
+target_link_libraries(random_view_generator ${CORE_LIBS})
+
+add_executable(view_sphere_generator test_view_sphere.cpp ${SRC_ALL})
+target_link_libraries(view_sphere_generator  ${CORE_LIBS})
 
  
  
