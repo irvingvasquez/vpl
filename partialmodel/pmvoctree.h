@@ -69,7 +69,7 @@ PMVOctree();
    */
   virtual bool loadPartialModel(std::string file_name);
   
-  virtual void evaluateCandidateViews();
+  //virtual void evaluateCandidateViews();
   
   virtual int evaluateView(ViewStructure &v);
   
@@ -86,6 +86,7 @@ PMVOctree();
    * Paints in orange unknown voxels
    */
   long int paintVoxels(COctreeVPL *octree);
+
   
   virtual bool init();
   

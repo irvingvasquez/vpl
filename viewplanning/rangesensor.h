@@ -85,6 +85,8 @@ RangeSensor();
   
   void setDataFolder(std::string folder);
   
+  void getDirectorRay(std::vector<double> &ray);
+  
   void setCurrentView(ViewStructure v);
   
 protected:
@@ -99,7 +101,9 @@ protected:
   
   std::string configFolder;
   std::string dataFolder;
-
+  
+  std::vector<double> director_ray;
+ 
   /// Only required for simulated sensors
   ViewStructure currentView;
   

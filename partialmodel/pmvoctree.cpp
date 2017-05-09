@@ -217,7 +217,6 @@ long int PMVOctree::paintVoxels(COctreeVPL* octree)
 }
 
 
-
 bool PMVOctree::rayTracingHTM(boost::numeric::ublas::matrix< double > m, EvaluationResult& result)
 {
   // Funcion revisada! ok!
@@ -449,7 +448,7 @@ float PMVOctree::updateWithScan(std::string file_name_scan, std::string file_nam
 int PMVOctree::evaluateView(ViewStructure& v)
 {
   if(!poitsToTheObject(v)){
-//     std::cout << "Sorry no points :(" << std::endl;
+    std::cout << "Sorry no points :(" << std::endl;
     return UNFEASIBLE_VIEW;
   }
   
@@ -504,27 +503,7 @@ bool PMVOctree::registrationConstraint(EvaluationResult r)
 }
 
 
-void PMVOctree::evaluateCandidateViews()
-{
-  std::list<ViewStructure>::iterator it_v;
-  ViewStructure view;
-  
-  std::cout << "Evaluating candidate views with octree." << std::endl;
-  
-  
-  if(rays.size() ==0){
-    std::cout << "rays have not been readed" << std::endl;
-    return;
-  }
-  
-  
-  it_v = candidateViews.begin();
-  
-  while(it_v != candidateViews.end()){
-    this->evaluateView(*it_v);
-    it_v ++;
-  }
-}
+
 
 
 void PMVOctree::saveObjectAsRawT(std::string file_name)

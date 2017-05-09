@@ -56,8 +56,36 @@ void RandomViewSynthesis::getViews(ViewList& views)
       random = (double) rand()/RAND_MAX; 
       interval = max_view.w[j] - min_view.w[j];
       rand_interval = random * interval;
+      // random pose
       view.w[j] = min_view.w[j] + rand_interval;
+      // in this case the configuration is the same than the pose
+      view.q = view.w;
     }
+    
+    // determinar la matriz de transformación homogenea
+    mrpt::poses::CPose3D pose(view.w[0], view.w[1], view.w[2], view.w[3], view.w[4], view.w[5]);
+    mrpt::math::CMatrixDouble44 htm_p;
+    pose.getHomogeneousMatrix(htm_p);
+  
+    view.HTM(0,0) = htm_p(0,0);
+    view.HTM(0,1) = htm_p(0,1); 
+    view.HTM(0,2) = htm_p(0,2); 
+    view.HTM(0,3) = htm_p(0,3);
+    
+    view.HTM(1,0) = htm_p(1,0); 
+    view.HTM(1,1) = htm_p(1,1); 
+    view.HTM(1,2) = htm_p(1,2);
+    view.HTM(1,3) = htm_p(1,3);
+    
+    view.HTM(2,0) = htm_p(2,0);
+    view.HTM(2,1) = htm_p(2,1);
+    view.HTM(2,2) = htm_p(2,2);
+    view.HTM(2,3) = htm_p(2,3);
+    
+    view.HTM(3,0) = htm_p(3,0);
+    view.HTM(3,1) = htm_p(3,1);
+    view.HTM(3,2) = htm_p(3,2);
+    view.HTM(3,3) = htm_p(3,3);
     
     views.push_back(view);
   }
@@ -169,6 +197,32 @@ void ViewSphereSynthesis::getPointedViews(std::vector< std::vector< double > > p
     view.w[3] = (double) (yaw);
     view.w[4] = (double) (pitch);
     view.w[5] = (double) (roll);
+    
+    view.q = view.w;
+    // determinar la matriz de transformación homogenea
+    mrpt::poses::CPose3D pose(view.w[0], view.w[1], view.w[2], view.w[3], view.w[4], view.w[5]);
+    mrpt::math::CMatrixDouble44 htm_p;
+    pose.getHomogeneousMatrix(htm_p);
+  
+    view.HTM(0,0) = htm_p(0,0);
+    view.HTM(0,1) = htm_p(0,1); 
+    view.HTM(0,2) = htm_p(0,2); 
+    view.HTM(0,3) = htm_p(0,3);
+    
+    view.HTM(1,0) = htm_p(1,0); 
+    view.HTM(1,1) = htm_p(1,1); 
+    view.HTM(1,2) = htm_p(1,2);
+    view.HTM(1,3) = htm_p(1,3);
+    
+    view.HTM(2,0) = htm_p(2,0);
+    view.HTM(2,1) = htm_p(2,1);
+    view.HTM(2,2) = htm_p(2,2);
+    view.HTM(2,3) = htm_p(2,3);
+    
+    view.HTM(3,0) = htm_p(3,0);
+    view.HTM(3,1) = htm_p(3,1);
+    view.HTM(3,2) = htm_p(3,2);
+    view.HTM(3,3) = htm_p(3,3);
     
     views.push_back(view);
   }

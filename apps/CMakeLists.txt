@@ -79,8 +79,8 @@ if(FREE_FLYER_APP)
     add_executable(test_freeflyer test_freeflyer.cpp)
     target_link_libraries(test_freeflyer ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
     
-    #add_executable(test_freeflyer_vasquez09 test_freeflyer_vasquez09.cpp)
-    #target_link_libraries(test_freeflyer_vasquez09 ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
+    add_executable(test_freeflyer_vasquez09 test_freeflyer_vasquez09.cpp)
+    target_link_libraries(test_freeflyer_vasquez09 ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
   endif()
 endif()
 

@@ -36,6 +36,8 @@
 #include <stdio.h>
 #include <cstring>
 
+#include <mrpt/poses.h>
+
 /*
  * Synthesis methods compute the NBV or a set of promising views by geometrical analysis of the reconstructed object.
  */
@@ -51,6 +53,12 @@ protected:
   
 };
 
+
+
+/*
+ * Synthesis methods compute the NBV or a set of promising views by geometrical analysis of the reconstructed object.
+ * Random views
+ */
 class RandomViewSynthesis :public ViewSynthesis
 {
 public:
@@ -68,12 +76,14 @@ protected:
 /*
  * View sphere generation by icosahedron tesselation
  * Parameters: radious, sphere center, tesselation level
+ * (double r, double x, double y, double z, int level=1);
  */
 class ViewSphereSynthesis: public ViewSynthesis
 {
 public:
   /*
    * Parameters: radious, sphere center, tesselation level
+   * (double r, double x, double y, double z, int level=1);
    */
 ViewSphereSynthesis(double r, double x, double y, double z, int level=1);
   

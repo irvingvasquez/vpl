@@ -25,23 +25,27 @@ WorkspaceNBVPlanner::WorkspaceNBVPlanner(RobotSensor* rs, PartialModelBase* pm):
 
 bool WorkspaceNBVPlanner::planNBV(ViewStructure& v)
 {
-  std::list<ViewStructure> evaluated_views;
+//  std::list<ViewStructure> evaluated_views;
   
-  partialModel->readCandidateViews(viewSphereFileName);
-  partialModel->evaluateCandidateViews();
-  partialModel->saveEvaluations();
-  partialModel->sortCandidateViews();
-  partialModel->saveEvaluatedViews(evaluatedViewsFile);
+  //vsSaveViewList(pointedViews, viewSphereFileName);
+  //partialModel->readCandidateViews(viewSphereFileName);
+  partialModel->evaluateCandidateViews(pointedViews);
+  //partialModel->saveEvaluations();
+  //partialModel->sortCandidateViews();
+  //partialModel->saveEvaluatedViews(evaluatedViewsFile);
   
-  vsReadViewList(evaluated_views, evaluatedViewsFile);
+  //vsReadViewList(evaluated_views, evaluatedViewsFile);
   
-  if(evaluated_views.size() > 0){
-    NBV = bestViewOfList(evaluated_views);
-    v = NBV;
+  pointedViews.sortHighToLow();
+  
+ // if(evaluated_views.size() > 0){
+    v = bestViewOfList(pointedViews);
+    std::cout << v << std::endl;
+ //   v = NBV;
     return true;
-  }
+//  }
   
-  return false;
+//  return false;
 }
 
 
@@ -49,7 +53,7 @@ bool WorkspaceNBVPlanner::init()
 {
   NBVPlanner::init();
   
-  std::cout << "----------------- WorkspaceNBVPlanner Configuration " << std::endl;
+  std::cout << "\n----------------- WorkspaceNBVPlanner Configuration ------------ " << std::endl;
   
   std::string config_file(configFolder);
   config_file.append("/");
@@ -62,42 +66,47 @@ bool WorkspaceNBVPlanner::init()
       fprintf(stderr, "cannot parse file: %s\n", config_file.c_str());
       return false ;
   }
-    //iniparser_dump(ini_file, stderr);
-    
+  //iniparser_dump(ini_file, stderr);
+  
+  double x1,y1,z1,x2,y2,z2;
+  partialModel->getOBB(x1,y1,z1,x2,y2,z2);
+  
   objectCenter.clear();
   objectCenter.resize(3);
   
-  objectCenter[0] = iniparser_getdouble(ini_file, "object_center:x", 0);
-  objectCenter[1] = iniparser_getdouble(ini_file, "object_center:y", 0);
-  objectCenter[2] = iniparser_getdouble(ini_file, "object_center:z", 0);
-  std::cout << "Object x: " << objectCenter[0] << std::endl;
-  std::cout << "Object x: " << objectCenter[1] << std::endl;
-  std::cout << "Object x: " << objectCenter[2] << std::endl;
+  objectCenter[0] = (x2+x1)/2;
+  objectCenter[1] = (y2+y1)/2;
+  objectCenter[2] = (z2+z1)/2;
+  std::cout << "View sphere center: [" << objectCenter[0] << ", " << objectCenter[1] << ", " << objectCenter[2] << "]" << std:: endl;
   
-  radio = iniparser_getdouble(ini_file, "workSpacePlanner:radio", 1);
+  radio = iniparser_getdouble(ini_file, "workSpacePlanner:radius", 1);
   std::cout << "Sphere points radious: " << radio << std::endl;
   
-  std::string sphere_points;
-  sphere_points.assign(iniparser_getstring(ini_file, "workSpacePlanner:spherePointsFile", "error"));
-  sphere_points = configFolder + "/" + sphere_points;
-  std::cout << "Sphere points file: " << sphere_points.c_str() << std::endl;
+  //std::string sphere_points;
+  //sphere_points.assign(iniparser_getstring(ini_file, "workSpacePlanner:spherePointsFile", "error"));
+  //sphere_points = configFolder + "/" + sphere_points;
+  //std::cout << "Sphere points file: " << sphere_points.c_str() << std::endl;
   
   viewSphereFileName.clear();
-  viewSphereFileName.assign(iniparser_getstring(ini_file, "workSpacePlanner:view_sphere", "view_sphere.vs"));
-  viewSphereFileName = dataFolder + "/" + viewSphereFileName;
+  //viewSphereFileName.assign(iniparser_getstring(ini_file, "workSpacePlanner:view_sphere", "view_sphere.vs"));
+  viewSphereFileName = dataFolder + "/view_sphere.vs";
   
   evaluatedViewsFile.clear();
   evaluatedViewsFile.assign(iniparser_getstring(ini_file, "workSpacePlanner:evaluated_views", "evaluated_views.vs"));
   evaluatedViewsFile = dataFolder + "/" + evaluatedViewsFile;
   
-  std::list<ViewStructure> pointedViews;
-  std::list< std::vector<double> > configurations;
+  int tesselation_level = iniparser_getint(ini_file, "workSpacePlanner:tesselationLevel", 1);
+  std::cout << "Tesselation level: " << tesselation_level << std::endl; 
   
-  generatePointedConfigurations(configurations, sphere_points, objectCenter, radio);
-  robotWithSensor->getViewsFromComfigurations(pointedViews, configurations);
+  ViewSphereSynthesis generator(radio, objectCenter[0], objectCenter[1], objectCenter[2], tesselation_level);
+  generator.getViews(pointedViews); 
+  std::cout << pointedViews.size() << " views were generated" << std::endl;
+  
+  // This step is needed because the rays depend on the sensor pose with respect of the robot
+  robotWithSensor->getViewsFromComfigurations(pointedViews);
   
   //generatePointedViews(pointedViews, sphere_points, objectCenter, radio);
-  vsSaveViewList(pointedViews, viewSphereFileName);
+  //vsSaveViewList(pointedViews, viewSphereFileName);
   
   return true;
 }
@@ -293,7 +302,7 @@ void WorkspaceNBVPlanner::generatePointedViews(list< ViewStructure >& viewList, 
     // llenar la vista
     ViewStructure v;
     v.q = config;
-    v.HTM = Robot;
+    
     v.w = coordinates;
     
     viewList.push_back(v);

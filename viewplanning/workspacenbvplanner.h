@@ -19,7 +19,11 @@
 #define WORKSPACENBVPLANNER_H
 
 #include "nbvplanner.h"
+#include "viewsynthesis.h"
 
+/**
+ * This planner generates a view sphere and selects the NBV as the view with the highest evaluation
+*/
 class WorkspaceNBVPlanner : public NBVPlanner
 {
 public:
@@ -33,18 +37,13 @@ protected:
   std::string viewSphereFileName;
   std::string evaluatedViewsFile;
   
-  //list<ViewStructure> pointedViews;
+  ViewList pointedViews;
   
   std::vector<double> objectCenter;
   
   // radio of the view sphere
   double radio;
   
-  //   /**
-  //    * Generates a set of views which point to a object
-  //    * @param radio in mts
-  //   */
-  //   void generatePointedViews(list< ViewStructure > &viewList, std::string points_file, std::vector< double > object_center, double radio);
   
   /**
    * only works in workspace. And for freeflyer robot.

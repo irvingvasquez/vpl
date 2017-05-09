@@ -87,7 +87,6 @@ std::vector<double> w;
  */
 std::vector<double> q;
 
-
 ///Homogeneous transformtation matrix
 boost::numeric::ublas::matrix<double> HTM;
 
@@ -136,13 +135,6 @@ public:
    */
   void sortHighToLow();
 };
-
-
-/**
- * Convert a HTM by a scale
- * To conver from mm to mts scale must be 1000
- */
-//boost::numeric::ublas::matrix<double> vsScaleHTM(boost::numeric::ublas::matrix<double> HTM, float scale);
 
 
 /**

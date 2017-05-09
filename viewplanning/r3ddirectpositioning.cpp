@@ -44,10 +44,9 @@ bool R3DDirectPositioning::init()
   
   gap_points = iniparser_getdouble(ini_file, "Reconstructor3D:gap", 0.005);
     
-  std::cout << "---------- Direct positioning reconstructor 3D -------" << std::endl;
+  std::cout << "\n---------- Direct positioning reconstructor 3D -------" << std::endl;
   std::cout << "Gap: " << gap_points << std::endl; 
   std::cout << "-----------------------------------" << std::endl;
-  
 }
 
 

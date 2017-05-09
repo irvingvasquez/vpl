@@ -20,7 +20,8 @@
 #include "rangesensor.h"
 
 
-RangeSensor::RangeSensor()
+RangeSensor::RangeSensor():
+director_ray(3)
 {
   ready = false;
 }
@@ -120,12 +121,16 @@ bool RangeSensor::init()
   info.clear();
   info.assign(iniparser_getstring(ini_file, "rangeSensor:info", "error"));
   
+  director_ray[0] = iniparser_getdouble(ini_file, "directorRay:x", -1);
+  director_ray[1]  = iniparser_getdouble(ini_file, "directorRay:y", -1);
+  director_ray[2]  = iniparser_getdouble(ini_file, "directorRay:z", -1);
     
-  std::cout << "---------- Range sensor -------" << std::endl;
+  std::cout << "\n---------- Range sensor -------" << std::endl;
   std::cout << "Horizontal aperture: " << h_aperture << std::endl;
   std::cout << "Vertial aperture: " << v_aperture << std::endl;
   std::cout << "horizontal points:" << h_points << std::endl;
   std::cout << "Vertial points:" << v_points << std::endl;
+  std::cout << "Director ray: [" << director_ray[0] << ", " << director_ray[1] << ", " << director_ray[2] << "]" << std:: endl;
   
   return true;
 }
@@ -176,6 +181,12 @@ void RangeSensor::getRays(std::vector< std::vector< double > >& rays)
   }
   
   return;
+}
+
+
+void RangeSensor::getDirectorRay(std::vector< double >& ray)
+{
+  ray = director_ray;
 }
 
 

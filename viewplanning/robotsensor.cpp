@@ -230,10 +230,9 @@ bool RobotSensor::saveSensorTrajectoryMts(std::string& file_name)
 }
 
 
-void RobotSensor::computeViewsFromConfigurations(std::list< ViewStructure >& views)
+void RobotSensor::getViewsFromComfigurations(std::list< ViewStructure >& views)
 {
-   std::list<ViewStructure>::iterator view_it;
-  std::vector<int> configuration;
+  std::list<ViewStructure>::iterator view_it;
   boost::numeric::ublas::matrix<double> HTM;
   boost::numeric::ublas::matrix<double> htmRobot;
   boost::numeric::ublas::matrix<double> htmSensor;
@@ -242,11 +241,12 @@ void RobotSensor::computeViewsFromConfigurations(std::list< ViewStructure >& vie
   
   for(view_it = views.begin(); view_it!= views.end(); view_it++){
       //configuration = view_it->q;
-      htmRobot = view_it->HTM;
-      std::cout << htmRobot << std::endl;
+      robot->getHTMfromConfiguration(htmRobot, view_it->q);
+      //htmRobot = view_it->HTM;
+      //std::cout << htmRobot << std::endl;
       HTM = boost::numeric::ublas::prod(htmRobot, htmSensor);
-      std::cout << HTM << std::endl;
-      view_it->HTM = HTM;
+      //std::cout << HTM << std::endl;
+      view_it->HTM = HTM;      
   }
 }
 

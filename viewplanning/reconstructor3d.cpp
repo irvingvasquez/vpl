@@ -168,9 +168,9 @@ void Reconstructor3D::solveReconstruction()
   
   std::vector<double> qi;
   robot_sensor->getCurrentConfiguration(qi);
-  std::cout << "Init configuration:" << std::endl;
+  std::cout << "Robot current configuration:" << std::endl;
   printVector(qi); 
-  
+   
   do{  
       std::cout << std::endl << std::endl <<"----------------------- View Planning Iteration " << iteration << "----------------" << std::endl;
       

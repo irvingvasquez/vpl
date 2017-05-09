@@ -2,24 +2,22 @@
 #include <vp.h>
 #include <rssraytracingoctree.h>
 
-
 int main(int argc, char **argv) {
-  // TODO: if i do not put the following lines then it does not link
+   // TODO: if i do not put the following lines then it does not link
     dictionary * ini_file;
     ini_file = iniparser_load("testing");
     delete ini_file;
-    
-    
+  
+  
     std::cout << "Consejo Nacional de Ciencia y Tecnología" << std::endl;
     std::cout << "Instituto Nacional de Astrofísica Óptica y Electrónica" << std::endl;
+    std::cout << "Centro de Innovación y Desarrollo Tecnológico en Cómputo" << std::endl;
     
     // octree resolution
     double resolution = 0.02;
     
-    // 
+    // Best scanning distance of the sensor
     double distance = 1.5;
-    
-    // ./program folder 
     
     if (argc != 3) { // Check the value of argc. If not enough parameters have been passed, inform user and exit.
         std::cout << "Usage is ./program <folder> <ref_model>\n Note: The folder must contain inside the folders config and data. \n<ref_model> describes the points of the target model in order to calculate the coverage\nExample: ./program /home/robot"; 
@@ -55,6 +53,7 @@ int main(int argc, char **argv) {
     s->setConfigFolder(config_folder);
     s->setDataFolder(data_folder);
     s->init();
+    // Set of rays that defines the sensor R
     s->saveRaysForResolution(rays_file, resolution, distance);
     
     
@@ -66,13 +65,14 @@ int main(int argc, char **argv) {
     rs->init();
     
     
+    
     // --------------- Partial Model ------------
     float alphaOcc = 0.2, alphaUnk = 0.8;
     PartialModelBase *partial_model = new PMVOctreeVasquez09(alphaOcc, alphaUnk);
-    
     partial_model->setConfigFolder(config_folder);
     partial_model->setDataFolder(data_folder);
     partial_model->init();
+    // Reads the sensor definition
     partial_model->readRays(rays_file);
     
     
@@ -92,8 +92,7 @@ int main(int argc, char **argv) {
     rec->ref_obj_pts_fn.assign(ref_model);
     rec->tar_pts_fn.assign(partial_model->object_points_filename);
     rec->init();
-    
-    
+     
     rec->solveReconstruction();
     
     delete r;

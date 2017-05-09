@@ -49,7 +49,7 @@ using namespace std;
 static void show_usage(std::string name)
 {
     std::cerr << "This program tests the partial model library \n"
-	      << "Usage: " << name.c_str() << " [path_to_folder] [outputfile.ot]"
+	      << "Usage: " << name.c_str() << " [path_to_project_folder]"
               << std::endl;
 }
 
@@ -68,11 +68,10 @@ int main(int argc, char **argv) {
 	      << std::endl;
 	      
 
-    if (argc != 3) {
+    if (argc != 2) {
         show_usage(argv[0]);
         return 1;
     }
-    
     
     std::string config_folder(argv[1]);
     std::string data_folder(config_folder);

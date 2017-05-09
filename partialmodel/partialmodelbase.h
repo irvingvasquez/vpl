@@ -83,7 +83,7 @@ PartialModelBase();
   
   virtual float updateWithScan(std::string file_name_scan, std::string file_name_origin)=0;
   
-  virtual void evaluateCandidateViews()=0;
+  virtual void evaluateCandidateViews();
   
   void evaluateCandidateViews(ViewList &views);
   
@@ -303,7 +303,7 @@ protected:
   /*
    * this should be specified in case that the sensor point to another direction for example the kinect reference frame is not the usual
    */
-  std::vector<double> sensorReferenceFramePose;
+  //std::vector<double> sensorReferenceFramePose;
   
 private:
   

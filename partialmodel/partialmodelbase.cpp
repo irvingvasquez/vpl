@@ -44,7 +44,8 @@ colorGray(200,200,200)
 
 bool PartialModelBase::init()
 {
-  std::cout << "Reading parameters" << std::endl;
+  float x1, x2, y1, y2, z1, z2;
+  double x,y,z;
  
   std::string config_file(configFolder);
   config_file.append("/");
@@ -53,11 +54,23 @@ bool PartialModelBase::init()
   mrpt::utils::CConfigFile parser;
   ASSERT_FILE_EXISTS_(config_file);
   parser.setFileName(config_file);
-
      
   std::cout << "\n------------- Partial Model Configuration ------------" << std::endl;
   
-  float x1, x2, y1, y2, z1, z2;
+  x = parser.read_double("directorRay", "x", 0, true);
+  y = parser.read_double("directorRay", "y", 0, true);
+  z = parser.read_double("directorRay", "z", 0, true);
+  minDOV = parser.read_double("sensor", "minDOV", 0, true);
+  maxDOV = parser.read_double("sensor", "maxDOV", 50, true);
+  point3d dr(x,y,z);
+  directorRay = dr;
+ 
+  std::cout << "Sensor:" << std::endl;
+  std::cout << "  Director ray: " << directorRay << std::endl;
+  std::cout << "  Minimun DOV: " << minDOV << std::endl;
+  std::cout << "  Maximun DOV: " << maxDOV << std::endl;
+  
+  
   x1 = parser.read_double("objectCapsule", "x1", 0, true);  
   x2 = parser.read_double("objectCapsule", "x2", 0, true);  
   y1 = parser.read_double("objectCapsule", "y1", 0, true);  
@@ -66,6 +79,20 @@ bool PartialModelBase::init()
   z2 = parser.read_double("objectCapsule", "z2", 0, true);
   
   setObjectCapsule(x1,y1,z1,x2,y2,z2);
+  point3d p_end(x2,y2,z2);
+  std::cout << "Object Capsule: [" << x1 << ", " << y1 << ", " << z1 << "][" << x2 << ", " << y2 << ", " << z2 << "]" << std::endl;
+  
+  x = (x1+x2)/2;
+  y = (y1+y2)/2;
+  z = (z1+z2)/2;
+  point3d p(x,y,z);
+  objectSphereCenter = p;
+  std::cout << "Capsule Center: " << objectSphereCenter;
+  
+  point3d pr = p_end - p;
+  objectSphereRadius =  pr.norm(); //parser.read_double("objectCenter", "radio", 1.0, true);
+  objRadius2 = objectSphereRadius;// * objectSphereRadius;
+  std::cout <<  "Capsule radius:" << objectSphereRadius << std::endl;
   
   x1 = parser.read_double("sceneCapsule", "x1", 0, true);
   x2 = parser.read_double("sceneCapsule", "x2", 0, true);
@@ -75,54 +102,35 @@ bool PartialModelBase::init()
   z2 = parser.read_double("sceneCapsule", "z2", 0, true);
   
   setScene(x1,y1,z1,x2,y2,z2);
+  std::cout << "Escene: [" << x1 << ", " << y1 << ", " << z1 << "][" << x2 << ", " << y2 << ", " << z2 << "]" << std::endl;
   
   evaluationsFile.clear();
   evaluationsFile.assign(dataFolder);
   evaluationsFile.append("/partial_model_evaluations.dat");
-  
-  minDOV = parser.read_double("sensor", "minDOV", 0, true);
-  maxDOV = parser.read_double("sensor", "maxDOV", 50, true);
-  
+
   //rbb_size = parser.read_double(ini_file, "partialModel:rbb_size", 0);
   
-  double x = parser.read_double("objectCenter", "x", 0, true);
-  double y = parser.read_double("objectCenter", "y", 0, true);
-  double z = parser.read_double("objectCenter", "z", 0, true);
-  double r = parser.read_double("objectCenter", "radio", 1.0, true);
-  point3d p(x,y,z);
-  objectSphereCenter = p;
-  objectSphereRadius = r;
-  objRadius2 = objectSphereRadius;// * objectSphereRadius;
   
-  x = parser.read_double("directorRay", "x", 0, true);
-  y = parser.read_double("directorRay", "y", 0, true);
-  z = parser.read_double("directorRay", "z", 0, true);
-  point3d dr(x,y,z);
-  directorRay = dr;
+  
+  
+//   x = parser.read_double("sensorPose", "x", 0, true);
+//   y = parser.read_double("sensorPose", "y", 0, true);
+//   z = parser.read_double("sensorPose", "z", 0, true);
+//   
+//   double yaw, pitch, roll;
+//   yaw = parser.read_double("sensorPose", "yaw", 0, true);
+//   pitch = parser.read_double("sensorPose", "pitch", 0, true);
+//   roll = parser.read_double("sensorPose", "roll", 0, true);
+//   sensorReferenceFramePose.resize(6);
+//   sensorReferenceFramePose[0] = x;
+//   sensorReferenceFramePose[1] = y;
+//   sensorReferenceFramePose[2] = z;
+//   sensorReferenceFramePose[3] = yaw;
+//   sensorReferenceFramePose[4] = pitch;
+//   sensorReferenceFramePose[5] = roll;
+  
+//  std::cout << "Sensor pose: "; PMUtils::printVector(sensorReferenceFramePose); 
  
-  std::cout << "Sensor:" << std::endl;
-  std::cout << "  Director ray: " << directorRay << std::endl;
-  std::cout << "  Minimun DOV: " << minDOV << std::endl;
-  std::cout << "  Maximun DOV: " << maxDOV << std::endl;
-  
-  x = parser.read_double("sensorPose", "x", 0, true);
-  y = parser.read_double("sensorPose", "y", 0, true);
-  z = parser.read_double("sensorPose", "z", 0, true);
-  
-  double yaw, pitch, roll;
-  yaw = parser.read_double("sensorPose", "yaw", 0, true);
-  pitch = parser.read_double("sensorPose", "pitch", 0, true);
-  roll = parser.read_double("sensorPose", "roll", 0, true);
-  sensorReferenceFramePose.resize(6);
-  sensorReferenceFramePose[0] = x;
-  sensorReferenceFramePose[1] = y;
-  sensorReferenceFramePose[2] = z;
-  sensorReferenceFramePose[3] = yaw;
-  sensorReferenceFramePose[4] = pitch;
-  sensorReferenceFramePose[5] = roll;
-  
-  std::cout << "Sensor pose: "; PMUtils::printVector(sensorReferenceFramePose); 
-  std::cout << "Object Center: " << p << "  radius:" << objectSphereRadius << std::endl;
   
   std::cout << "-------------------------------------" << std::endl;
   return true;
@@ -401,22 +409,22 @@ bool PartialModelBase::rayIntersectSphere(const point3d raydir, const point3d ra
 }
 
 
-
+// WARNING the view must have in w a view that is pointing to x
 bool PartialModelBase::poitsToTheObject(ViewStructure& v)
 {
-   point3d ray(directorRay);
-   ray.rotate_IP(v.w[5],v.w[4],v.w[3]);
-   
-   //std::cout << "rotated director ray" << ray << std::endl;
-   
-   point3d origin(v.w[0],v.w[1],v.w[2]);
-   
-   if(rayIntersectObjectSphere(ray, origin)){
-//     std::cout << "points to the object :)" << std::endl;
-    return true;
-   }
-   
-   return false;
+//   point3d ray(directorRay);
+//    ray.rotate_IP(v.w[5],v.w[4],v.w[3]);
+//    
+//    //std::cout << "rotated director ray" << ray << std::endl;
+//    
+//    point3d origin(v.w[0],v.w[1],v.w[2]);
+//    
+//    if(rayIntersectObjectSphere(ray, origin)){
+//      //std::cout << "points to the object :)" << std::endl;
+      return true;
+//    }
+//    
+//    return false;
 }
 
 
@@ -461,8 +469,25 @@ void PartialModelBase::evaluateCandidateViews(ViewList& views)
   while(it_v != views.end()){
     temp_view = *it_v;
     this->evaluateView(temp_view);
-    std::cout << temp_view << std::endl;
+    //std::cout << temp_view << std::endl;
     *it_v = temp_view;
     it_v ++;
   }
 }
+
+void PartialModelBase::evaluateCandidateViews()
+{
+  std::list<ViewStructure>::iterator it_v;
+  ViewStructure view;
+  
+  std::cout << "Evaluating candidate views:" << std::endl;
+  it_v = candidateViews.begin();
+  int i = 1;
+  int n = candidateViews.size();
+  while(it_v != candidateViews.end()){
+    std::cout <<  i << "/" << n << std::endl; 
+    this->evaluateView(*it_v);
+    it_v ++; i++;
+  }
+}
+

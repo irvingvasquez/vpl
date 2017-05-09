@@ -83,11 +83,12 @@ RobotSensor(vpRobot *r, RangeSensor *s);
     
     /**
      * NOTE: this is only a patch!!!!
-     * Receives a set of configurations in views format. Only the member q is taken into account.
+     * Receives a set of configurations in views format. Only the vector q is taken into account.
      * Returns the same set of views but with HTM filled.
      * You can also use a getViewsFromComfigurations
      */
-    void computeViewsFromConfigurations(std::list<ViewStructure> &views);
+    void getViewsFromComfigurations(std::list<ViewStructure> &views);
+    
     
     /**
      * Receives a set of configurations and returns a set of views.
