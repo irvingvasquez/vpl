@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 
 project(VPL)
 
-set(NBVS true)
+set(NBVS false)
 
 add_subdirectory(partialmodel)
 
