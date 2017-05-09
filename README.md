@@ -11,6 +11,25 @@ VPL(The acronym of view planning library) provides a platform to develop view pl
 VPL is composed of 2 core libraries: PartialModel and ViewPlanning. PartialModel stores the information about object that is being reconstructed and provides a set of functions to handle visibility for next best view calculation. 
 ViewPlanning provides planning algorithms to achieve an automated reconstruction.
 
+More information is in our paper (under development):
+
+If your are using VPL in an academy work please cite:
+
+Vasquez-Gomez, J. I., Sucar, L. E., & Murrieta-Cid, R. (2017). View/state planning for three-dimensional object reconstruction under uncertainty. Autonomous Robots, 41(1), 89-109.
+
+```
+@article{vasquez2017view,
+  title={View/state planning for three-dimensional object reconstruction under uncertainty},
+  author={Vasquez-Gomez, J Irving and Sucar, L Enrique and Murrieta-Cid, Rafael},
+  journal={Autonomous Robots},
+  volume={41},
+  number={1},
+  pages={89--109},
+  year={2017},
+  publisher={Springer}
+}
+```
+
 
 ### Requirements
 
@@ -22,8 +41,7 @@ Before installing VPL you need to install the following libraries:
 
 ### Installation
 
-First, download and install [octomap] and [iniparser]. Modify the CMakeList.txt file to specify your installation addresses or follow the folder hierarchy that I have used. See "Full VPL Installation". 
-
+First, download and install [octomap] and [MRPT]. Modify the CMakeList.txt file to specify your installation addresses or follow the folder hierarchy that I have used. See "Full VPL Installation". 
 
 ### Full VPL installation
 
