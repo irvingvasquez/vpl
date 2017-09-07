@@ -26,6 +26,7 @@ RangeSimulatorOctree::RangeSimulatorOctree():RangeSimulatorBase()
 
 bool RangeSimulatorOctree::init()
 {
+  //std::cout << "--- Simulator with octree ---" << std::endl;
   RangeSimulatorBase::init();
   
   std::string config_file(configFolder);
@@ -71,16 +72,16 @@ bool RangeSimulatorOctree::init()
    //model->prune();
       
    std::string model_f;
-   model_f.assign( parser.read_string("scene", "file", "scene.wrl") );
+   model_f.assign( parser.read_string("scene", "file", "none.wrl") );
    modelFile.clear();
    modelFile.assign(configFolder);
    modelFile.append("/");
    modelFile.append(model_f);
    
-   isRawFormat = parser.read_bool("scene", "rawformat", true);
+   isRawFormat = parser.read_bool("scene", "rawFormat", true);
    
    std::string rays_f;
-   rays_f.assign( parser.read_string("sensor", "raysfile", "sensor.dat") );
+   rays_f.assign( parser.read_string("sensor", "raysFile", "sensor.dat") );
    sensorFile.clear();
    sensorFile.assign(configFolder);
    sensorFile.append("/");
@@ -90,10 +91,11 @@ bool RangeSimulatorOctree::init()
    std::cout << "--------------  Range simulator Configuration ----------------" << std::endl;
    std::cout << "Resolution: " << voxelResolution << std::endl;
    std::cout << "Maximum lenght: " << maxLenght << std::endl;
-   std::cout << "File:" << modelFile << std::endl;
-   std::cout << "Raw format:" << isRawFormat << std::endl;
+   std::cout << "File (file):" << modelFile << std::endl;
+   std::cout << "Raw format (rawFormat):" << isRawFormat << std::endl;
    std::cout << "Rays file:" << sensorFile << std::endl;
    std::cout << "Scene Transformation:" << std::endl;
+   std::cout << "(freeSpace): " << freeSpace << std::endl;
    loadModel(modelFile);
    readRays(sensorFile);
    if(freeSpace){

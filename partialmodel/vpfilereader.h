@@ -285,6 +285,7 @@ bool saveToMSLVector(std::vector<TipoDato> &data, std::string file_name, bool ap
     file << std::endl;
     
     file.close();
+    std::cout << "Saved MSLVector to " << file_name.c_str() << std::endl;
     return true;
   } else {
     std::cout << "Unable to open file " << file_name.c_str() << std::endl;

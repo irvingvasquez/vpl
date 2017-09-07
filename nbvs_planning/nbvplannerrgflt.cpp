@@ -840,7 +840,7 @@ bool NBVPlannerExtendTree::planNBV(ViewStructure& v)
 {
 
   vpFileReader reader;
-  ViewList views_list;
+  //ViewList views_list;
   std::string file_name;
   
   //generateCandidateViews(views_list, m, g);
@@ -849,8 +849,10 @@ bool NBVPlannerExtendTree::planNBV(ViewStructure& v)
   std::cout <<"-----------Motion Planning with node evaluation ----------" << std::endl;
   
   savePlannerData();
-  Geom *g = new GeomPQP3DRigidMulti(configFolder);
+  std::cout <<"Creating the motion planning problem"<< std::endl;
   
+  Geom *g = new GeomPQP3DRigidMulti(configFolder);
+  std::cout << "Geometry ok" << std::endl;
   clock_t begin = clock();
 
   bool success = false;
@@ -862,11 +864,16 @@ bool NBVPlannerExtendTree::planNBV(ViewStructure& v)
   list<MSLVector> best_policy1;
   list<MSLVector> best_policy2;
 
-  ViewList::iterator itv = views_list.begin();
+  //ViewList::iterator itv = views_list.begin();
   file_name.clear();
+  vector<double> random_state;
+  this->robotWithSensor->getRandomState(random_state);
+  
   file_name = configFolder + "/GoalState";
-  reader.saveToMSLVector<double>(itv->q, file_name);
+  reader.saveToMSLVector<double>(random_state, file_name);
+  std::cout << "False Goal state set" << std::endl;
   Problem *p = new Problem(g, m, configFolder);
+  std::cout << "Problem set" << std::endl;
   
   //RRT *rrt= new RRTExtExt(p);
   RRTNBV *rrt = new RRTNBV(p, configFolder, dataFolder);
@@ -876,6 +883,7 @@ bool NBVPlannerExtendTree::planNBV(ViewStructure& v)
   rrt->PlannerDeltaT = plannerDeltaT;
   rrt->NumNodes = rrtNodes;
   rrt->UseANN = false;
+  std::cout << "Planner set" << std::endl;
   
   if(rrt->Plan()){
     success = true;

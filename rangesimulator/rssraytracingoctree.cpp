@@ -10,6 +10,7 @@ RSSRayTracingOCtree::RSSRayTracingOCtree()
 
 bool RSSRayTracingOCtree::init()
 {
+  std::cout << "--- Range Sensor Simulated ---" << std::endl;
   RangeSensor::init();
   
   std::string rays_file;
