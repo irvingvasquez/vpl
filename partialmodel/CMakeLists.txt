@@ -10,11 +10,10 @@ set(SRC_ALL ${SRC_PARTIAL_MODEL} ${SRC_VIEW} ${SRC_OTHER} ${SRC_STRUCTURES})
 
 
 # ----------------------------- Octomap --------------------
-set(OCTOMAP_DIR ${VPL_SOURCE_DIR}/../octomap-devel) ## Needs configuration
-
-include_directories(${OCTOMAP_DIR}/octomap/include)
-link_directories(${OCTOMAP_DIR}/lib ${OCTOMAP_DIR}/octovis/lib)
-set(LIBS_OCTOMAP octomap octomath octovis)
+#set(OCTOMAP_DIR ${VPL_SOURCE_DIR}/../octomap-devel) ## Needs configuration
+include_directories(${OCTOMAP_INCLUDE_PATH})
+link_directories(${OCTOMAP_LIB_PATH})
+set(LIBS_OCTOMAP octomap octomath)
 
 # ---------------- MRPT ---------------------
  find_package(MRPT REQUIRED)

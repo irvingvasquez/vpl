@@ -13,8 +13,8 @@ set(BUILD_APPS true)
 set(NBVS true)
 
 # Configure the path to the octomap library
-set(OCTOMAP_LIB_PATH )
-set(OCTOMAP_INCLUDE_PATH )
+set(OCTOMAP_LIB_PATH /home/irving/projects/ViewPlanning/octomap-devel/lib)
+set(OCTOMAP_INCLUDE_PATH /home/irving/projects/ViewPlanning/octomap-devel/octomap/include)
 
 add_subdirectory(partialmodel)
 
