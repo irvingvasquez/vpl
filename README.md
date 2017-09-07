@@ -52,7 +52,13 @@ I installed it from Ubuntu PPA
 
 ### Installation
 
-First, download and install [octomap] and [MRPT]. 
+1. Download and install [octomap] and [MRPT].
+2. Clone this repo to your machine
+```
+git clone https://github.com/irvingvasquez/vpl
+```
+3. Configure the CMakeLists.txt at top file
+
 
 Modify the CMakeList.txt file to specify your installation addresses or follow the folder hierarchy that I have used. See "Full VPL Installation". 
 
