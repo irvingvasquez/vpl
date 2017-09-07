@@ -39,14 +39,22 @@ If you are having troubles with VPL, please drop me a mail:
 
 Before installing VPL you need to install the following libraries:
 - boost
-- octomap
-- MRPT
-
+```
+  sudo apt get install libboost-all-dev
+```
+- [octomap]
+```
+git clone https://github.com/OctoMap/octomap.git
+```
+- [MRPT]
+I installed it from Ubuntu PPA
 
 
 ### Installation
 
-First, download and install [octomap] and [MRPT]. Modify the CMakeList.txt file to specify your installation addresses or follow the folder hierarchy that I have used. See "Full VPL Installation". 
+First, download and install [octomap] and [MRPT]. 
+
+Modify the CMakeList.txt file to specify your installation addresses or follow the folder hierarchy that I have used. See "Full VPL Installation". 
 
 ### Full VPL installation
 
