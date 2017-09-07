@@ -20,9 +20,13 @@ add_subdirectory(partialmodel)
 
 add_subdirectory(viewplanning)
 
+if(RANGE_SIM)
 add_subdirectory(rangesimulator)
+endif()
 
+if(BUILD_APPS)
 add_subdirectory(apps)
+endif()
 
 if(NBVS)
   add_subdirectory(nbvs_planning)

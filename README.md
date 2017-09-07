@@ -59,8 +59,13 @@ git clone https://github.com/irvingvasquez/vpl
 ```
 3. Configure the CMakeLists.txt at top file
 
+4. Compile the library. Move to the VPL top folder and run:
+```sh
+mkdir build
+cd build    
+cmake ..
+```
 
-Modify the CMakeList.txt file to specify your installation addresses or follow the folder hierarchy that I have used. See "Full VPL Installation". 
 
 ### Full VPL installation
 

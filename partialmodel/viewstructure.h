@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <math.h>
+//#include <math.h>
 
 //#include "pmutils.h"
 

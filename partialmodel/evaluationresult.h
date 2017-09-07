@@ -40,7 +40,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <stdio.h>
+
 
 /*
  * Structure that describes how much voxels of each type were collected

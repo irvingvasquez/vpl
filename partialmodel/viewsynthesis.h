@@ -37,9 +37,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "viewstructure.h"
 #include <time.h>
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <vector>
-#include <stdio.h>
+//#include <stdio.h>
 #include <cstring>
 
 #include <mrpt/poses.h>
