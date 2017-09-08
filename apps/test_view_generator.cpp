@@ -1,4 +1,3 @@
-#include <math.h>
 #include <viewstructure.h>
 #include <viewsynthesis.h>
 #include <string>

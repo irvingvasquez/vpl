@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 
-#include <stdio.h>
+//#include <stdio.h>
 #include <octomap/octomap.h>
 #include <octomap/math/Utils.h>
 

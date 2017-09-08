@@ -31,9 +31,9 @@ set(LIBS_PARTIAL_MODEL PartialModel)
 
 
 # --------------- Octomap --------------------
-include_directories(${RELATED_DIRS_DIRECTORY}/octomap-devel/octomap/include)
-link_directories(${RELATED_DIRS_DIRECTORY}/octomap-devel/lib)
-set(LIBS_OCTOMAP octomap octomath octovis)
+include_directories(${OCTOMAP_INCLUDE_PATH})
+link_directories(${OCTOMAP_LIB_PATH})
+set(LIBS_OCTOMAP octomap octomath)
 
 
 # ---------------- MRPT ---------------------

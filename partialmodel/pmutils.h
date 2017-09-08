@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #include <vector>
-#include <math.h>
+//#include <math.h>
 #include <octomap/Pointcloud.h>
 #include <iostream>
 //#include "vpfilereader.h"

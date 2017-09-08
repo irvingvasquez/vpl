@@ -23,10 +23,10 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <string>
 #include <vector>
-#include <math.h>
+//#include <math.h>
 #include <list>
 
 #include "vpdefinitions.h"

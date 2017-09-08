@@ -25,7 +25,7 @@
 #include "evaluationresult.h"
 #include <string>
 #include <fstream>
-#include <stdio.h>
+//#include <stdio.h>
 
 
 class EvaluationResultVector : public std::vector<EvaluationResult>

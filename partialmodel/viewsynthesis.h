@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define VIEWSYNTHESIS_H
 
 #include "viewstructure.h"
-#include <time.h>
+//#include <time.h>
 //#include <stdlib.h>
 #include <vector>
 //#include <stdio.h>

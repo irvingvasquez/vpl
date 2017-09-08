@@ -22,8 +22,8 @@
 
 #include <octomap/octomap.h>
 #include <octomap/ColorOcTree.h>
-#include <math.h>
-#include <stdio.h>
+//#include <math.h>
+//#include <stdio.h>
 #include <iomanip>
 #include <iostream>
 

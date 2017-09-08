@@ -49,7 +49,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <octomap/octomap.h>
 #include <octomap/ColorOcTree.h>
 
-#include <math.h>
+//#include <math.h>
 //#include <iniparser.h>
 #include <mrpt/system/filesystem.h>
 #include <mrpt/utils/CConfigFile.h>
