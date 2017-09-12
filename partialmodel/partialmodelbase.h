@@ -51,13 +51,13 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 //#include <math.h>
 //#include <iniparser.h>
-#include <mrpt/system/filesystem.h>
-#include <mrpt/utils/CConfigFile.h>
+//#include <mrpt/system/filesystem.h>
+//#include <mrpt/utils/CConfigFile.h>
 
 #include "vpfilereader.h"
 #include "viewstructure.h"
 #include "pmutils.h"
-
+#include "INIReader.h"
 
 
 using namespace octomap;

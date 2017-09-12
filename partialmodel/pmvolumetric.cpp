@@ -41,34 +41,41 @@ bool PMVolumetric::init()
     config_file.append("/");
     config_file.append("partialModelConfig.ini");
   
-    mrpt::utils::CConfigFile parser;
-    ASSERT_FILE_EXISTS_(config_file);
-    parser.setFileName(config_file);
+    //mrpt::utils::CConfigFile parser;
+    //ASSERT_FILE_EXISTS_(config_file);
+    //parser.setFileName(config_file);
     
-    voxelResolution = parser.read_double("volumetric", "resolution", -1, true);
-    
-    weight = parser.read_double("volumetric", "weight", 0.5, true);
-    
-    freeSpace = parser.read_bool("volumetric", "freeSpace", false, true);
-    
-    collisionGap = parser.read_double("volumetric", "collisionGap", 0.1, true);
-    
-    minUnknown = parser.read_int("volumetric", "minUnknown", 100);
-    
-    minOverlap = parser.read_int("volumetric", "minOverlap", 1); 
-    
-    if(freeSpace){
-      x_free_1 = parser.read_double("freeSpaceCoord", "x1", -1, true);
-      x_free_2 = parser.read_double("freeSpaceCoord", "x2", -1, true);
-      
-      y_free_1 = parser.read_double("freeSpaceCoord", "y1", -1, true);
-      y_free_2 = parser.read_double("freeSpaceCoord", "y2", -1, true);
-      
-      z_free_1 = parser.read_double("freeSpaceCoord", "z1", -1, true);
-      z_free_2 = parser.read_double("freeSpaceCoord", "z2", -1, true);
+    INIReader reader(config_file.c_str());
+  
+    if (reader.ParseError() < 0) {
+        std::cout << "Can't load " << config_file.c_str() << "\n";
+        return false;
     }
     
-    maxRange = parser.read_double( "volumetric", "maxRange", -1, true);
+    voxelResolution = reader.GetReal("volumetric", "resolution", -1);
+    
+    weight = reader.GetReal("volumetric", "weight", 0.5);
+    
+    freeSpace = reader.GetBoolean("volumetric", "freeSpace", false);
+    
+    collisionGap = reader.GetReal("volumetric", "collisionGap", 0.1);
+    
+    minUnknown = reader.GetInteger("volumetric", "minUnknown", 100);
+    
+    minOverlap = reader.GetInteger("volumetric", "minOverlap", 1); 
+    
+    if(freeSpace){
+      x_free_1 = reader.GetReal("freeSpaceCoord", "x1", -1);
+      x_free_2 = reader.GetReal("freeSpaceCoord", "x2", -1);
+      
+      y_free_1 = reader.GetReal("freeSpaceCoord", "y1", -1);
+      y_free_2 = reader.GetReal("freeSpaceCoord", "y2", -1);
+      
+      z_free_1 = reader.GetReal("freeSpaceCoord", "z1", -1);
+      z_free_2 = reader.GetReal("freeSpaceCoord", "z2", -1);
+    }
+    
+    maxRange = reader.GetReal( "volumetric", "maxRange", -1);
     
     std::cout << "---------- Volumetric configuration -------" << std::endl;
     std::cout << "Voxel reslution:" << voxelResolution << std::endl;
@@ -80,12 +87,12 @@ bool PMVolumetric::init()
     std::cout << "max range:" << maxRange << std::endl;
     
     float x1, x2, y1, y2, z1, z2;
-    x1 = parser.read_double("objectCapsule", "x1", 0, true);
-    x2 = parser.read_double("objectCapsule", "x2", 0, true);
-    y1 = parser.read_double("objectCapsule", "y1", 0, true);
-    y2 = parser.read_double("objectCapsule", "y2", 0, true);
-    z1 = parser.read_double("objectCapsule", "z1", 0, true);
-    z2 = parser.read_double("objectCapsule", "z2", 0, true);
+    x1 = reader.GetReal("objectCapsule", "x1", 0);
+    x2 = reader.GetReal("objectCapsule", "x2", 0);
+    y1 = reader.GetReal("objectCapsule", "y1", 0);
+    y2 = reader.GetReal("objectCapsule", "y2", 0);
+    z1 = reader.GetReal("objectCapsule", "z1", 0);
+    z2 = reader.GetReal("objectCapsule", "z2", 0);
     
     point3d obj_min(x1,y1,z1);
     ObjectBBxMin = obj_min;
@@ -93,12 +100,12 @@ bool PMVolumetric::init()
     point3d obj_max(x2,y2,z2);
     ObjectBBxMax = obj_max;
     
-    x1 = parser.read_double("sceneCapsule", "x1", 0, true);
-    x2 = parser.read_double("sceneCapsule", "x2", 0, true);
-    y1 = parser.read_double("sceneCapsule", "y1", 0, true);
-    y2 = parser.read_double("sceneCapsule", "y2", 0, true);
-    z1 = parser.read_double("sceneCapsule", "z1", 0, true);
-    z2 = parser.read_double("sceneCapsule", "z2", 0, true);
+    x1 = reader.GetReal("sceneCapsule", "x1", 0);
+    x2 = reader.GetReal("sceneCapsule", "x2", 0);
+    y1 = reader.GetReal("sceneCapsule", "y1", 0);
+    y2 = reader.GetReal("sceneCapsule", "y2", 0);
+    z1 = reader.GetReal("sceneCapsule", "z1", 0);
+    z2 = reader.GetReal("sceneCapsule", "z2", 0);
     
     point3d sce_min(x1,y1,z1);
     SceneBBxMin = sce_min;

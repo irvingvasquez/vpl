@@ -16,10 +16,10 @@ link_directories(${OCTOMAP_LIB_PATH})
 set(LIBS_OCTOMAP octomap octomath)
 
 # ---------------- MRPT ---------------------
- find_package(MRPT REQUIRED)
- include_directories(${MRPT_INCLUDE_DIRS})
- link_directories(${MRPT_LINK_DIRECTORIES})
- set(LIBS_MRPT mrpt-base)
+find_package(MRPT REQUIRED)
+include_directories(${MRPT_INCLUDE_DIRS})
+link_directories(${MRPT_LINK_DIRECTORIES})
+set(LIBS_MRPT mrpt-base)
 
 #----------------------------- BOOST --------------------
 find_package(Boost COMPONENTS system filesystem REQUIRED)

@@ -51,17 +51,24 @@ bool PartialModelBase::init()
   config_file.append("/");
   config_file.append("partialModelConfig.ini");
   
-  mrpt::utils::CConfigFile parser;
-  ASSERT_FILE_EXISTS_(config_file);
-  parser.setFileName(config_file);
-     
+  //mrpt::utils::CConfigFile parser;
+  //ASSERT_FILE_EXISTS_(config_file);
+  //parser.setFileName(config_file);
+    
+  INIReader reader(config_file.c_str());
+  
+  if (reader.ParseError() < 0) {
+        std::cout << "Can't load " << config_file.c_str() << "\n";
+        return false;
+  }
+  
   std::cout << "\n------------- Partial Model Configuration ------------" << std::endl;
   
-  x = parser.read_double("directorRay", "x", 0, true);
-  y = parser.read_double("directorRay", "y", 0, true);
-  z = parser.read_double("directorRay", "z", 0, true);
-  minDOV = parser.read_double("sensor", "minDOV", 0, true);
-  maxDOV = parser.read_double("sensor", "maxDOV", 50, true);
+  x = reader.GetReal("directorRay", "x", 0);
+  y = reader.GetReal("directorRay", "y", 0);
+  z = reader.GetReal("directorRay", "z", 0);
+  minDOV = reader.GetReal("sensor", "minDOV", 0);
+  maxDOV = reader.GetReal("sensor", "maxDOV", 50);
   point3d dr(x,y,z);
   directorRay = dr;
  
@@ -71,12 +78,12 @@ bool PartialModelBase::init()
   std::cout << "  Maximun DOV: " << maxDOV << std::endl;
   
   
-  x1 = parser.read_double("objectCapsule", "x1", 0, true);  
-  x2 = parser.read_double("objectCapsule", "x2", 0, true);  
-  y1 = parser.read_double("objectCapsule", "y1", 0, true);  
-  y2 = parser.read_double("objectCapsule", "y2", 0, true);
-  z1 = parser.read_double("objectCapsule", "z1", 0, true);
-  z2 = parser.read_double("objectCapsule", "z2", 0, true);
+  x1 = reader.GetReal("objectCapsule", "x1", 0);  
+  x2 = reader.GetReal("objectCapsule", "x2", 0);  
+  y1 = reader.GetReal("objectCapsule", "y1", 0);  
+  y2 = reader.GetReal("objectCapsule", "y2", 0);
+  z1 = reader.GetReal("objectCapsule", "z1", 0);
+  z2 = reader.GetReal("objectCapsule", "z2", 0);
   
   setObjectCapsule(x1,y1,z1,x2,y2,z2);
   point3d p_end(x2,y2,z2);
@@ -87,19 +94,19 @@ bool PartialModelBase::init()
   z = (z1+z2)/2;
   point3d p(x,y,z);
   objectSphereCenter = p;
-  std::cout << "Capsule Center: " << objectSphereCenter;
+  std::cout << "Capsule Center: " << objectSphereCenter << std::endl;;
   
   point3d pr = p_end - p;
-  objectSphereRadius =  pr.norm(); //parser.read_double("objectCenter", "radio", 1.0, true);
+  objectSphereRadius =  pr.norm(); //reader.GetReal("objectCenter", "radio", 1.0);
   objRadius2 = objectSphereRadius;// * objectSphereRadius;
   std::cout <<  "Capsule radius:" << objectSphereRadius << std::endl;
   
-  x1 = parser.read_double("sceneCapsule", "x1", 0, true);
-  x2 = parser.read_double("sceneCapsule", "x2", 0, true);
-  y1 = parser.read_double("sceneCapsule", "y1", 0, true);
-  y2 = parser.read_double("sceneCapsule", "y2", 0, true);
-  z1 = parser.read_double("sceneCapsule", "z1", 0, true);
-  z2 = parser.read_double("sceneCapsule", "z2", 0, true);
+  x1 = reader.GetReal("sceneCapsule", "x1", 0);
+  x2 = reader.GetReal("sceneCapsule", "x2", 0);
+  y1 = reader.GetReal("sceneCapsule", "y1", 0);
+  y2 = reader.GetReal("sceneCapsule", "y2", 0);
+  z1 = reader.GetReal("sceneCapsule", "z1", 0);
+  z2 = reader.GetReal("sceneCapsule", "z2", 0);
   
   setScene(x1,y1,z1,x2,y2,z2);
   std::cout << "Escene: [" << x1 << ", " << y1 << ", " << z1 << "][" << x2 << ", " << y2 << ", " << z2 << "]" << std::endl;
@@ -108,19 +115,19 @@ bool PartialModelBase::init()
   evaluationsFile.assign(dataFolder);
   evaluationsFile.append("/partial_model_evaluations.dat");
 
-  //rbb_size = parser.read_double(ini_file, "partialModel:rbb_size", 0);
+  //rbb_size = reader.GetReal(ini_file, "partialModel:rbb_size", 0);
   
   
   
   
-//   x = parser.read_double("sensorPose", "x", 0, true);
-//   y = parser.read_double("sensorPose", "y", 0, true);
-//   z = parser.read_double("sensorPose", "z", 0, true);
+//   x = reader.GetReal("sensorPose", "x", 0);
+//   y = reader.GetReal("sensorPose", "y", 0);
+//   z = reader.GetReal("sensorPose", "z", 0);
 //   
 //   double yaw, pitch, roll;
-//   yaw = parser.read_double("sensorPose", "yaw", 0, true);
-//   pitch = parser.read_double("sensorPose", "pitch", 0, true);
-//   roll = parser.read_double("sensorPose", "roll", 0, true);
+//   yaw = reader.GetReal("sensorPose", "yaw", 0);
+//   pitch = reader.GetReal("sensorPose", "pitch", 0);
+//   roll = reader.GetReal("sensorPose", "roll", 0);
 //   sensorReferenceFramePose.resize(6);
 //   sensorReferenceFramePose[0] = x;
 //   sensorReferenceFramePose[1] = y;
@@ -135,6 +142,7 @@ bool PartialModelBase::init()
   std::cout << "-------------------------------------" << std::endl;
   return true;
 }
+
 
 
 void PartialModelBase::setObjectCapsule(double x1, double y1, double z1, double x2, double y2, double z2)
