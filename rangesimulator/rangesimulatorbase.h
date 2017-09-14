@@ -23,9 +23,10 @@
 #include <string>
 #include <viewstructure.h>
 #include <vpfilereader.h>
+#include <INIReader.h>
 
-#include <mrpt/system/filesystem.h>
-#include <mrpt/utils/CConfigFile.h>
+//#include <mrpt/system/filesystem.h>
+//#include <mrpt/utils/CConfigFile.h>
 
 #include "recbenchmarklist.h"
 

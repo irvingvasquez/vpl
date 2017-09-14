@@ -42,7 +42,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //#include <stdio.h>
 #include <cstring>
 
-#include <mrpt/poses.h>
+//#include <mrpt/poses.h>
 
 /*
  * Synthesis methods compute the NBV or a set of promising views by geometrical analysis of the reconstructed object.

@@ -37,11 +37,11 @@ set(LIBS_OCTOMAP octomap octomath)
 
 
 # ---------------- MRPT ---------------------
- find_package(MRPT REQUIRED)
- include_directories(${MRPT_INCLUDE_DIRS})
- link_directories(${MRPT_LINK_DIRECTORIES})
+find_package(MRPT REQUIRED)
+include_directories(${MRPT_INCLUDE_DIRS})
+link_directories(${MRPT_LINK_DIRECTORIES})
 # include_directories(/usr/include/mrpt/gui/include)
- set(LIBS_MRPT mrpt-base)
+set(LIBS_MRPT mrpt-base)
 
 
 set (ALL_LIBS ${LIBS_PARTIAL_MODEL} ${LIBS_OCTOMAP} ${LIBS_MRPT})

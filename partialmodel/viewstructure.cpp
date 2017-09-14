@@ -73,8 +73,9 @@ void ViewStructure::setPose(std::vector< double > pose)
   if(pose.size()!=6)
     return;
   
-  this->w = pose;
+  this->setPose(pose[0],pose[1],pose[2],pose[3],pose[4],pose[5]);
 }
+
 
 void ViewStructure::setPose(double x, double y, double z, double yaw, double pitch, double roll)
 {
@@ -84,6 +85,27 @@ void ViewStructure::setPose(double x, double y, double z, double yaw, double pit
   w[3] = yaw;
   w[4] = pitch;
   w[5] = roll;
+  
+  // set HTM
+  HTM(0,0) = cos(yaw)*cos(pitch);
+  HTM(0,1) = cos(yaw)*sin(pitch)*sin(roll)-sin(yaw)*cos(roll); 
+  HTM(0,2) = cos(yaw)*sin(pitch)*cos(roll)+sin(yaw)*sin(roll); 
+  HTM(0,3) = x;
+    
+  HTM(1,0) = sin(yaw)*cos(pitch); 
+  HTM(1,1) = sin(yaw)*sin(pitch)*sin(roll)+cos(yaw)*cos(roll); 
+  HTM(1,2) = sin(yaw)*sin(pitch)*cos(roll)-cos(yaw)*sin(roll);
+  HTM(1,3) = y;
+    
+  HTM(2,0) = -sin(pitch);
+  HTM(2,1) = cos(pitch)*sin(roll);
+  HTM(2,2) = cos(pitch)*cos(roll);
+  HTM(2,3) = z;
+    
+  HTM(3,0) = 0;
+  HTM(3,1) = 0;
+  HTM(3,2) = 0;
+  HTM(3,3) = 1;
 }
 
 

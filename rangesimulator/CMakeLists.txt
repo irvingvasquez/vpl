@@ -27,7 +27,7 @@ set(LIBS_OCTOMAP octomap octomath octovis)
 find_package(MRPT REQUIRED)
 include_directories(${MRPT_INCLUDE_DIRS})
 link_directories(${MRPT_LINK_DIRECTORIES})
-#include_directories(/usr/include/mrpt/gui/include)
+# #include_directories(/usr/include/mrpt/gui/include)
 set(LIBS_MRPT mrpt-base)
 
 #--------------------------------------------
