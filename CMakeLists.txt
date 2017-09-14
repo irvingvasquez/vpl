@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.6)
 
 project(VPL)
 
+set(BUILD_PLANNERS false)
+
 # set this as false if you are going to use another range simulator
 set(RANGE_SIM false)
 
@@ -17,16 +19,18 @@ set(OCTOMAP_INCLUDE_PATH /home/irving/projects/ViewPlanning/octomap-devel/octoma
 
 add_subdirectory(partialmodel)
 
-add_subdirectory(viewplanning)
+if(BUILD_PLANNERS)
+   add_subdirectory(viewplanning)
+endif()
 
 if(RANGE_SIM)
-add_subdirectory(rangesimulator)
+   add_subdirectory(rangesimulator)
 endif()
 
 if(BUILD_APPS)
-add_subdirectory(apps)
+   add_subdirectory(apps)
 endif()
 
 if(NBVS)
-  add_subdirectory(nbvs_planning)
+   add_subdirectory(nbvs_planning)
 endif()
