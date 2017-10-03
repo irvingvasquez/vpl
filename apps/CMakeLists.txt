@@ -3,9 +3,71 @@ cmake_minimum_required(VERSION 2.6)
 project(apps)
 
 ########### First configure the following ###########
-set(OCTREE_RANGE_SIMULATOR TRUE)
-set(FREE_FLYER_APP TRUE)
+set(OCTREE_RANGE_SIMULATOR FALSE)
+set(FREE_FLYER_APP FALSE)
 set(RELATED_DIRS_DIRECTORY ${VPL_SOURCE_DIR}/..)
+
+
+if(BUILD_PARTIAL_MODEL)
+  # Partial model
+  include_directories(${VPL_SOURCE_DIR}/partialmodel)
+  link_directories(${VPL_SOURCE_DIR}/lib)
+  set(LIB_PARTIALMODEL PartialModel)
+  
+  # Octomap
+  include_directories(${OCTOMAP_INCLUDE_PATH})
+  link_directories(${OCTOMAP_LIB_PATH})
+  set(LIBS_OCTOMAP octomap octomath)
+
+  add_executable(random_view_generator test_view_generator.cpp ${SRC_ALL})
+  target_link_libraries(random_view_generator ${LIB_PARTIALMODEL} ${LIBS_OCTOMAP})
+
+  add_executable(view_sphere_generator test_view_sphere.cpp ${SRC_ALL})
+  target_link_libraries(view_sphere_generator  ${LIB_PARTIALMODEL} ${LIBS_OCTOMAP})
+endif()
+
+
+if(BUILD_PLANNERS)
+    include_directories(${VPL_SOURCE_DIR}/viewplanning)
+    set(LIB ViewPlanning PartialModel)
+endif()
+
+if(BUILD_RANGE_SIM)
+
+endif()
+
+if(BUILD_APPS)
+
+endif()
+
+if(BUILD_NBVS)
+
+endif()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #set(SRC_EXT_ROBOTS vprobot.cpp vprfreeflyer.cpp)
@@ -30,17 +92,9 @@ set(RELATED_DIRS_DIRECTORY ${VPL_SOURCE_DIR}/..)
 #set(SRC_EXTENDED ${SRC_EXT_ROBOTS} ${SRC_EXT_SENSORS} ${SRC_EXT_NBVPLANNER} ${SRC_EXT_ROBOTSENSOR} ${SRC_EXT_RECONSTRUCTOR})
 
 
-#---------------- View Planning Library ---------
-include_directories(${VPL_SOURCE_DIR}/viewplanning)
-include_directories(${VPL_SOURCE_DIR}/partialmodel)
-link_directories(${VPL_SOURCE_DIR}/lib)
-set(LIBS_VIEW_PLANNING ViewPlanning PartialModel)
 
 
-# --------------- Octomap --------------------
-include_directories(${RELATED_DIRS_DIRECTORY}/octomap-devel/octomap/include)
-link_directories(${RELATED_DIRS_DIRECTORY}/octomap-devel/lib)
-set(LIBS_OCTOMAP octomap octomath octovis)
+
 
 
 # ---------------- MRPT ---------------------
@@ -75,11 +129,6 @@ if(FREE_FLYER_APP)
 endif()
 
 
-add_executable(random_view_generator test_view_generator.cpp ${SRC_ALL})
-target_link_libraries(random_view_generator ${CORE_LIBS})
-
-add_executable(view_sphere_generator test_view_sphere.cpp ${SRC_ALL})
-target_link_libraries(view_sphere_generator  ${CORE_LIBS})
 
  
  

@@ -79,33 +79,33 @@ void ViewStructure::setPose(std::vector< double > pose)
 
 void ViewStructure::setPose(double x, double y, double z, double yaw, double pitch, double roll)
 {
-  w[0] = x;
-  w[1] = y;
-  w[2] = z;
-  w[3] = yaw;
-  w[4] = pitch;
-  w[5] = roll;
+  this->w[0] = x;
+  this->w[1] = y;
+  this->w[2] = z;
+  this->w[3] = yaw;
+  this->w[4] = pitch;
+  this->w[5] = roll;
   
   // set HTM
-  HTM(0,0) = cos(yaw)*cos(pitch);
-  HTM(0,1) = cos(yaw)*sin(pitch)*sin(roll)-sin(yaw)*cos(roll); 
-  HTM(0,2) = cos(yaw)*sin(pitch)*cos(roll)+sin(yaw)*sin(roll); 
-  HTM(0,3) = x;
+  this->HTM(0,0) = cos(yaw)*cos(pitch);
+  this->HTM(0,1) = cos(yaw)*sin(pitch)*sin(roll)-sin(yaw)*cos(roll); 
+  this->HTM(0,2) = cos(yaw)*sin(pitch)*cos(roll)+sin(yaw)*sin(roll); 
+  this->HTM(0,3) = x;
     
-  HTM(1,0) = sin(yaw)*cos(pitch); 
-  HTM(1,1) = sin(yaw)*sin(pitch)*sin(roll)+cos(yaw)*cos(roll); 
-  HTM(1,2) = sin(yaw)*sin(pitch)*cos(roll)-cos(yaw)*sin(roll);
-  HTM(1,3) = y;
+  this->HTM(1,0) = sin(yaw)*cos(pitch); 
+  this->HTM(1,1) = sin(yaw)*sin(pitch)*sin(roll)+cos(yaw)*cos(roll); 
+  this->HTM(1,2) = sin(yaw)*sin(pitch)*cos(roll)-cos(yaw)*sin(roll);
+  this->HTM(1,3) = y;
     
-  HTM(2,0) = -sin(pitch);
-  HTM(2,1) = cos(pitch)*sin(roll);
-  HTM(2,2) = cos(pitch)*cos(roll);
-  HTM(2,3) = z;
+  this->HTM(2,0) = -sin(pitch);
+  this->HTM(2,1) = cos(pitch)*sin(roll);
+  this->HTM(2,2) = cos(pitch)*cos(roll);
+  this->HTM(2,3) = z;
     
-  HTM(3,0) = 0;
-  HTM(3,1) = 0;
-  HTM(3,2) = 0;
-  HTM(3,3) = 1;
+  this->HTM(3,0) = 0;
+  this->HTM(3,1) = 0;
+  this->HTM(3,2) = 0;
+  this->HTM(3,3) = 1;
 }
 
 

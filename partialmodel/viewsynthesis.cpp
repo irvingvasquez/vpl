@@ -60,10 +60,10 @@ void RandomViewSynthesis::getViews(ViewList& views)
       // random pose
       pose[j] = min_view.w[j] + rand_interval;
       // in this case the configuration is the same than the pose
-      view.q = view.w;
+      // view.q = view.w;
     }
     
-    view.setPose(view.w[0], view.w[1], view.w[2], view.w[3], view.w[4], view.w[5]);
+    view.setPose(pose[0], pose[1], pose[2], pose[3], pose[4], pose[5]);
     
 //     // determinar la matriz de transformación homogenea
 //     mrpt::poses::CPose3D pose(view.w[0], view.w[1], view.w[2], view.w[3], view.w[4], view.w[5]);
