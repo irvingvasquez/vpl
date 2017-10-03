@@ -24,6 +24,9 @@ if(BUILD_PARTIAL_MODEL)
 
   add_executable(view_sphere_generator test_view_sphere.cpp ${SRC_ALL})
   target_link_libraries(view_sphere_generator  ${LIB_PARTIALMODEL} ${LIBS_OCTOMAP})
+  
+  add_executable(update_partial_model test_update_partial_model.cpp ${SRC_ALL})
+  target_link_libraries(update_partial_model  ${LIB_PARTIALMODEL} ${LIBS_OCTOMAP})
 endif()
 
 
