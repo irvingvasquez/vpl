@@ -159,7 +159,7 @@ bool vpFileReader::saveDoubleCoordinates(std::string file_name, std::vector< std
     return false;
   }
   
-  std::cout << file_name << "Saved" << std::endl;
+  //std::cout << file_name << " Saved" << std::endl;
   return true;
 }
 

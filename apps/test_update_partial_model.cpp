@@ -49,6 +49,7 @@ int main(int argc, char **argv) {
 
   // update the partial model 
   octree.updateWithScan(scan_file, origin_file);
+  octree.paintVoxels();
  
   // save the current representation  
   octree.savePartialModel("octree_after_updating.ot");

@@ -86,6 +86,12 @@ PMVOctree();
    * Paints in orange unknown voxels
    */
   long int paintVoxels(COctreeVPL *octree);
+  
+  /**
+   * Paints in blue occupied voxels that are inside the object capsule.
+   * Paints in orange unknown voxels
+   */
+  long int paintVoxels();
 
   
   virtual bool init();

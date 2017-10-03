@@ -216,6 +216,11 @@ long int PMVOctree::paintVoxels(COctreeVPL* octree)
   return 0;
 }
 
+long int PMVOctree::paintVoxels()
+{
+  return paintVoxels(this->map);
+}
+
 
 bool PMVOctree::rayTracingHTM(boost::numeric::ublas::matrix< double > m, EvaluationResult& result)
 {
@@ -355,15 +360,13 @@ bool PMVOctree::savePartialModel(std::string file_name)
     std::cout << "Octree empty" << std::endl;
     return false;
   }
-  
-  std::cout << "Writing to " << file_name.c_str() << std::endl;
-  
+ 
   if(!map->write(file_name.c_str())){
     return false;
   }
   
-  //paintOccupiedInCapsule();
-  
+  std::cout << "Octomap: " << file_name.c_str() << " saved\n";
+    
   long int n_unk;
   std::string file_uknown(file_name);
   file_uknown.append(".unk.ot");
@@ -378,6 +381,7 @@ bool PMVOctree::savePartialModel(std::string file_name)
   file_object_points.append("/object_accumulated_points.wrl");
   objectPointCloud.writeVrml(file_object_points);
   
+  std::cout << "Object VRML: " << file_object_points.c_str() << " saved\n";
   
   Pointcloud::iterator it;
   std::vector< std::vector<double> > vec_pc;
@@ -394,10 +398,14 @@ bool PMVOctree::savePartialModel(std::string file_name)
   file_pc.append(object_points_filename);
   reader.saveDoubleCoordinates(file_pc, vec_pc);
   
+  std::cout << "Object point cloud: " << file_pc.c_str() << " saved\n";
+  
   unknownVoxelsInOBBx.push_back(n_unk);;
   std::string file_n_uknown(dataFolder);
   file_n_uknown.append("/unknown_voxels_OBBx");
   reader.saveVector<long int>(unknownVoxelsInOBBx, file_n_uknown);
+  
+  std::cout << "Unknown voxels in BBx amouts was saved\n";
   
   return true;
 }
