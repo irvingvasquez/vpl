@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 
+### VIEW PLANNING LIBRARY ###
 project(VPL)
 
 set(BUILD_PARTIAL_MODEL true)
@@ -13,7 +14,7 @@ set(BUILD_RANGE_SIM true)
 set(BUILD_APPS true)
 
 # View/state planning It requires additional libraries, I recommend to put this as false (under development)
-set(BUILD_NBVS false)
+set(BUILD_NBVS true)
 
 # Configure the path to the octomap library
 set(OCTOMAP_LIB_PATH /home/irving/projects/ViewPlanning/octomap-devel/lib)

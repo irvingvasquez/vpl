@@ -2,40 +2,44 @@ cmake_minimum_required(VERSION 2.6)
 
 project(apps)
 
-########### First configure the following ###########
-set(OCTREE_RANGE_SIMULATOR FALSE)
-set(FREE_FLYER_APP FALSE)
-set(RELATED_DIRS_DIRECTORY ${VPL_SOURCE_DIR}/..)
+# Octomap
+include_directories(${OCTOMAP_INCLUDE_PATH})
+link_directories(${OCTOMAP_LIB_PATH})
+set(LIBS_OCTOMAP octomap octomath)
 
 
 if(BUILD_PARTIAL_MODEL)
   # Partial model
   include_directories(${VPL_SOURCE_DIR}/partialmodel)
   link_directories(${VPL_SOURCE_DIR}/lib)
-  set(LIB_PARTIALMODEL PartialModel)
-  
-  # Octomap
-  include_directories(${OCTOMAP_INCLUDE_PATH})
-  link_directories(${OCTOMAP_LIB_PATH})
-  set(LIBS_OCTOMAP octomap octomath)
+  set(LIB_PARTIAL_MODEL PartialModel)
   
   message("Building partial model examples")
 
   # Programs
   add_executable(random_view_generator test_view_generator.cpp ${SRC_ALL})
-  target_link_libraries(random_view_generator ${LIB_PARTIALMODEL} ${LIBS_OCTOMAP})
+  target_link_libraries(random_view_generator ${LIB_PARTIAL_MODEL} ${LIBS_OCTOMAP})
 
   add_executable(view_sphere_generator test_view_sphere.cpp ${SRC_ALL})
-  target_link_libraries(view_sphere_generator  ${LIB_PARTIALMODEL} ${LIBS_OCTOMAP})
+  target_link_libraries(view_sphere_generator  ${LIB_PARTIAL_MODEL} ${LIBS_OCTOMAP})
   
   add_executable(update_partial_model test_update_partial_model.cpp ${SRC_ALL})
-  target_link_libraries(update_partial_model  ${LIB_PARTIALMODEL} ${LIBS_OCTOMAP})
-endif()
-
-
-if(BUILD_VIEW_PLANNING)
+  target_link_libraries(update_partial_model  ${LIB_PARTIAL_MODEL} ${LIBS_OCTOMAP})
+  
+  
+  
+  if(BUILD_VIEW_PLANNING)
     include_directories(${VPL_SOURCE_DIR}/viewplanning)
     set(LIBS_VIEW_PLANNING ViewPlanning)
+    
+    # ---------------- MRPT ---------------------
+    find_package(MRPT REQUIRED)
+    include_directories(${MRPT_INCLUDE_DIRS})
+    link_directories(${MRPT_LINK_DIRECTORIES})
+    include_directories(/usr/include/mrpt/gui/include)
+    set(LIBS_MRPT mrpt-base)
+    
+    set (CORE_LIBS ${LIBS_VIEW_PLANNING} ${LIBS_OCTOMAP} ${LIBS_MRPT})
     
     if(BUILD_RANGE_SIM)
       # range Simulator 
@@ -44,14 +48,17 @@ if(BUILD_VIEW_PLANNING)
       link_directories(${VPL_SOURCE_DIR}/lib)
       set(LIBS_RANGE_SIMULATOR RangeSimulator)
       
-#       add_executable(test_rangesimulator test_rangesimulator.cpp)
-#       target_link_libraries(test_rangesimulator ${LIB_PARTIALMODEL} ${LIBS_RANGE_SIMULATOR} ${LIBS_OCTOMAP} ${LIBS_VIEW_PLANNING})
+      add_executable(test_rangesimulator test_rangesimulator.cpp)
+      target_link_libraries(test_rangesimulator ${LIB_PARTIAL_MODEL} ${LIBS_RANGE_SIMULATOR} ${LIBS_OCTOMAP} ${LIBS_VIEW_PLANNING})
+      
+      add_executable(test_freeflyer test_freeflyer.cpp)
+      target_link_libraries(test_freeflyer ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
+      
+      add_executable(test_freeflyer_vasquez09 test_freeflyer_vasquez09.cpp)
+      target_link_libraries(test_freeflyer_vasquez09 ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
+      
     endif()
-endif()
-
-
-if(BUILD_APPS)
-
+  endif()
 endif()
 
 
@@ -105,35 +112,6 @@ endif()
 #set(SRC_EXT_RECONSTRUCTOR reconstructor3d.cpp r3ddirectpositioning.cpp vplutils.cpp)
 
 #set(SRC_EXTENDED ${SRC_EXT_ROBOTS} ${SRC_EXT_SENSORS} ${SRC_EXT_NBVPLANNER} ${SRC_EXT_ROBOTSENSOR} ${SRC_EXT_RECONSTRUCTOR})
-
-
-
-
-
-
-
-# ---------------- MRPT ---------------------
- find_package(MRPT REQUIRED)
- include_directories(${MRPT_INCLUDE_DIRS})
- link_directories(${MRPT_LINK_DIRECTORIES})
- include_directories(/usr/include/mrpt/gui/include)
- set(LIBS_MRPT mrpt-base)
- 
- set (CORE_LIBS ${LIBS_VIEW_PLANNING} ${LIBS_OCTOMAP} ${LIBS_MRPT})
- 
- 
-
-
-
-if(FREE_FLYER_APP)
-  if(OCTREE_RANGE_SIMULATOR)
-    add_executable(test_freeflyer test_freeflyer.cpp)
-    target_link_libraries(test_freeflyer ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
-    
-    add_executable(test_freeflyer_vasquez09 test_freeflyer_vasquez09.cpp)
-    target_link_libraries(test_freeflyer_vasquez09 ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR})
-  endif()
-endif()
 
 
 

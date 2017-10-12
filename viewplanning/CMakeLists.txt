@@ -27,7 +27,7 @@ set(SRC_ALL ${SRC_ROBOTS} ${SRC_SENSORS} ${SRC_NBVPLANNER} ${SRC_ROBOTSENSOR} ${
 #---------------- Partial Model Library ---------
 include_directories(${VPL_SOURCE_DIR}/partialmodel)
 link_directories(${VPL_SOURCE_DIR}/lib)
-set(LIBS_PARTIAL_MODEL PartialModel)
+set(LIB_PARTIAL_MODEL PartialModel)
 
 
 # --------------- Octomap --------------------
@@ -44,8 +44,9 @@ link_directories(${MRPT_LINK_DIRECTORIES})
 set(LIBS_MRPT mrpt-base)
 
 
-set (ALL_LIBS ${LIBS_PARTIAL_MODEL} ${LIBS_OCTOMAP} ${LIBS_MRPT})
+set (ALL_LIBS ${LIB_PARTIAL_MODEL} ${LIBS_OCTOMAP} ${LIBS_MRPT})
 
 # -------------------------------------------------
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${VPL_SOURCE_DIR}/lib)
 add_library(ViewPlanning SHARED ${SRC_ALL})
+target_link_libraries(ViewPlanning ${LIB_PARTIAL_MODEL} ${LIBS_OCTOMAP} ${LIBS_MRPT})
