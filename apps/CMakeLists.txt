@@ -18,7 +18,10 @@ if(BUILD_PARTIAL_MODEL)
   include_directories(${OCTOMAP_INCLUDE_PATH})
   link_directories(${OCTOMAP_LIB_PATH})
   set(LIBS_OCTOMAP octomap octomath)
+  
+  message("Building partial model examples")
 
+  # Programs
   add_executable(random_view_generator test_view_generator.cpp ${SRC_ALL})
   target_link_libraries(random_view_generator ${LIB_PARTIALMODEL} ${LIBS_OCTOMAP})
 
@@ -30,18 +33,27 @@ if(BUILD_PARTIAL_MODEL)
 endif()
 
 
-if(BUILD_PLANNERS)
+if(BUILD_VIEW_PLANNING)
     include_directories(${VPL_SOURCE_DIR}/viewplanning)
-    set(LIB ViewPlanning PartialModel)
+    set(LIBS_VIEW_PLANNING ViewPlanning)
+    
+    if(BUILD_RANGE_SIM)
+      # range Simulator 
+      message("Building range simulator apps")
+      include_directories(${VPL_SOURCE_DIR}/rangesimulator)
+      link_directories(${VPL_SOURCE_DIR}/lib)
+      set(LIBS_RANGE_SIMULATOR RangeSimulator)
+      
+#       add_executable(test_rangesimulator test_rangesimulator.cpp)
+#       target_link_libraries(test_rangesimulator ${LIB_PARTIALMODEL} ${LIBS_RANGE_SIMULATOR} ${LIBS_OCTOMAP} ${LIBS_VIEW_PLANNING})
+    endif()
 endif()
 
-if(BUILD_RANGE_SIM)
-
-endif()
 
 if(BUILD_APPS)
 
 endif()
+
 
 if(BUILD_NBVS)
 
@@ -110,15 +122,7 @@ endif()
  set (CORE_LIBS ${LIBS_VIEW_PLANNING} ${LIBS_OCTOMAP} ${LIBS_MRPT})
  
  
- if(OCTREE_RANGE_SIMULATOR)
-#---------------- range Simulator ---------
-  message("APPS will compile with octree range simulator")
-  #message(${CORE_LIBS})
-  #set(SRC_OCTREE_RSIM rssraytracingoctree.cpp)
-  include_directories(${VPL_SOURCE_DIR}/rangesimulator)
-  link_directories(${VPL_SOURCE_DIR}/lib)
-  set(LIBS_RANGE_SIMULATOR RangeSimulator)
-endif()
+
 
 
 if(FREE_FLYER_APP)

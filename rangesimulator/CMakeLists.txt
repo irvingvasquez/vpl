@@ -18,11 +18,6 @@ include_directories(${RELATED_DIRS_DIRECTORY}/octomap-devel/octomap/include)
 link_directories(${RELATED_DIRS_DIRECTORY}/octomap-devel/lib)
 set(LIBS_OCTOMAP octomap octomath octovis)
 
-# # ---------------- INIPARSER  -----------------
-# include_directories(${RELATED_DIRS_DIRECTORY}/iniparser/src)
-# link_directories(${RELATED_DIRS_DIRECTORY}/iniparser)
-# set(LIBS_INIPARSER iniparser)
-
 # ---------------- MRPT ---------------------
 find_package(MRPT REQUIRED)
 include_directories(${MRPT_INCLUDE_DIRS})

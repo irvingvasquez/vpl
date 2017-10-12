@@ -4,10 +4,10 @@ project(VPL)
 
 set(BUILD_PARTIAL_MODEL true)
 
-set(BUILD_PLANNERS false)
+set(BUILD_VIEW_PLANNING true)
 
 # set this as false if you are going to use another range simulator
-set(BUILD_RANGE_SIM false)
+set(BUILD_RANGE_SIM true)
 
 # set this as false if you do not want the app examples (under development)
 set(BUILD_APPS true)
@@ -24,18 +24,20 @@ if(BUILD_PARTIAL_MODEL)
   add_subdirectory(partialmodel)
 endif()
 
-if(BUILD_PLANNERS)
+if(BUILD_VIEW_PLANNING)
    add_subdirectory(viewplanning)
-endif()
-
-if(BUILD_RANGE_SIM)
-   add_subdirectory(rangesimulator)
+   
+   if(BUILD_RANGE_SIM)
+      add_subdirectory(rangesimulator)
+   endif()
+   
+   if(BUILD_NBVS)
+      add_subdirectory(nbvs_planning)
+   endif()
 endif()
 
 if(BUILD_APPS)
    add_subdirectory(apps)
 endif()
 
-if(BUILD_NBVS)
-   add_subdirectory(nbvs_planning)
-endif()
+
