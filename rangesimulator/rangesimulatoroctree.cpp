@@ -33,9 +33,6 @@ bool RangeSimulatorOctree::init()
    config_file.append("/");
    config_file.append("rangeSimulator.ini");
   
-//    mrpt::utils::CConfigFile parser;
-//    ASSERT_FILE_EXISTS_(config_file);
-//    parser.setFileName(config_file);
    
    INIReader reader(config_file.c_str());
   

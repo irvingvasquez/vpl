@@ -40,7 +40,6 @@ int main(int argc, char **argv) {
     vpRobot *r = new vprFreeFlyer();
     r->init();
     
-    
     // ---------------- sensor ----------------------
     // Simulation of the scan with octree
     // RangeSensor *s = new RSSimulated();
@@ -50,6 +49,7 @@ int main(int argc, char **argv) {
     s->init();
     // Set of rays that defines the sensor R
     s->saveRaysForResolution(rays_file, resolution, distance);
+    
     
     
     // ---------------- RobotSensor ----------------

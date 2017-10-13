@@ -60,8 +60,8 @@ bool Reconstructor3D::init()
   
   if (!vsReadViewList(Plan, fileName)){
     std::cout << "Error: No initial view" << std::endl;
-    getchar();
-    return false;
+    //getchar();
+    exit(0);
   }
   
   initiated = true;
@@ -86,7 +86,7 @@ bool Reconstructor3D::init()
   candidateViewsFileName.append(dataFolder);
   candidateViewsFileName.append("/");
   //candidateViewsFileName.append(problemName);
-  candidateViewsFileName.append("random_views.vs");
+  candidateViewsFileName.append("candidate_views.vs");
   
   raysFileName.clear();
   raysFileName.append(dataFolder);
@@ -109,7 +109,11 @@ bool Reconstructor3D::init()
   partialModelFileName.append("/");
   partialModelFileName.append("partial_model_octree_color.ot");
   
-  
+  occupiedVoxelsFileName.assign(dataFolder);
+  occupiedVoxelsFileName.append("/occupied.triangles");
+
+  unknownVoxelsFilename.assign(dataFolder);
+  unknownVoxelsFilename.append("/unknown.triangles");
   
   std::string config_file(configFolder);
   config_file.append("/");
@@ -165,7 +169,11 @@ void Reconstructor3D::solveReconstruction()
   robot_sensor->getCurrentConfiguration(qi);
   std::cout << "Robot current configuration:" << std::endl;
   printVector(qi); 
-   
+  
+  this->partialModel->saveObjectAsRawT(occupiedVoxelsFileName);
+  this->partialModel->saveUnknownVolumeAsObst(unknownVoxelsFilename);
+  saveData();
+  
   do{  
       std::cout << std::endl << std::endl <<"----------------------- View Planning Iteration " << iteration << "----------------" << std::endl;
       

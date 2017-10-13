@@ -22,7 +22,6 @@
 
 #include "rangesimulatorbase.h"
 #include <octomap/ColorOcTree.h>
-//#include <math.h>
 #include <boost/numeric/ublas/matrix.hpp>
 
 //typedef boost::numeric::ublas::matrix<double> boost::numeric::ublas::matrix<double>;

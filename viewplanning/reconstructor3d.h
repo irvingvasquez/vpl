@@ -100,6 +100,8 @@ protected:
   std::string goalsFileName;
   std::string reachedGoalsFilename;
   std::string partialModelFileName;
+  std::string occupiedVoxelsFileName;
+  std::string unknownVoxelsFilename;
   
   std::string currentPointCloudFile;
   std::string currentOriginFile;

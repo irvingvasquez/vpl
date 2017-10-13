@@ -16,11 +16,13 @@ include_directories(${OCTOMAP_INCLUDE_PATH})
 link_directories(${OCTOMAP_LIB_PATH})
 set(LIBS_OCTOMAP octomap octomath)
 
+
 #----------------------------- BOOST --------------------
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories( ${Boost_INCLUDE_DIR} )
 
+
 # -------------------------------------------------
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${VPL_SOURCE_DIR}/lib)
 add_library(PartialModel SHARED ${SRC_ALL})
-
+target_link_libraries(PartialModel ${LIBS_OCTOMAP})
