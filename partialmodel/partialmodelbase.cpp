@@ -290,7 +290,7 @@ bool PartialModelBase::readPointCloudFromDAT(std::string file_name, Pointcloud& 
     
     file.close();
   } else {
-    std::cout << "Unable to open file" << std::endl;
+    std::cout << "Unable to open file"  << file_name.c_str() << std::endl;
     return false;
   }
   
@@ -420,19 +420,19 @@ bool PartialModelBase::rayIntersectSphere(const point3d raydir, const point3d ra
 // WARNING the view must have in w a view that is pointing to x
 bool PartialModelBase::poitsToTheObject(ViewStructure& v)
 {
-//   point3d ray(directorRay);
-//    ray.rotate_IP(v.w[5],v.w[4],v.w[3]);
-//    
-//    //std::cout << "rotated director ray" << ray << std::endl;
-//    
-//    point3d origin(v.w[0],v.w[1],v.w[2]);
-//    
-//    if(rayIntersectObjectSphere(ray, origin)){
-//      //std::cout << "points to the object :)" << std::endl;
+   point3d ray(directorRay);
+   ray.rotate_IP(v.w[5],v.w[4],v.w[3]);
+   
+   //std::cout << "rotated director ray" << ray << std::endl;
+   
+   point3d origin(v.w[0],v.w[1],v.w[2]);
+   
+   if(rayIntersectObjectSphere(ray, origin)){
+     //std::cout << "points to the object :)" << std::endl;
       return true;
-//    }
-//    
-//    return false;
+   }
+   
+   return false;
 }
 
 

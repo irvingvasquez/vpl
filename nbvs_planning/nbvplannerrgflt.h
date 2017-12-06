@@ -121,6 +121,13 @@ NBVPlannerExtendTree(RobotSensor* rs, PartialModelBase* pm);
 };
 
 
+class NBVPlannerExtendTreeOneEdge : public NBVPlannerExtendTree
+{
+public:
+  
+   NBVPlannerExtendTreeOneEdge(RobotSensor* rs, PartialModelBase* pm);
 
+   virtual bool planNBV(ViewStructure& v);
+};
 
 #endif // NBVPLANNERRGFLT_H

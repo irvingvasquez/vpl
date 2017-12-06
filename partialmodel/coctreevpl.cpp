@@ -1250,6 +1250,7 @@ void COctreeVPL::getVisibleUnknownVoxels(point3d_list& node_centers, point3d_lis
 
 void COctreeVPL::getFrontierUnknownVoxels(point3d_list& node_centers, point3d_list& voxel_normals)
 {
+  // TODO: needs revision because it is generating an execption
   point3d query;
   OcTreeNode* result = NULL;
   point3d zero(0,0,0);
@@ -1311,7 +1312,7 @@ void COctreeVPL::getFrontierUnknownVoxels(point3d_list& node_centers, point3d_li
 	  } 
 	}
       }
-  }
+   }
 }
 
 

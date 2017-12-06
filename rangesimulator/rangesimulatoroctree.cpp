@@ -427,7 +427,7 @@ bool RangeSimulatorOctree::takeAndSaveScan(boost::numeric::ublas::matrix< double
   std::cout << "Saving file: " << scan_name.c_str() << std::endl;
   if (!myfile.is_open())
   {
-    std::cout << "Unable to open file";
+    std::cout << "Unable to open file" << scan_name.c_str() << std::endl;
     return false;
   }
   for(it = cloud.begin(); it!= cloud.end(); it++){
@@ -447,7 +447,7 @@ bool RangeSimulatorOctree::takeAndSaveScan(boost::numeric::ublas::matrix< double
   std::cout << "Saving file: " << origin_name.c_str() << std::endl;
   if (!myfileOrigin.is_open())
   {
-    std::cout << "Unable to open file";
+    std::cout << "Unable to open file"  << origin_name.c_str() << std::endl;
     return false;
   }
   myfileOrigin << rotated_origin(0,0) << " " << rotated_origin(1,0) << " " << rotated_origin(2,0) << std::endl;
@@ -478,7 +478,7 @@ bool RangeSimulatorOctree::takeAndSaveScan(ViewStructure v, std::string file_nam
   std::ofstream myfile (file_name.c_str());
   if (!myfile.is_open())
   {
-    std::cout << "Unable to open file";
+    std::cout << "Unable to open file:"  << file_name.c_str() << std::endl;
     return false;
   }
   

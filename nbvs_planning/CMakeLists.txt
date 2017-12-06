@@ -118,8 +118,8 @@ set(LIBS_ALL ${CORE_LIBS} ${LIBS_RANGE_SIMULATOR} ${LIBS_MP})
 add_executable(vp_simulation_example vp_simulation_example.cpp ${SRC})
 target_link_libraries(vp_simulation_example ${LIBS_ALL})
 
-add_executable(test_sim_rrtnbv test_sim_rrtnbv.cpp ${SRC})
-target_link_libraries(test_sim_rrtnbv ${LIBS_ALL})
+add_executable(test_sim_rrtnbv_vuv test_sim_rrtnbv.cpp ${SRC})
+target_link_libraries(test_sim_rrtnbv_vuv ${LIBS_ALL})
 
 add_executable(test_sim_rrtnbv_fig test_sim_rrtnbv_fig.cpp ${SRC})
 target_link_libraries(test_sim_rrtnbv_fig ${LIBS_ALL})

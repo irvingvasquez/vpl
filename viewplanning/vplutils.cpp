@@ -132,7 +132,7 @@ bool vpl::readTransformationMatrix(std::string filename, mrpt::poses::CPose3D& p
     //cout << T << std::endl;
   }
   else { 
-    std::cout << "Unable to open transformation file"; 
+    std::cout << "Unable to open transformation file"  << filename.c_str() << std::endl;
     return false;
   }
   

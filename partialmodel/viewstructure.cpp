@@ -251,7 +251,7 @@ bool vsReadViewList(std::list< ViewStructure >& views, std::string fileName)
     std::cout << "Readed complete. " << views.size() << "views." << std::endl;
     return true;
   } else {
-    std::cout << "Unable to open file" << std::endl;
+    std::cout << "Unable to open file"  << fileName.c_str() << std::endl;
     return false;
   }
 }
@@ -316,7 +316,7 @@ bool ViewList::read(std::string file_name)
     std::cout << "Readed complete. " << this->size() << "views." << std::endl;
     return true;
   } else {
-    std::cout << "Unable to open file" << std::endl;
+    std::cout << "Unable to open file"  << file_name.c_str() << std::endl;
     return false;
   }
 }
@@ -351,8 +351,10 @@ bool ViewList::saveAsMSLStates(std::string file_name)
     std::cout << "Views saved. File: " << file_name.c_str() << std::endl;
     return true;
   }
-  
-  else std::cout << "Unable to open file" << std::endl;
+  else 
+  {
+     std::cout << "Unable to open file"  << file_name.c_str() << std::endl;
+  }
   return false;
 }
 
@@ -409,8 +411,9 @@ bool ViewList::save(std::string file_name)
     std::cout << "Views saved. File: " << file_name.c_str() <<std::endl;
     return true;
   }
-  
-  else std::cout << "Unable to open file" <<std::endl;
+  else{
+    std::cout << "Unable to save file"  << file_name.c_str() << std::endl;
+  }
   return false;
 }
 
@@ -467,7 +470,9 @@ if(views.size() == 0){
     std::cout << "Views saved. File: " << fileName.c_str() << std::endl;
     return true;
   }
-  else std::cout << "Unable to open file" << std::endl;
+  else{
+     std::cout << "Unable to save file: " << fileName.c_str() << std::endl;
+  }
   return false;
 }
 

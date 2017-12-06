@@ -127,10 +127,12 @@ bool NBVPlanner::savePlannerData()
   file_name = configFolder + "/ObstEnvironment.raw";
   vpTriangleList triangles;
   triangles.readFile(file_name);
+  
   vpTriangleList tris;
   partialModel->getOccupiedTriangles(tris);
   triangles.insert(triangles.end(), tris.begin(), tris.end());
   tris.clear();
+  
   partialModel->getUnknownTriangles(tris);
   triangles.insert(triangles.end(), tris.begin(), tris.end());
   file_name.clear();
@@ -144,13 +146,14 @@ bool NBVPlanner::savePlannerData()
   file_name.clear();
   file_name = dataFolder + "/unknown.raw";
   partialModel->saveUnknownVolumeAsRawT(file_name); 
+    
+  // TODO
+  //file_name.clear();
+  //file_name = dataFolder + "/FrontierVertices.dat";
+  //std::string file_name2;
+  //file_name2 = dataFolder + "/FrontierNormals.dat";
+  //partialModel->saveFrontierUnknown(file_name, file_name2);
   
-  
-  file_name.clear();
-  file_name = dataFolder + "/FrontierVertices.dat";
-  std::string file_name2;
-  file_name2 = dataFolder + "/FrontierNormals.dat";
-  partialModel->saveFrontierUnknown(file_name, file_name2);
   return true;
 }
 

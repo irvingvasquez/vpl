@@ -134,7 +134,7 @@ bool vpFileReader::readLineCoordinatesfromPCD(std::string file_name, std::vector
     std::cout << "closed file" << std::endl;
     return true;
   } else {
-    std::cout << "Unable to open file" << std::endl;
+    std::cout << "Unable to open file: "  << file_name.c_str() << std::endl;
     return false;
   }
 }
@@ -247,7 +247,7 @@ bool vpFileReader::readDouble(std::string file_name, std::vector< double >& data
     file.close();
     return true;
   } else {
-    std::cout << "Unable to open file" << std::endl;
+    std::cout << "Unable to open file: "  << file_name.c_str() << std::endl;
     return false;
   }
 }

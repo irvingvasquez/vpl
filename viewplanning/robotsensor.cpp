@@ -215,7 +215,7 @@ bool RobotSensor::saveSensorTrajectory(std::string& file_name, double factor)
       file.close();
   }
     else {
-      std::cout << "Error: unable to open file.\n";
+      std::cout << "Error: unable to save file: "  << file_name.c_str() << std::endl;
       return false;
   }
   

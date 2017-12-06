@@ -98,7 +98,7 @@ bool vpTriangleList::saveToFile(std::string file_name)
     file.close();
   }
   else {
-    std::cout << "Error: unable to open file.\n";
+    std::cout << "Error: unable to save file: "  << file_name.c_str() << std::endl;
     return false;
   }
   
@@ -146,7 +146,7 @@ bool vpTriangleList::readFile(std::string file_name)
     file.close();
     return true;
   } else {
-    std::cout << "Unable to open file" << std::endl;
+    std::cout << "Unable to open file: " << file_name.c_str() << std::endl;
     return false;
   }
 }

@@ -44,8 +44,7 @@ void EvaluationResultVector::saveVector(std::string file_name)
     myfile.close();
   }
   else{ 
-    std::cout << "Unable to open file";
-    getchar();
+    std::cout << "Unable to save file " << file_name.c_str() << std::endl;
   }
   
 }

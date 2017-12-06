@@ -1032,4 +1032,205 @@ bool NBVPlannerExtendTree::planNBV(ViewStructure& v)
 
 
 
+NBVPlannerExtendTreeOneEdge::NBVPlannerExtendTreeOneEdge(RobotSensor* rs, PartialModelBase* pm): NBVPlannerExtendTree(rs, pm)
+{
+
+}
+
+bool NBVPlannerExtendTreeOneEdge::planNBV(ViewStructure& v)
+{
+  vpFileReader reader;
+  //ViewList views_list;
+  std::string file_name;
+  
+  //generateCandidateViews(views_list, m, g);
+  //ViewStructure best_sensing_view = views_list.getBestView();
+
+  std::cout <<"-----------Motion Planning with node evaluation ----------" << std::endl;
+  
+  savePlannerData();
+  std::cout <<"Creating the motion planning problem"<< std::endl;
+  
+  Geom *g = new GeomPQP3DRigidMulti(configFolder);
+  std::cout << "Geometry ok" << std::endl;
+  clock_t begin = clock();
+
+  bool success = false;
+  
+  double best_eval = 0;
+  list<MSLVector> best_path;
+  MSLVector best_goal;
+  MSLVector init_state;
+  list<MSLVector> best_policy1;
+  list<MSLVector> best_policy2;
+
+  //ViewList::iterator itv = views_list.begin();
+  file_name.clear();
+  vector<double> random_state;
+  this->robotWithSensor->getRandomState(random_state);
+  
+  file_name = configFolder + "/GoalState";
+  reader.saveToMSLVector<double>(random_state, file_name);
+  std::cout << "False Goal state set" << std::endl;
+  Problem *p = new Problem(g, m, configFolder);
+  std::cout << "Problem set" << std::endl;
+  
+  //RRT *rrt= new RRTExtExt(p);
+  RRTNBV *rrt = new RRTNBV(p, configFolder, dataFolder);
+  rrt->setPartialModel(partialModel);
+  rrt->setRobotWithSensor(robotWithSensor);
+  
+  rrt->PlannerDeltaT = plannerDeltaT;
+  rrt->NumNodes = rrtNodes;
+  rrt->UseANN = false;
+  std::cout << "Planner set" << std::endl;
+  
+  if(rrt->Plan()){
+    success = true;
+    //cout << "Solution Path: \n" << rrt->Path << "\n"; 
+    //cout << "NBV: \n" << rrt->BestState << std::endl;
+
+    v = rrt->getNBV();
+    
+    std_utility = (float) v.eval;
+    std_distance_uf = (float)  1 / (1+v.d);
+    std_surface_uf = (float) v.n_unknown;
+    
+    best_path = rrt->Path;
+    best_goal = rrt->BestState;
+    init_state = p->InitialState;
+    best_policy1 = rrt->Policy1;
+    best_policy2 = rrt->Policy2;
+  } else {
+    std::cout << "No path found" << std::endl;
+  }
+  delete rrt; 
+  
+  
+  clock_t end = clock();
+  double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+  std_mp_time = elapsed_secs;
+  motionPTimes.push_back(elapsed_secs);
+  std::cout << "Motion Planing elapsed time: " << elapsed_secs << std::endl;
+  
+  if(success){
+    std::cout << "Motion planning success" << std::endl;
+    std::ofstream *outfile; 
+    MSLVector pose_configuration;
+    
+    file_name.clear();
+    file_name = dataFolder + "/InitialPose";
+    pose_configuration = m->StateToConfiguration(init_state);
+    
+    outfile = new ofstream(file_name.c_str()); 
+    if (*outfile) {   
+      *outfile << pose_configuration;
+      outfile->close();
+    }  
+    
+    file_name.clear();
+    file_name = dataFolder + "/GoalPose";
+    pose_configuration = m->StateToConfiguration(best_goal);
+    
+    outfile->open(file_name.c_str()); 
+    if (*outfile) {   
+      *outfile << pose_configuration;
+      outfile->close();
+    }
+    
+    
+    //guardar path
+    file_name.clear();
+    file_name = dataFolder + "/Path";
+    
+    outfile->open(file_name.c_str()); 
+    if (*outfile) {   
+      *outfile << best_path;
+      outfile->close();
+    }
+    
+    //guardar pose path
+    list<MSLVector> posesPath;
+    for(list<MSLVector>::iterator it = best_path.begin(); it!= best_path.end(); it++){
+      MSLVector pose = m->StateToConfiguration(*it);
+      posesPath.push_back(pose);
+    }
+    file_name.clear();
+    file_name = dataFolder + "/PosePath";
+    
+    outfile->open(file_name.c_str()); 
+    if (*outfile) {   
+      *outfile << posesPath;
+      outfile->close();
+    }
+    
+    
+    //guardar frames;
+    list<MSLVector> framesPath;
+    int inter = 7; //intermediate frames per state;
+    double deltat = 1/inter;
+    
+    // save the first
+    list<MSLVector>::iterator lower_it = best_path.begin();
+    list<MSLVector>::iterator upper_it = best_path.begin();
+
+    framesPath.push_back(m->StateToConfiguration(*lower_it));
+    
+    upper_it ++;
+    while(upper_it != best_path.end()){
+      // save intermediate frames;
+      for(int i = 1; i<=inter; i++){ // saves the upper state
+	MSLVector pose = p->StateToConfiguration( p->InterpolateState(*lower_it, *upper_it, deltat*i) );
+      }
+      lower_it = upper_it;
+      upper_it++;
+    }
+
+    file_name.clear();
+    file_name = dataFolder + "/FramePath";
+    
+    outfile->open(file_name.c_str()); 
+    if (*outfile) {   
+      *outfile << posesPath;
+      outfile->close();
+    }
+    
+    
+    file_name.clear();
+    file_name = dataFolder + "/visionTimes";
+    reader.saveVector<float>(visionTimes,file_name);
+    
+    file_name.clear();
+    file_name = dataFolder + "/motionPlanningTimes";
+    reader.saveVector<float>(motionPTimes, file_name);
+    
+    //traveled_distance += v.d;
+    //std_distance = accumulatedDistance(best_path, m);
+    std_distance = 0; //TODO
+    std_accu_distance += std_distance;
+    distances_per_it.push_back(std_distance);
+    
+    file_name.clear();
+    file_name = dataFolder + "/traveledDistance";
+    reader.saveVector<double>(distances_per_it, file_name);
+    
+    copySingleSolution(best_path, best_policy1);
+    //saveToLogFile();
+    
+    file_name.clear();
+    file_name = dataFolder + "/numControls";
+    reader.saveData2Text<int>(solutionControls.size(),file_name,true,'\t');
+  }
+  
+  //pointingViews.remove(v);
+  
+  delete p;
+  delete g;
+  
+  return success;
+
+}
+
+
+
 

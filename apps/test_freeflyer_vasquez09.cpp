@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
     data_folder.append("/data");
     
     std::string rays_file(main_folder);
-    rays_file.append("/data/rays_0.dat");
+    rays_file.append("/data/sensor_rays.dat");
     
     
     // ------------------- Robot ---------------------------
@@ -40,9 +40,9 @@ int main(int argc, char **argv) {
     vpRobot *r = new vprFreeFlyer();
     r->init();
     
+    
     // ---------------- sensor ----------------------
-    // Simulation of the scan with octree
-    // RangeSensor *s = new RSSimulated();
+    // Simulation of the scan with octree ray tracing
     RangeSensor *s = new RSSRayTracingOCtree();
     s->setConfigFolder(config_folder);
     s->setDataFolder(data_folder);
@@ -50,16 +50,12 @@ int main(int argc, char **argv) {
     // Set of rays that defines the sensor R
     s->saveRaysForResolution(rays_file, resolution, distance);
     
-    
-    
     // ---------------- RobotSensor ----------------
     RobotSensor *rs = new RobSenNoTransformation(r, s);
     rs->setSensorPose(0,0,0,-M_PI/2,0,-M_PI/2);
     rs->setConfigFolder(config_folder);
     rs->setDataFolder(data_folder);
-    rs->init();
-    
-    
+    rs->init(); 
     
     // --------------- Partial Model ------------
     float alphaOcc = 0.2, alphaUnk = 0.8;

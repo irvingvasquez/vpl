@@ -341,7 +341,7 @@ long int PMVOctree::readRays(std::string file_address)
     }
     file.close();
   } else {
-    std::cout << "Unable to open file " << file_address.c_str() << std::endl;
+    std::cout << "Unable to read file " << file_address.c_str() << std::endl;
     return -1;
   }
   
@@ -436,7 +436,7 @@ float PMVOctree::updateWithScan(std::string file_name_scan, std::string file_nam
   
   map->insertPointCloud(*scanCloud, *it_origin, maxRange);
   map->updateInnerOccupancy();
-  map->prune();
+  map->expand();
   
   clock_t ends = clock();
   diff = (double) (ends - start) / CLOCKS_PER_SEC;
@@ -456,7 +456,7 @@ float PMVOctree::updateWithScan(std::string file_name_scan, std::string file_nam
 int PMVOctree::evaluateView(ViewStructure& v)
 {
   if(!poitsToTheObject(v)){
-    std::cout << "Sorry no points :(" << std::endl;
+    //std::cout << "Sorry no points :(" << std::endl;
     return UNFEASIBLE_VIEW;
   }
   
@@ -487,8 +487,8 @@ int PMVOctree::evaluateView(ViewStructure& v)
       }
   } else 
   { 
-    std::cout << " no valid :S" << std::endl;
-    v.eval = 0.0;
+    //std::cout << " no valid :S" << std::endl;
+    //v.eval = 0.0;
     return UNFEASIBLE_VIEW;
   }
 }
@@ -619,6 +619,7 @@ bool PMVOctree::saveFrontierUnknown(std::string file_name_vertex, std::string fi
   std::vector< std::vector<double> > data;
   vpFileReader fr;
   
+  
   map->getFrontierUnknownVoxels(vertices, normals);
   itv = vertices.begin();
   itn = normals.begin();
@@ -683,7 +684,7 @@ void PMVOctree::getUnknownTriangles(vpTriangleList& tris)
   vpTriangleList tris_unknown;
   
   tris.clear();
-  
+  map->expand();
   map->getUnknownCentersAll(unk_centers);
   
   for(it=unk_centers.begin(); it!=unk_centers.end(); it++){

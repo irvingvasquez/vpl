@@ -38,10 +38,10 @@ PMVOctreeVasquez09::PMVOctreeVasquez09(double alphaOccupied, double alphaUnknown
 
 int PMVOctreeVasquez09::evaluateView(ViewStructure& v)
 {
-  if(!poitsToTheObject(v)){
-    std::cout << "Sorry no points :(" << std::endl;
-    return UNFEASIBLE_VIEW;
-  }
+  //if(!poitsToTheObject(v)){
+  //  std::cout << "Sorry no points :(" << std::endl;
+  //  return UNFEASIBLE_VIEW;
+  //}
   
   EvaluationResult result;
   

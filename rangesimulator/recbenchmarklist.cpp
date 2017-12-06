@@ -43,7 +43,7 @@ bool RecBenchmarkList::saveList(std::string file_name)
     myfile.close();
   }
   else { 
-    std::cout << "Unable to open file" << std::endl;
+    std::cout << "Unable to open file: "  << file_name.c_str() << std::endl; 
     return false;
   }
   
