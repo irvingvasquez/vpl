@@ -53,6 +53,7 @@ I installed it from Ubuntu PPA
 ### Installation
 
 1. Download and install [octomap] and [MRPT].
+MRPT was installed from source not PPA
 2. Clone this repo to your machine
 ```
 git clone https://github.com/irvingvasquez/vpl
