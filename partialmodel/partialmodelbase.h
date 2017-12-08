@@ -172,17 +172,17 @@ PartialModelBase();
   virtual void saveObjectAsObst(std::string file_name)=0;
   
   /**
-  *
+  * used for motion planning
   */
   virtual bool saveUnknownVolumeAsObst(std::string file_name)=0;
   
   /**
-   * 
+   * Saves the unknown voxels inside the object bouding box as a list of triangles.
    */
   virtual bool saveUnknownVolumeAsRawT(std::string file_name)=0;
   
   /**
-   * Saves the occupied  and unknown voxels as Obs
+   * Saves the occupied  and unknown voxels as Obs (MSL format)
    */
   virtual bool saveObstacle(std::string file_name)=0;  
   

@@ -63,7 +63,7 @@ git clone https://github.com/irvingvasquez/vpl
 4. Compile the library. Move to the VPL top folder and run:
 ```sh
 mkdir build
-cd build    
+cd build 
 cmake ..
 ```
 

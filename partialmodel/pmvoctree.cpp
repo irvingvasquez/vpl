@@ -162,7 +162,7 @@ void PMVOctree::insertFreeSpace(double x1, double y1, double z1, double x2, doub
     x = x + resolution;
   }
   
-  // insert unknown voxels
+// insert unknown voxels
 //   point3d_list centers;
 //   point3d_list::iterator it;
 //   map->getUnknownLeafCenters(centers, SceneBBxMin, SceneBBxMax);

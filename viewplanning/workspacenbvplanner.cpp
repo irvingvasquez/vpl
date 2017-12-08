@@ -1,18 +1,37 @@
 /*
-    Copyright 2013 <copyright holder> <email>
+ * 
+ * 
+View Planning Library
+Copyright (c) 2016, J. Irving Vasquez ivasquez@ccc.inaoep.mx
+Consejo Nacional de Ciencia y Tecnología (CONACYT)
+All rights reserved.
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-        http://www.apache.org/licenses/LICENSE-2.0
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
 
 
 #include "workspacenbvplanner.h"
@@ -27,19 +46,19 @@ bool WorkspaceNBVPlanner::planNBV(ViewStructure& v)
 {
 //  std::list<ViewStructure> evaluated_views;
   
-  //vsSaveViewList(pointedViews, viewSphereFileName);
+  //vsSaveViewList(candidateViews, viewSphereFileName);
   //partialModel->readCandidateViews(viewSphereFileName);
-  partialModel->evaluateCandidateViews(pointedViews);
+  partialModel->evaluateCandidateViews(candidateViews);
   //partialModel->saveEvaluations();
   //partialModel->sortCandidateViews();
   //partialModel->saveEvaluatedViews(evaluatedViewsFile);
   
   //vsReadViewList(evaluated_views, evaluatedViewsFile);
   
-  pointedViews.sortHighToLow();
+  candidateViews.sortHighToLow();
   
  // if(evaluated_views.size() > 0){
-    v = bestViewOfList(pointedViews);
+    v = bestViewOfList(candidateViews);
     std::cout << v << std::endl;
  //   v = NBV;
     return true;
@@ -88,16 +107,16 @@ bool WorkspaceNBVPlanner::init()
   std::cout << "Tesselation level: " << tesselation_level << std::endl; 
   
   ViewSphereSynthesis generator(radio, objectCenter[0], objectCenter[1], objectCenter[2], tesselation_level);
-  generator.getViews(pointedViews); 
-  std::cout << pointedViews.size() << " views were generated" << std::endl;
+  generator.getViews(candidateViews); 
+  std::cout << candidateViews.size() << " views were generated" << std::endl;
   
   // This step is needed because the rays depend on the sensor pose with respect of the robot
-  robotWithSensor->getViewsFromComfigurations(pointedViews);
+  robotWithSensor->getViewsFromComfigurations(candidateViews);
   
   return true;
 }
 
-
+/*
 void WorkspaceNBVPlanner::generatePointedConfigurations(std::list< std::vector< double > >& configurations, std::string points_file, std::vector< double > object_center, double radio)
 {
   std::vector< std::vector<double> > points;
@@ -175,7 +194,7 @@ void WorkspaceNBVPlanner::generatePointedConfigurations(std::list< std::vector< 
     configurations.push_back(config);
   }
 }
-
+*/
 
 /*
 void WorkspaceNBVPlanner::generatePointedViews(list< ViewStructure >& viewList, std::string points_file, std::vector< double > object_center, double radio)
