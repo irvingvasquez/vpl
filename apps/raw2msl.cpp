@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "pmutils.h"
-
+#include <pmutils.h>
+#include <string>
 
 // When passing char arrays as parameters they must be pointers
 int main(int argc, char* argv[]) {
@@ -10,8 +10,8 @@ int main(int argc, char* argv[]) {
         std::cin.get();
         exit(0);
     } else { // if we got enough parameters...
-	string infile(argv[1]);
-	string outfile(argv[2]);
+	std::string infile(argv[1]);
+	std::string outfile(argv[2]);
 	
 	PMUtils::raw2triangles(infile, outfile);
 
