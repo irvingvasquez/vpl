@@ -26,6 +26,8 @@ if(BUILD_PARTIAL_MODEL)
   add_executable(update_partial_model test_update_partial_model.cpp ${SRC_ALL})
   target_link_libraries(update_partial_model  ${LIB_PARTIAL_MODEL} ${LIBS_OCTOMAP})
   
+  add_executable(raw2msl raw2msl.cpp ${SRC_ALL})
+  target_link_libraries(raw2msl  ${LIB_PARTIAL_MODEL} ${LIBS_OCTOMAP})
   
   
   if(BUILD_VIEW_PLANNING)

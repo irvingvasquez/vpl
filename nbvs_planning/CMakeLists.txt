@@ -130,6 +130,12 @@ target_link_libraries(test_sim_rrtnbv_Kriegel ${LIBS_ALL})
 add_executable(test_sim_rrtnbv_rearside test_sim_rrtnbv_rearside.cpp ${SRC})
 target_link_libraries(test_sim_rrtnbv_rearside ${LIBS_ALL})
 
+add_executable(mrpt_alternatives mrpt_alternatives.cpp ${SRC})
+target_link_libraries(mrpt_alternatives ${LIBS_ALL})
+
+add_executable(test_uav_ort test_uav_ort.cpp ${SRC})
+target_link_libraries(test_uav_ort ${LIBS_ALL})
+
 ######################################################### 
 
 
