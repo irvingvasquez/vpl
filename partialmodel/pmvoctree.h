@@ -59,7 +59,13 @@ class PMVOctree :  public PMVolumetric
 
 public:
 PMVOctree();
+virtual ~PMVOctree();
 
+//   void getOBBVoxelGrid(std::vector< double > & voxels, std::vector<int> &dim );
+
+// TODO
+  bool insertUnknownSurface(Pointcloud pc);
+  
   virtual float updateWithScan(std::string file_name_scan, std::string file_name_origin);
   
   virtual bool savePartialModel(std::string file_name);

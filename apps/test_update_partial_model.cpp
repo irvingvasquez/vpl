@@ -33,27 +33,30 @@ int main(int argc, char **argv) {
   cout << "Configuration folder: " << config_folder.c_str() << "\n";
   cout << "Data folder: " << data_folder.c_str() << "\n";
   
+  for(int i = 1; i<2; i++){  
+    // create a partial partial model
+    cout << "Iteration: " << i << endl;
+    PMVOctree* octree = new PMVOctree();
+    octree->setConfigFolder(config_folder);
+    octree->setDataFolder(data_folder);
+    octree->init();
     
-  // create a partial partial model
-  PMVOctree octree;
-  octree.setConfigFolder(config_folder);
-  octree.setDataFolder(data_folder);
-  octree.init();
-  
-  // save the current status
-  octree.savePartialModel("octree_before_updating.ot");
-  
-  // read the scan
-  string scan_file(data_folder + "/scan_1.dat");
-  string origin_file(data_folder + "/scan_origin_1.dat");
+    // save the current status
+    octree->savePartialModel("octree_before_updating.ot");
+    
+    // read the scan
+    string scan_file(data_folder + "/scan_1.dat");
+    string origin_file(data_folder + "/scan_origin_1.dat");
 
-  // update the partial model 
-  octree.updateWithScan(scan_file, origin_file);
-  octree.paintVoxels();
- 
-  // save the current representation  
-  octree.savePartialModel("octree_after_updating.ot");
+    // update the partial model 
+    octree->updateWithScan(scan_file, origin_file);
+    octree->paintVoxels();
   
+    // save the current representation  
+    octree->savePartialModel("octree_after_updating.ot");
+    delete octree;
+    //getchar();
+  }
        
   return 0;
 }

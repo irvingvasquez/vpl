@@ -79,6 +79,7 @@ class PartialModelBase
 public:
 
 PartialModelBase();
+virtual ~PartialModelBase();
   
   virtual float updateWithScan(std::string file_name_scan, std::string file_name_origin)=0;
   
@@ -106,7 +107,11 @@ PartialModelBase();
   */ 
   virtual long int readRays(std::string file_address)=0;
   
-  
+  /*
+   * the voxels that contain the pointcloud are marked as unknown
+   */
+  virtual bool insertUnknownSurface(Pointcloud pc)=0;
+    
   virtual bool init();
   
   /**
@@ -151,7 +156,7 @@ PartialModelBase();
   void setScene(double x1, double y1, double z1, double x2, double y2, double z2);
   
   
-//   void setPaintPartialModel(bool value);
+  //void setPaintPartialModel(bool value);
   
   void setConfigFolder(std::string folder);
   

@@ -75,9 +75,10 @@ class PMVolumetric : public PartialModelBase
 {
 public:
   
- //pmVolumetric();
- PMVolumetric();
- 
+//pmVolumetric();
+PMVolumetric();
+virtual ~PMVolumetric(); 
+
   /**
    * Paints in blue occupied voxels that are inside the object capsule
    */
@@ -102,6 +103,10 @@ public:
   void setMinimunNumberOfUnmarkVoxels(int n);
   
   virtual bool saveVisibleUnknown(std::string file_name_vertex, std::string file_name_normal)=0;
+  
+  virtual bool insertUnknownSurface(Pointcloud pc)=0;
+  
+//   virtual void getOBBVoxelGrid(std::vector< std::vector< std::vector<double> > > &voxels)=0;
   
 protected:
   std::vector<point3d> touched_voxels;

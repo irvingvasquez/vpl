@@ -78,4 +78,10 @@ namespace PMUtils {
   */
   void getHTMfromPose(std::vector<double> pose, boost::numeric::ublas::matrix<double> &HTM); 
   
+  /*
+  * gets the homogeneous transformation matrix from a pose (x,y,z, yaw(z), pitch(y), roll(x))
+  * status: not tested
+  */
+  void getHTMfromPose(octomath::Pose6D pose, boost::numeric::ublas::matrix<double> &HTM); 
+  
 }

@@ -41,6 +41,14 @@ PMVOctree::PMVOctree() : PMVolumetric()
 
 }
 
+PMVOctree::~PMVOctree()
+{
+  //std::cout << "~PMVOctree" << std::endl;
+  delete map;
+}
+
+
+
 bool PMVOctree::init()
 {  
   PMVolumetric::init();
@@ -417,6 +425,111 @@ bool PMVOctree::loadPartialModel(std::string file_name)
 }
 
 
+bool PMVOctree::insertUnknownSurface(Pointcloud pc)
+{
+  Pointcloud::iterator it;
+  float start_prob = 0.5;
+  
+  for(it = pc.begin(); it!= pc.end(); it++)
+  {
+    // update all the voxels between center points   
+    octomap::point3d endpoint = *it;
+    octomap::ColorOcTreeNode* n = map->updateNode(endpoint, false);
+    //n->setValue(0);
+    n->setLogOdds(logodds(start_prob));
+    n->setColor(colorOrange);
+  }
+}
+
+
+// void PMVOctree::getOBBVoxelGrid(std::vector< double >& voxels, std::vector< int >& dim)
+// {
+//   double x,y,z; 
+//   float start_prob = 0.5;
+//   float prob;
+//   dim.resize(3);
+//   
+//   float x1 = ObjectBBxMin.x();
+//   float y1 = ObjectBBxMin.y();
+//   float z1 = ObjectBBxMin.z();
+//   
+//   float x2 = ObjectBBxMax.x();
+//   float y2 = ObjectBBxMax.y();
+//   float z2 = ObjectBBxMax.z();
+//   
+//   std::cout << "Inserting free space.." << std::endl;
+//   
+//   float resolution;
+//   int nx, ny, nz;
+//   float ox,oy,oz;
+//   float p1x, p1y, p1z;
+//   float p2x, p2y, p2z;
+//   
+//   resolution = this->voxelResolution;
+//   //resolution = multi_octree_it->getResolution();
+//   
+//   // compute the origin of the voxels
+//   ox = resolution / 2;
+//   oy = ox;
+//   oz = ox;
+//   
+//   // how many displacements are need to reach the first point
+//   nx = (int) floor(x1/resolution);
+//   ny = (int) floor(y1/resolution);
+//   nz = (int) floor(z1/resolution);
+//   
+//   // compute the center of the first point
+//   p1x = ox + nx * resolution;
+//   p1y = oy + ny * resolution;
+//   p1z = oz + nz * resolution;
+//   
+//   // how many displacements are need to reach the second point
+//   nx = (int) floor(x2/resolution);
+//   ny = (int) floor(y2/resolution);
+//   nz = (int) floor(z2/resolution);
+//   
+//   // compute the center of the second point
+//   p2x = ox + nx * resolution;
+//   p2y = oy + ny * resolution;
+//   p2z = oz + nz * resolution;
+//   
+//   //calculate the dimension
+//   int dimx = 0;
+//   int dimy = 0;
+//   int dimz = 0;
+//   
+//   // update all the voxels between center points   
+//   x = p1x;
+//   while(x <= p2x){
+//     y = p1y;
+//     while(y <= p2y){
+//       z = p1z;
+//       while(z <= p2z){
+// 	octomap::point3d endpoint ((float) x, (float) y, (float) z);
+// 	OcTreeKey key;
+// 	map->coordToKeyChecked(endpoint, key);
+// 	ColorOcTreeNode* node = map->search(key);
+// 	prob = node->getOccupancy();
+// 	
+// 	voxels.push_back((double)prob);
+// 	dimz ++;
+// 	
+// 	z = z + resolution;
+//       } 
+//       dimy ++;
+//       y = y + resolution;
+//     }
+//     dimx ++;
+//     x = x + resolution;
+//   }
+// 
+//   dim[0]=dimx;
+//   dim[1]=dimy;
+//   dim[2]=dimz;
+// }
+
+
+
 float PMVOctree::updateWithScan(std::string file_name_scan, std::string file_name_origin)
 {
   std::cout << "Updating octree with scan." << std::endl;
@@ -676,6 +789,7 @@ void PMVOctree::getOccupiedTriangles(vpTriangleList& tris)
   
   map->useBBXLimit(false);
 }
+
 
 void PMVOctree::getUnknownTriangles(vpTriangleList& tris)
 {

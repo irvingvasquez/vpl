@@ -30,6 +30,11 @@ PMVolumetric::PMVolumetric(): PartialModelBase()
 }
 
 
+PMVolumetric::~PMVolumetric()
+{
+    //std::cout << "~PMVolumetric" << std::endl;
+}
+
 
 
 

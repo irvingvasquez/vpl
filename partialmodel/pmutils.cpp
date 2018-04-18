@@ -258,3 +258,45 @@ void PMUtils::getHTMfromPose(std::vector< double > pose, boost::numeric::ublas::
   HTM = result;
 }
 
+void PMUtils::getHTMfromPose(octomath::Pose6D pose, boost::numeric::ublas::matrix< double >& HTM)
+{ 
+  boost::numeric::ublas::matrix< double > result(4,4);
+  double x,y,z, yaw, pitch, roll;
+  x = pose.x();
+  y = pose.y();
+  z = pose.z();
+  yaw = pose.yaw();
+  pitch = pose.pitch();
+  roll = pose.roll();
+  
+  double cy = cos(yaw);
+  double sy = sin(yaw);
+  double cp = cos(pitch);
+  double sp = sin(pitch);
+  double cr = cos(roll);
+  double sr = sin(roll);
+
+  result(0,0) = cy * cp;  
+  result(0,1) = cy * sp *sr - sy * cr;
+  result(0,2) = cy * sp * cr + sy * sr;
+  result(0,3) = x;
+  
+  result(1,0) = sy * cp;
+  result(1,1) = sy * sp * sr + cy * cr;
+  result(1,2) = sy * sp * cr - cy * sr;
+  result(1,3) = y;
+  
+  result(2,0) = -sp;
+  result(2,1) = cp*sr;
+  result(2,2) = cp *cr;
+  result(2,3) = z;
+  
+  result(3,0) = 0;
+  result(3,1) = 0;
+  result(3,2) = 0;
+  result(3,3) = 1;
+  
+  //std::cout << "result:" << result << "\n" << std::endl;
+  HTM = result;
+}
+

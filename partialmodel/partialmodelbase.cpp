@@ -41,6 +41,14 @@ colorGray(200,200,200)
   object_points_filename.assign("object_pts.dat");
 }
 
+PartialModelBase::~PartialModelBase()
+{
+  //std::cout << "~PartialModelBase" << std::endl;
+  delete scanOrigin;
+  delete scanCloudOrigins;
+  delete scanCloud;
+}
+
 
 bool PartialModelBase::init()
 {
